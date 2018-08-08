@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:p="http://www.springframework.org/schema/p"
+xmlns:c="http://www.springframework.org/schema/c"
+xmlns:util="http://www.springframework.org/schema/util"
+xmlns:jee="http://www.springframework.org/schema/jee"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-3.1.xsd
+http://www.springframework.org/schema/util
+http://www.springframework.org/schema/util/spring-util-3.1.xsd
+http://www.springframework.org/schema/jee    
+http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
+http://www.springframework.org/schema/aop 
+http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
+	<context:component-scan base-package="com.neusoft.oa"/><!-- 配置扫描的起始包-->
+	<!-- 启用Aspect J切面处理 -->
+	<aop:aspectj-autoproxy />
+	<!-- 旧版本查找注册连接池对象-->
+	<!-- bean id="dataSourceOA" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/neuedu"></property>
+	</bean-->
+	
+	<!-- 新版本查找注册连接池对象  -->
+	<!--jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/neuedu"/--> 
+	
+	<!-- DriverManagerDataSource -->
+	<!--bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/>
+		<property name="username" value="wwl"/>
+		<property name="password" value="long123"/>
+	</bean-->
+	
+	<!-- dbcp -->
+	<!--bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/>
+		<property name="username" value="wwl"/>
+		<property name="password" value="long123"/>
+	</bean-->
+
+	
+	<!-- c3p0 -->	
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
+		<property name="user" value="wwl"/> 
+		<property name="password" value="long123"/> 
+		<property name="initialPoolSize" value="5"/>
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="10"/>
+		<property name="acquireIncrement" value="1"/>
+	</bean>
+	
+	<!--定义一个bean 
+	<bean id="empDaoImpl" class="com.neusoft.oa.hr.dao.impl.EmployeeDaoImpl" />-->
+	
+	<!--依赖注入
+	<bean id="employeeService" class="com.neusoft.oa.hr.service.impl.EmployeeServiceImpl" >
+		<property name="empDaoImpl" ref="empDaoImpl"></property>
+	</bean>  -->
+	
+	<!--
+	<bean id="employeeService01" class="com.neusoft.oa.hr.service.impl.EmployeeServiceImpl">
+		<constructor-arg ref="empDaoImpl"></constructor-arg></bean>-->
+		<!-- 定制参数类型
+		<constructor-arg type="java.lang.String" value="Name"></constructor-arg>
+		<constructor-arg type="int" value="18"></constructor-arg>
+		-->
+		
+		<!-- 指定参数位置 index从0开始
+		<constructor-arg index="0" value="Name"></constructor-arg>
+		<constructor-arg index="1" value="18"></constructor-arg>
+		-->
+	
+</beans>

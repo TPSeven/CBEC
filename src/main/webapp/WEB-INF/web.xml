@@ -31,19 +31,23 @@
 	<load-on-startup>1</load-on-startup>
 	<multipart-config>
       <max-file-size>20848820</max-file-size>
+      
       <!--上传内文件的最大容量-->
       <max-request-size>418018841</max-request-size>
+      
       <!--表示多部分HTTP请求允许的最大容量-->
       <file-size-threshold>1048576</file-size-threshold>
+      
       <!--超过这个容量将会被写到磁盘中-->
       <location>/</location>
+      
       <!--要将已上传的文件保存到磁盘中的位置-->
-    </multipart-config>
-  </servlet>
-  <servlet-mapping>
-  	<servlet-name>app</servlet-name>
-	<url-pattern>*.mvc</url-pattern>
-  </servlet-mapping>
+	   </multipart-config>
+	  </servlet>
+	  <servlet-mapping>
+	  	<servlet-name>app</servlet-name>
+		<url-pattern>*.mvc</url-pattern>
+	  </servlet-mapping>
 
   <!-- 中文编码过滤器 -->
   <filter>

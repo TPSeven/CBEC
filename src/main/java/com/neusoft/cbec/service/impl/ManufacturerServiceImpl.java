@@ -14,7 +14,7 @@ import com.neusoft.cbec.model.ManufacturerModel;
 import com.nuesoft.cbec.service.IManufacturerService;
 
 /**
- * @author wwl
+ * @author Wwl 温万龙
  *    制造商服务层实现
  */
 @Service
@@ -34,7 +34,7 @@ public class ManufacturerServiceImpl implements IManufacturerService {
 
 	@Override
 	public void delete(ManufacturerModel manufacturer) throws Exception {
-
+		
 	}
 
 	@Override
@@ -44,6 +44,19 @@ public class ManufacturerServiceImpl implements IManufacturerService {
 
 	@Override
 	public List<ManufacturerModel> getListByAll() throws Exception {
+		String resource = "wwl-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		SqlSession session =sqlSessionFactory.openSession();
+		IManufacturerDao manufacturerDao = session.getMapper(IManufacturerDao.class);
+		List<ManufacturerModel> list = manufacturerDao.selectListByAll();
+		session.commit();
+		session.close();
+		return list;
+	}
+
+	@Override
+	public ManufacturerModel getManufacturerById(int no) throws Exception {
 		return null;
 	}
 

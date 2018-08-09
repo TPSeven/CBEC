@@ -15,4 +15,5 @@ public interface IManufacturerDao {
 	
 	public List<ManufacturerModel> selectListByAll() throws Exception;
 	
+	public ManufacturerModel selectManufacturerById(int no) throws Exception;
 }

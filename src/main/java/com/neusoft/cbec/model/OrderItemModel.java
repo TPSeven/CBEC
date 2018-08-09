@@ -1,5 +1,5 @@
 package com.neusoft.cbec.model;
-
+/**/
 public class OrderItemModel {
 	
 			 private int order_id =0;

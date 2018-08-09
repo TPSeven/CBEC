@@ -7,11 +7,12 @@ import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.springframework.stereotype.Service;
 
 import com.neusoft.cbec.dao.IProductDao;
 import com.neusoft.cbec.model.ProductModel;
 import com.nuesoft.cbec.service.IProductService;
-
+@Service
 public class ProductServiceImpl implements IProductService {
 
 	@Override

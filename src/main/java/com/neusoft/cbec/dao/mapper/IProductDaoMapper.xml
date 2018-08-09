@@ -5,7 +5,7 @@
 <mapper namespace="com.neusoft.cbec.dao.IProductDao">
   <insert id="create" parameterType = "com.neusoft.cbec.model.ProductModel">
   	insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc) 
-  	values(PRODUCT_NEXT_SQ.nextval,#{pro_name},#{pro_price},#{pro_weight},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc})
+  	values(PRODUCT_NEXTNO_SQ.nextval,#{pro_name},#{pro_price},#{pro_weight},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc})
   </insert>
   
   <update id="update" parameterType = "com.neusoft.cbec.model.ProductModel">

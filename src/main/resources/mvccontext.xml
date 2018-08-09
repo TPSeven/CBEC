@@ -24,15 +24,15 @@ http://www.springframework.org/schema/tx/spring-tx.xsd
 http://www.springframework.org/schema/mvc
 http://www.springframework.org/schema/mvc/spring-mvc.xsd">
 	<!-- 配置扫描的起始包-->
-	<context:component-scan base-package="com.neusoft.oa"/>
+	<context:component-scan base-package="com.neusoft.cbec"/>
 	<!-- 启用Aspect J切面处理 -->
 	<aop:aspectj-autoproxy />
 	
-	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+	<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
 		<property name="prefix" value="/"/>
 		<property name="suffix" value=".jsp"/>
-	</bean>
+	</bean> -->
 	
 	<!-- 启用mvc注解类解析标签 -->
 	<mvc:annotation-driven></mvc:annotation-driven>

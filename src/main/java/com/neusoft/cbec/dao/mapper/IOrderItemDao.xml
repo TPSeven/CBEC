@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.cbec.dao.IOrderItemDao">
+<insert id ="create" parameterType="com.neusoft.cbec.model.OrderItemModel">
+ insert into  ORDER_ITEM (Order_id,pro_id,pro_id_count,man_id,sorder_id,state) values (ORDER_ITEM_NEXTNO_SQ.nextval,#{pro_id},#{pro_id_count},#{man_id},#{seller_id},#{state})"
+</insert>
+<update id ="update"  parameterType="com.neusoft.cbec.model.OrderItemModel">
+  update ORDER_ITEM set  pro_id=#{pro_id}, pro_id_count=#{pro_id_count},man_id=#{man_id},seller_id=#{seller_id},state=#{state} where order_id=#{order_id}
+</update>
+
+<delete id="delete" parameterType="com.neusoft.cbec.model.OrderItemModel">
+ delete from ORDER_ITEM where  order_id=#{order_id}
+</delete>
+
+<select id="selectListByAll" resultType="com.neusoft.cbec.model.OrderItemModel">
+select * from ORDER_ITEM
+
+</select>
+
+<select id="selectByID" parameterType="int"  resultType="com.neusoft.cbec.model.OrderItemModel">
+ select * from  ORDER_ITEM where pro_id=#{order_id}
+</select>
+</mapper> 

@@ -11,43 +11,34 @@
   </welcome-file-list>
   
   <context-param>
-  	<param-name>contextConfigLocation</param-name>
-  	<param-value>/WEB-INF/classes/context.xml</param-value>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>/WEB-INF/classes/context.xml</param-value>
   </context-param>
-  
-  <!-- 配置Spring Ioc监听器 -->
   <listener>
-  	<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
   
-  <!-- 配合Spring MVC核心控制器 -->
   <servlet>
-  	<servlet-name>app</servlet-name>
-	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-	<init-param>
-	  <param-name>contextConfigLocation</param-name>
-	  <param-value>/WEB-INF/classes/mvccontext.xml</param-value>
-	</init-param>
-	<load-on-startup>1</load-on-startup>
-	<multipart-config>
+    <servlet-name>app</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>/WEB-INF/classes/mvccontext.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    <multipart-config>
       <max-file-size>20848820</max-file-size>
-      <!--上传内文件的最大容量-->
       <max-request-size>418018841</max-request-size>
-      <!--表示多部分HTTP请求允许的最大容量-->
       <file-size-threshold>1048576</file-size-threshold>
-      <!--超过这个容量将会被写到磁盘中-->
-      <location>/</location>
-      <!--要将已上传的文件保存到磁盘中的位置-->
     </multipart-config>
   </servlet>
   <servlet-mapping>
-  	<servlet-name>app</servlet-name>
-	<url-pattern>*.mvc</url-pattern>
-  </servlet-mapping>
-
-  <!-- 中文编码过滤器 -->
+    <servlet-name>app</servlet-name>
+    <url-pattern>*.mvc</url-pattern>
+  </servlet-mapping>
+  
   <filter>
-  	<filter-name>Character Encoding</filter-name>
+    <filter-name>Character Encoding</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
     <init-param>
       <param-name>encoding</param-name>
@@ -58,6 +49,4 @@
     <filter-name>Character Encoding</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
-  
-
 </web-app>

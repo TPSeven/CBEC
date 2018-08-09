@@ -10,7 +10,7 @@
   update ORDER_ITEM set  pro_id=#{pro_id}, pro_id_count=#{pro_id_count},man_id=#{man_id},seller_id=#{seller_id},state=#{state} where order_id=#{order_id}
 </update>
 
-<delete id="delete parameterType="com.neusoft.cbec.model.OrderItemModel">
+<delete id="delete" parameterType="com.neusoft.cbec.model.OrderItemModel">
  delete from ORDER_ITEM where  order_id=#{order_id}
 </delete>
 
@@ -19,7 +19,7 @@ select * from ORDER_ITEM
 
 </select>
 
-<select id="selectByID" paramterType="int"  resultType="com.neusoft.cbec.model.OrderItemModel">
+<select id="selectByID" parameterType="int"  resultType="com.neusoft.cbec.model.OrderItemModel">
  select * from  ORDER_ITEM where pro_id=#{order_id}
 </select>
 </mapper> 

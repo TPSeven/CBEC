@@ -3,20 +3,40 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.cbec.dao.IManufacturerDao">
-  <select id="create" resultType="com.neusoft.cbec.model.ManufacturerModel">
-    insert into MANUFACTURER values(MANUFACTURER_NEXTNO_SQ.nextval,#{name},#{address},#{scope},#{desc})
+
+  <resultMap id="ManResultMap" type="Manufacturer">
+  	<id property="id" column="man_id" />
+  	<result property="name" column="man_name"/>
+  	<result property="address" column="man_address"/>
+  	<result property="scope" column="man_scope"/>
+  	<result property="desc" column="man_desc"/>
+  </resultMap>
+  
+  <insert id="create" parameterType="Manufacturer">
+    insert into MANUFACTURER 
+    values(MANUFACTURER_NEXTNO_SQ.nextval,#{name},#{address},#{scope},#{desc})
+  </insert>
+  
+  <delete id="delete" parameterType="Manufacturer">
+    delete MANUFACTURER 
+    where man_id = #{id}
+  </delete>
+  
+  <update id="update" parameterType="Manufacturer">
+    update MANUFACTURER 
+    set man_name=#{name},man_address=#{address},man_scope=#{scope},man_desc=#{desc} 
+    where man_id = #{id}
+  </update>
+  
+  <select id="selectListByAll" resultMap="ManResultMap">
+    select *
+    from MANUFACTURER
   </select>
   
-  <select id="delete" resultType="com.neusoft.cbec.model.ManufacturerModel">
-    delete MANUFACTURER where man_id = #{no}
-  </select>
-  
-  <select id="update" resultType="com.neusoft.cbec.model.ManufacturerModel">
-    update MANUFACTURER set man_name=#{name},man_address=#{address},man_scope=#{scope},man_desc=#{desc} where man_id = #{no}
-  </select>
-  
-  <select id="selectListByAll" resultType="com.neusoft.cbec.model.ManufacturerModel">
-    select * from MANUFACTURER
+  <select id="selectManufacturerById" parameterType="int" resultMap="ManResultMap">
+    select * 
+    from MANUFACTURER 
+    where man_id = #{id}
   </select>
   
 </mapper>

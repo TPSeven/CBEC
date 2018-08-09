@@ -3,14 +3,23 @@
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+	
+	<typeAliases>
+		<typeAlias type="com.neusoft.cbec.model.ManufacturerModel" alias="Manufacturer"/>
+	</typeAliases>
+	
+	
 	<environments default="development">
 		<environment id="development">
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="oracle.jdbc.driver.OracleDriver" />
-				<property name="url" value="jdbc:oracle:thin:@10.1.53.30:1521:neuedu" />
+				<!-- <property name="url" value="jdbc:oracle:thin:@10.1.53.30:1521:neuedu" />
 				<property name="username" value="tpseven" />
-				<property name="password" value="TPSEVEN" />
+				<property name="password" value="TPSEVEN" /> -->
+				<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu" />
+				<property name="username" value="wwl" />
+				<property name="password" value="long123" />
 			</dataSource>
 		</environment>
 	</environments>

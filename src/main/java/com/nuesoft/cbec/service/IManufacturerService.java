@@ -10,4 +10,6 @@ public interface IManufacturerService {
 	public void modify(ManufacturerModel manufacturer) throws Exception;
 	
 	public List<ManufacturerModel> getListByAll() throws Exception;
+	
+	public ManufacturerModel getManufacturerById(int no) throws Exception;
 }

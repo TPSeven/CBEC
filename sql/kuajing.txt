@@ -1,0 +1,51 @@
+
+
+--manufacturer
+create table "MANUFACTURER"
+(
+"man_id" number(20,0) constraint pk_man_id primary key,    --制造商ID
+"man_name"  varchar2(50 byte),                                           --制造商名字
+"man_address" varchar2(10 byte),                                          --制造商地址
+"man_scope" varchar2(10  byte),                                          --制造商？？
+"man_desc" varchar2(200 byte)                                          --制造商简介
+)
+
+
+--brand
+create table "BRAND"
+(
+"brand_id" number(20,0) constraint pk_brand_id primary key,      --品牌商ID
+"brand_name"  varchar2(50 byte),                                          --品牌商名字
+"man_id" number(20,0),                                                     --制造商ID
+"brand_desc" varchar2(200 byte)                                          --品牌商简介
+)
+
+
+
+
+--ORDER_ITEM
+create table "ORDER_ITEM"
+(
+"order_id" number(20,0) constraint pk_order_id primary key,       --订单ID
+"pro_id" number(20,0),                                                               --产品ID
+"pro_id_count" number(20,0),                                                      --产品数量
+"man_id" number(20,0),                                                         --制造商ID
+"sorder_id" number(20,0),
+"state" varchar2(20  byte)                                                  --订单状态
+)
+
+
+
+create table "PRODUCT"
+(
+"pro_id" number(20,0) constraint pk_pro_id primary key,
+"pro_name"  varchar2(50 byte), 
+"pro_price" number(20,2), 
+"pro_weight" number(20,2),
+"pro_count" number(20,0),
+"pro_kinds_id"  number(20,0),
+"pro_state_id"  number(20,0),
+"brand_id"  number(20,0),
+"pro_photos_id"  number(20,0),
+"pro_desc"  varchar2(200 byte)
+)

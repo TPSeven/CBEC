@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.cbec.dao.IManufacturerDao">
+  <select id="create" resultType="com.neusoft.cbec.model.ManufacturerModel">
+    insert into MANUFACTURER values(MANUFACTURER_NEXTNO_SQ.nextval,#{name},#{address},#{scope},#{desc})
+  </select>
+  
+  <select id="delete" resultType="com.neusoft.cbec.model.ManufacturerModel">
+    delete MANUFACTURER where man_id = #{no}
+  </select>
+  
+  <select id="update" resultType="com.neusoft.cbec.model.ManufacturerModel">
+    update MANUFACTURER set man_name=#{name},man_address=#{address},man_scope=#{scope},man_desc=#{desc} where man_id = #{no}
+  </select>
+  
+  <select id="selectListByAll" resultType="com.neusoft.cbec.model.ManufacturerModel">
+    select * from MANUFACTURER
+  </select>
+  
+</mapper>

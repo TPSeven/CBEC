@@ -41,5 +41,4 @@ public class ManufacturerModel {
 		this.desc = desc;
 	}
 	
-	
 }

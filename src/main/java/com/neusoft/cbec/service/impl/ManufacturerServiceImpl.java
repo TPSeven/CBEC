@@ -22,7 +22,7 @@ public class ManufacturerServiceImpl implements IManufacturerService {
 
 	@Override
 	public void add(ManufacturerModel manufacturer) throws Exception {
-		String resource = "org/mybatis/example/wwl-config.xml";
+		String resource = "wwl-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		SqlSession session =sqlSessionFactory.openSession();

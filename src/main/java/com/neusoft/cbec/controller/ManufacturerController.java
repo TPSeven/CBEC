@@ -12,7 +12,7 @@ import com.nuesoft.cbec.service.IManufacturerService;
  *  员工控制器类
  */
 @Controller
-@RequestMapping("/manufacturer1")
+@RequestMapping("/manufacturer")
 public class ManufacturerController {
 	private IManufacturerService manufacturerService = null;
 	

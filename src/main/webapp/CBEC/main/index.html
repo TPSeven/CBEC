@@ -274,9 +274,9 @@
                             <!-- /input-group -->
                             <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> 品牌商<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level" id="manufacturer-manger">
+                            <ul class="nav nav-second-level" id="manufacturer-content">
                                 <li>
-                                    <a href="../manufacturer/index.html">我的信息</a>
+                                    <a href="../manufacturer/view.html">我的信息</a>
                                 </li>
                                 <li>
                                     <a href="buttons.html">品牌管理</a>
@@ -298,7 +298,7 @@
                         	</li>
                             <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> 借卖商<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level" id="order">
+                            <ul class="nav nav-second-level">
                                 <li>
                                     <a href="#">商品管理</a>
                                 </li>
@@ -311,11 +311,8 @@
                                 <li>
                                     <a href="#">心愿单</a>
                                 </li>
-                               <!--  <li>
+                                <li>
                                     <a href="#"> 订单管理</a>
-                                </li> -->
-                                 <li>
-                                    <a href="../orderitem/order.html"> 订单管理</a>
                                 </li>
                                 <li>
                                     <a href="#">我的钱包</a>
@@ -327,7 +324,10 @@
        
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i>管理员<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                            <ul class="nav nav-second-level" id="admin-content">
+                            	<li>
+                                    <a href="../manufacturer/toListByAll.html">品牌商管理</a>
+                                </li>
                                 <li>
                                     <a href="panels-wells.html">数据字典管理</a>
                                 </li>
@@ -351,10 +351,10 @@
 
         <!-- Page Content -->
         <div id="page-wrapper">
-            <div class="container-fluid">
+            <div class="container-fluid" id="maincontent">
                 <!-- Page Heading -->
                 <div class="row">
-                    <div class="col-lg-12"  id="maincontent" style="background-color:#EEE;">
+                    <div class="col-lg-12">
                         <h1 class="page-header">
                            	 欢迎使用 <small>东软集团跨境电商借买交易平台</small>
                         </h1>
@@ -387,7 +387,7 @@
     <script src="../dist/js/sb-admin-2.js"></script>
     
     <!-- Main JavaScript -->
-    <script src="../main/order.js"></script>
+    <script src="../main/main.js"></script>
 
 </body>
 

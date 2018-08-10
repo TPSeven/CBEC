@@ -1,81 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xmlns:context="http://www.springframework.org/schema/context"
-xmlns:p="http://www.springframework.org/schema/p"
-xmlns:c="http://www.springframework.org/schema/c"
-xmlns:util="http://www.springframework.org/schema/util"
-xmlns:jee="http://www.springframework.org/schema/jee"
 xmlns:aop="http://www.springframework.org/schema/aop"
-xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
-http://www.springframework.org/schema/context
-http://www.springframework.org/schema/context/spring-context-3.1.xsd
-http://www.springframework.org/schema/util
-http://www.springframework.org/schema/util/spring-util-3.1.xsd
-http://www.springframework.org/schema/jee    
-http://www.springframework.org/schema/jee/spring-jee-2.0.xsd
-http://www.springframework.org/schema/aop 
-http://www.springframework.org/schema/aop/spring-aop-3.0.xsd">
-	<context:component-scan base-package="com.neusoft.oa"/><!-- 配置扫描的起始包-->
+xmlns:c="http://www.springframework.org/schema/c"
+xmlns:cache="http://www.springframework.org/schema/cache"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+xmlns:jee="http://www.springframework.org/schema/jee"
+xmlns:jms="http://www.springframework.org/schema/jms"
+xmlns:lang="http://www.springframework.org/schema/lang"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:oxm="http://www.springframework.org/schema/oxm"
+xmlns:p="http://www.springframework.org/schema/p"
+xmlns:task="http://www.springframework.org/schema/task"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:util="http://www.springframework.org/schema/util"
+xmlns:websocket="http://www.springframework.org/schema/websocket"
+xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
+http://mybatis.org/schema/mybatis-spring 
+http://mybatis.org/schema/mybatis-spring.xsd">
+	
+	<!-- 配置扫描的起始包-->
+	<context:component-scan base-package="com.neusoft.oa"/>
+	<!-- 自动扫描dao接口文件-->
+	<mybatis:scan base-package="com.neusoft.cbec.dao" />
 	<!-- 启用Aspect J切面处理 -->
 	<aop:aspectj-autoproxy />
-	<!-- 旧版本查找注册连接池对象-->
-	<!-- bean id="dataSourceOA" class="org.springframework.jndi.JndiObjectFactoryBean">
-		<property name="jndiName" value="java:comp/env/jdbc/neuedu"></property>
-	</bean-->
-	
-	<!-- 新版本查找注册连接池对象  -->
-	<!--jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/neuedu"/--> 
-	
-	<!-- DriverManagerDataSource -->
-	<!--bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/>
-		<property name="username" value="wwl"/>
-		<property name="password" value="long123"/>
-	</bean-->
-	
-	<!-- dbcp -->
-	<!--bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/>
-		<property name="username" value="wwl"/>
-		<property name="password" value="long123"/>
-	</bean-->
-
 	
 	<!-- c3p0 -->	
-	<!--bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
 		<property name="user" value="wwl"/> 
 		<property name="password" value="long123"/> 
-		<property name="initialPoolSize" value="5"/>
+		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>
-		<property name="maxPoolSize" value="10"/>
+		<property name="maxPoolSize" value="5"/>
 		<property name="acquireIncrement" value="1"/>
+	</bean>
+	
+	<!--bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@10.1.53.30:1521:neuedu"/> 
+		<property name="user" value="tpseven"/> 
+		<property name="password" value="TPSEVEN"/> 
+		<property name="initialPoolSize" value="3"/>
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="5"/>
+		<property name="acquireIncrement" value="1"/>
+		<property name="acquireRetryDelay" value="100"></property>  
+	    <property name="acquireRetryAttempts" value="10"></property>  
+	    <property name="breakAfterAcquireFailure" value="false"></property>  
 	</bean-->
 	
-	<!--定义一个bean 
-	<bean id="empDaoImpl" class="com.neusoft.oa.hr.dao.impl.EmployeeDaoImpl" />-->
+	<!--配置sqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	  <property name="dataSource" ref="dataSource" />
+	  <property name="mapperLocations">
+	    	<list>
+	    		<value>classpath*:com/neusoft/cbec/dao/mapper/*.xml</value>
+	    	</list>
+	  </property>
+	  <property name="typeAliasesPackage" value="com.neusoft.cbec.model"/>
+	  <property name="configuration">
+	    <bean class="org.apache.ibatis.session.Configuration">
+	      <property name="mapUnderscoreToCamelCase" value="true"/>
+	    </bean>
+  	  </property>
+	</bean>
 	
-	<!--依赖注入
-	<bean id="employeeService" class="com.neusoft.oa.hr.service.impl.EmployeeServiceImpl" >
-		<property name="empDaoImpl" ref="empDaoImpl"></property>
-	</bean>  -->
+	<!--获取session对象 -->
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+  		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
 	
-	<!--
-	<bean id="employeeService01" class="com.neusoft.oa.hr.service.impl.EmployeeServiceImpl">
-		<constructor-arg ref="empDaoImpl"></constructor-arg></bean>-->
-		<!-- 定制参数类型
-		<constructor-arg type="java.lang.String" value="Name"></constructor-arg>
-		<constructor-arg type="int" value="18"></constructor-arg>
-		-->
-		
-		<!-- 指定参数位置 index从0开始
-		<constructor-arg index="0" value="Name"></constructor-arg>
-		<constructor-arg index="1" value="18"></constructor-arg>
-		-->
+	<!--配置事务管理器  -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+  		<property name="dataSource" ref="dataSource" />
+	</bean>
 	
+	<!--启动事务注解模式  -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

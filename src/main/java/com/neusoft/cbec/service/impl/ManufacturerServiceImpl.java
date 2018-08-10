@@ -17,7 +17,7 @@ import com.nuesoft.cbec.service.IManufacturerService;
  * @author Wwl 温万龙
  *    制造商服务层实现
  */
-@Service
+//@Service
 public class ManufacturerServiceImpl implements IManufacturerService {
 
 	@Override

@@ -4,10 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	
-	<typeAliases>
+	<!-- <typeAliases>
 		<typeAlias type="com.neusoft.cbec.model.ManufacturerModel" alias="Manufacturer"/>
-	</typeAliases>
-	
+		<package name="com.neusoft.cbec.model"/>
+	</typeAliases> -->
 	
 	<environments default="development">
 		<environment id="development">

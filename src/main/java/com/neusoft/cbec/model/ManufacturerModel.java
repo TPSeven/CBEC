@@ -1,9 +1,12 @@
 package com.neusoft.cbec.model;
 
+import org.apache.ibatis.type.Alias;
+
 /**
  * @author Wwl
  * Manufacturer Bean -制造商
  */
+@Alias("Manufacturer")
 public class ManufacturerModel {
 	private int id = 0;
 	private String name = null;

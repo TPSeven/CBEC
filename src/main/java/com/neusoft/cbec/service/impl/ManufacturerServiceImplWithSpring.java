@@ -32,21 +32,22 @@ public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 
 	@Override
 	public void delete(ManufacturerModel manufacturer) throws Exception {
-		
+		manufacturerDao.delete(manufacturer);
 	}
 
 	@Override
 	public void modify(ManufacturerModel manufacturer) throws Exception {
-
+		manufacturerDao.update(manufacturer);
 	}
 
 	@Override
 	public List<ManufacturerModel> getListByAll() throws Exception {
-		return null;
+		return manufacturerDao.selectListByAll();
 	}
 
 	@Override
-	public ManufacturerModel getManufacturerById(int no) throws Exception {
-		return null;
+	public ManufacturerModel getManufacturerById(int id) throws Exception {
+		System.out.println(manufacturerDao.selectManufacturerById(id).getName());
+		return manufacturerDao.selectManufacturerById(id);
 	}
 }

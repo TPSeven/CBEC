@@ -45,8 +45,8 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
-		<property name="user" value="wwl"/> 
-		<property name="password" value="long123"/> 
+		<property name="user" value="scott"/> 
+		<property name="password" value="tiger"/> 
 		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>
 		<property name="maxPoolSize" value="5"/>

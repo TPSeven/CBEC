@@ -43,9 +43,21 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<ProductModel> getListByAllWithPage(int rows, int page) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<ProductModel> getListByAll() throws Exception {
+		String resource = "link-config.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		
+		SqlSession session = sqlSessionFactory.openSession();
+		IProductDao productDao=session.getMapper(IProductDao.class);
+		List<ProductModel> list = productDao.selectListByAll();
+		session.commit();
+		session.close();
+		return list;
 	}
+
+
+
+
 
 }

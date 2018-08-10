@@ -16,8 +16,8 @@
   	delete from PRODUCT where pro_id=#{pro_id}
   </delete>
   
-  <select id="selectListByAll" parameterType = "com.neusoft.cbec.model.ProductModel">
-  	select * from PRODUCT
+  <select id="selectListByAll" resultType = "com.neusoft.cbec.model.ProductModel">
+  	select pro_name from PRODUCT
   </select>
   
 </mapper>

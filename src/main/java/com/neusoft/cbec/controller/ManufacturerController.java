@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.ManufacturerModel;
 import com.nuesoft.cbec.service.IManufacturerService;
@@ -14,7 +16,7 @@ import com.nuesoft.cbec.service.IManufacturerService;
  * @author Wwl 温万龙
  *  员工控制器类
  */
-@Controller
+@RestController
 @RequestMapping("/manufacturer")
 public class ManufacturerController {
 	private IManufacturerService manufacturerService = null;
@@ -31,9 +33,13 @@ public class ManufacturerController {
 	}
 	
 	@RequestMapping("/toListByAll")
-	@ResponseBody
 	public List<ManufacturerModel> toListByAll() throws Exception{
-		List<ManufacturerModel> list = manufacturerService.getListByAll();
-		return list;
+		List<ManufacturerModel> manlist = manufacturerService.getListByAll();
+		return manlist;
+	}
+	
+	@RequestMapping("/toView")
+	public ManufacturerModel toView(@RequestParam(required=true)int id) throws Exception{
+		return manufacturerService.getManufacturerById(id);
 	}
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.BrandModel;
@@ -23,14 +24,14 @@ public class BrandController {
 	}
 	
 	
-	@RequestMapping("/add")
+	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String add(BrandModel brandmodel) throws Exception{
 		brandService.add(brandmodel);
 		return "ok";
 	}
 	
-	@RequestMapping("/listbyall") 
-	public List<BrandModel> toListByAl(BrandModel brandmodel) throws Exception{
+	@RequestMapping(value = "/listbyall",method = RequestMethod.GET) 
+	public List<BrandModel> toListByAl() throws Exception{
 		
 		List<BrandModel> list = brandService.getListByAll();
 		return list;

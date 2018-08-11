@@ -15,7 +15,7 @@
 </delete>
 
 <select id="selectListByAll" resultType="com.neusoft.cbec.model.OrderItemModel">
-select * from ORDER_ITEM
+select  ORDER_ID order_id, PRO_ID pro_id,PRO_ID_COUNT pro_id_count,MAN_ID man_id,SELLER_ID seller_id,STATE state  from ORDER_ITEM
 
 </select>
 
@@ -23,3 +23,4 @@ select * from ORDER_ITEM
  select * from  ORDER_ITEM where pro_id=#{order_id}
 </select>
 </mapper> 
+<!-- ORDER_ID order_id, PRO_ID pro_id,PRO_ID_COUNT pro_id_count,MAN_ID man_id,SELLER_ID seller_id,STATE state -->

@@ -24,6 +24,22 @@ public class ProductController {
 		return "ok";
 		
 	}
+	
+	@RequestMapping("/modify")
+	public String modify(ProductModel product) throws Exception {
+		
+		productService.modify(product);
+		return "ok";
+		
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(ProductModel product) throws Exception {
+		
+		productService.delete(product);
+		return "ok";
+		
+	}
 	@RequestMapping("/list/all")
 	public List<ProductModel> getListByAll() throws Exception{
 		return productService.getListByAll();

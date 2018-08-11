@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import com.neusoft.cbec.dao.IProductDao;
 import com.neusoft.cbec.model.ProductModel;
 import com.nuesoft.cbec.service.IProductService;
-@Service
+
 public class ProductServiceImpl implements IProductService {
 
 	@Override

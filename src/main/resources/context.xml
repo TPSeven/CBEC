@@ -43,6 +43,7 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- c3p0 -->	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+<<<<<<< HEAD
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>  
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:neuedu"/> 
 		<property name="user" value="BusManager"/> 
@@ -50,6 +51,12 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:neuedu"/>
 		<property name="user" value="BusManager"/> 
 		<property name="password" value="long123"/>  -->
+=======
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
+		<property name="user" value="scott"/> 
+		<property name="password" value="tiger"/> 
+>>>>>>> branch 'master' of https://github.com/TPSeven/CBEC.git
 		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>
 		<property name="maxPoolSize" value="5"/>

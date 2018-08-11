@@ -33,7 +33,7 @@
     from MANUFACTURER
   </select>
   
-  <select id="selectManufacturerById" parameterType="int" resultMap="ManResultMap">
+  <select id="selectManufacturerById" parameterType="int" resultType="Manufacturer">
     select * 
     from MANUFACTURER 
     where man_id = #{id}

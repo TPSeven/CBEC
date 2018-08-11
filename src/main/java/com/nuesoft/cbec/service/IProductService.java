@@ -12,7 +12,7 @@ public interface IProductService {
 	//删除
 	public void delete(ProductModel product) throws Exception;
 	//查询
-	public List<ProductModel> getListByAllWithPage(int rows,int page) throws Exception;
+	public List<ProductModel> getListByAll() throws Exception;
 	
 
 }

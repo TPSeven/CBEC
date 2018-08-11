@@ -9,7 +9,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.stereotype.Service;
 
+import com.neusoft.cbec.dao.IManufacturerDao;
 import com.neusoft.cbec.dao.IOrderItemDao;
+import com.neusoft.cbec.model.ManufacturerModel;
 import com.neusoft.cbec.model.OrderItemModel;
 import com.nuesoft.cbec.service.IOrderItemService;
 @Service("IOrderItemService")
@@ -41,8 +43,15 @@ public class OrderItemServiceImpl implements IOrderItemService {
 
 	@Override
 	public List<OrderItemModel> getListByAll() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		String resource = "kaoliulian.xml";
+		InputStream inputStream = Resources.getResourceAsStream(resource);
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+		SqlSession session =sqlSessionFactory.openSession();
+		IOrderItemDao orderitemDao = session.getMapper(IOrderItemDao.class);
+		List<OrderItemModel> list =orderitemDao.selectListByAll();
+		session.commit();
+		session.close();
+		return list;
 	}
 
 }

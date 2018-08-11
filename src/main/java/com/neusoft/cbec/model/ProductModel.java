@@ -1,5 +1,8 @@
 package com.neusoft.cbec.model;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("Product")
 public class ProductModel {
 	
 	private int pro_id = 0;

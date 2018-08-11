@@ -36,17 +36,20 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- 配置扫描的起始包-->
 	<context:component-scan base-package="com.neusoft.oa"/>
-	<!-- 自动扫描dao接口文件-->
+	<!-- 获取DAO接口的对象,自动扫描dao接口文件-->
 	<mybatis:scan base-package="com.neusoft.cbec.dao" />
 	<!-- 启用Aspect J切面处理 -->
 	<aop:aspectj-autoproxy />
 	
 	<!-- c3p0 -->	
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
-		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
-		<property name="user" value="wwl"/> 
-		<property name="password" value="long123"/> 
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>  
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:neuedu"/> 
+		<property name="user" value="BusManager"/> 
+		<property name="password" value="Admin123"/>  
+		<!-- <property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:neuedu"/>
+		<property name="user" value="BusManager"/> 
+		<property name="password" value="long123"/>  -->
 		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>
 		<property name="maxPoolSize" value="5"/>
@@ -93,6 +96,6 @@ http://mybatis.org/schema/mybatis-spring.xsd">
   		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
-	<!--启动事务注解模式  -->
+	<!--启动事务注解模式 (注解模式的业务切面) -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 </beans>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.ManufacturerModel;
@@ -23,7 +24,7 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	  orderitemService.add(em);
 	  return "ok";
   }
-  @RequestMapping("/getListByAll")
+  @RequestMapping(value="/getListByAll",method=RequestMethod.GET)
   public List<OrderItemModel> getListByAll()throws Exception{
 		List<OrderItemModel> list = orderitemService.getListByAll();
 		return list;

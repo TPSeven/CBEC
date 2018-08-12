@@ -1,5 +1,7 @@
 package com.neusoft.cbec.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,6 +23,26 @@ public class ProductController {
 		productService.add(product);
 		return "ok";
 		
+	}
+	
+	@RequestMapping("/modify")
+	public String modify(ProductModel product) throws Exception {
+		
+		productService.modify(product);
+		return "ok";
+		
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(ProductModel product) throws Exception {
+		
+		productService.delete(product);
+		return "ok";
+		
+	}
+	@RequestMapping("/list/all")
+	public List<ProductModel> getListByAll() throws Exception{
+		return productService.getListByAll();
 	}
 
 }

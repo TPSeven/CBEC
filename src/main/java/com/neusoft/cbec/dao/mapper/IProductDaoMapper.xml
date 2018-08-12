@@ -3,21 +3,35 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.cbec.dao.IProductDao">
-  <insert id="create" parameterType = "com.neusoft.cbec.model.ProductModel">
+
+  <resultMap id="ProductResultMap" type="Product">
+  	<id property="pro_id" column="pro_id" />
+  	<result property="pro_name" column="pro_name"/>
+  	<result property="pro_price" column="pro_price"/>
+  	<result property="pro_count" column="pro_count"/>
+  	<result property="pro_kinds_id" column="pro_kinds_id"/>
+  	<result property="pro_state_id" column="pro_state_id"/>
+  	<result property="brand_id" column="brand_id"/>
+  	<result property="pro_photos_id" column="pro_photos_id"/>
+  	<result property="pro_desc" column="pro_desc"/>
+  </resultMap>
+
+  <insert id="create" parameterType = "Product">
   	insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc) 
   	values(PRODUCT_NEXTNO_SQ.nextval,#{pro_name},#{pro_price},#{pro_weight},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc})
   </insert>
   
-  <update id="update" parameterType = "com.neusoft.cbec.model.ProductModel">
-  	update PRODUCT set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_kinds_id=#{pro_kinds_id},pro_state_id=#{pro_state_id},brand_id=#{brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc}
+  <update id="update" parameterType = "Product">
+  	update PRODUCT set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_count=#{pro_count},pro_kinds_id=#{pro_kinds_id},pro_state_id=#{pro_state_id},brand_id=#{brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc}
+  	where pro_id=#{pro_id}
   </update>
   
-  <delete id="delete" parameterType = "com.neusoft.cbec.model.ProductModel">
+  <delete id="delete" parameterType = "Product">
   	delete from PRODUCT where pro_id=#{pro_id}
   </delete>
   
-  <select id="selectListByAll" parameterType = "com.neusoft.cbec.model.ProductModel">
-  	select * from PRODUCT
+  <select id="selectListByAll" resultMap = "ProductResultMap">
+  	select pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc from PRODUCT
   </select>
   
 </mapper>

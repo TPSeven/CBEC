@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:aop="http://www.springframework.org/schema/aop"
+xmlns:c="http://www.springframework.org/schema/c"
+xmlns:cache="http://www.springframework.org/schema/cache"
+xmlns:context="http://www.springframework.org/schema/context"
+xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+xmlns:jee="http://www.springframework.org/schema/jee"
+xmlns:jms="http://www.springframework.org/schema/jms"
+xmlns:lang="http://www.springframework.org/schema/lang"
+xmlns:mvc="http://www.springframework.org/schema/mvc"
+xmlns:oxm="http://www.springframework.org/schema/oxm"
+xmlns:p="http://www.springframework.org/schema/p"
+xmlns:task="http://www.springframework.org/schema/task"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:util="http://www.springframework.org/schema/util"
+xmlns:websocket="http://www.springframework.org/schema/websocket"
+xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+http://www.springframework.org/schema/jms http://www.springframework.org/schema/jms/spring-jms.xsd
+http://www.springframework.org/schema/lang http://www.springframework.org/schema/lang/spring-lang.xsd
+http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+http://www.springframework.org/schema/oxm http://www.springframework.org/schema/oxm/spring-oxm.xsd
+http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+http://www.springframework.org/schema/websocket http://www.springframework.org/schema/websocket/spring-websocket.xsd
+http://mybatis.org/schema/mybatis-spring 
+http://mybatis.org/schema/mybatis-spring.xsd">
+	<context:component-scan base-package="com.neusoft.oa"/><!-- 配置扫描的起始包-->
+	<!-- 启用Aspect J切面处理 -->
+	<aop:aspectj-autoproxy />
+	<!-- 旧版本查找注册连接池对象-->
+	<!-- bean id="dataSourceOA" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="java:comp/env/jdbc/neuedu"></property>
+	</bean-->
+	
+	<!-- 新版本查找注册连接池对象  -->
+	<!--jee:jndi-lookup id="dataSource" jndi-name="java:comp/env/jdbc/neuedu"/--> 
+	
+	<!-- DriverManagerDataSource -->
+	<!--bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/>
+		<property name="username" value="wwl"/>
+		<property name="password" value="long123"/>
+	</bean-->
+	
+	<!-- dbcp -->
+	<!--bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/>
+		<property name="username" value="wwl"/>
+		<property name="password" value="long123"/>
+	</bean-->
+
+	
+	<!-- c3p0 配置数据库连接池 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:neuedu"/> 
+		<property name="user" value="BusManager"/> 
+		<property name="password" value="Admin123"/> 
+		<property name="initialPoolSize" value="5"/>
+		<property name="minPoolSize" value="1"/>
+		<property name="maxPoolSize" value="10"/>
+		<property name="acquireIncrement" value="1"/>
+	</bean>
+	<!-- 
+	<bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="mapperInterface" value="org.mybatis.spring.sample.mapper.UserMapper" />
+        <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+    </bean> -->
+    
+	 <!-- 配置SqlSessionFactory的工厂Bean： -->
+	 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+	     <property name="dataSource" ref="dataSource" />
+	     <property name="mapperLocations" value="classpath*:sample/config/mappers/**/*.xml" />
+     </bean>
+     
+      <!--   配置获取SqlSession对象： -->
+     <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+         <constructor-arg index="0" ref="sqlSessionFactory" />
+     </bean>
+     
+    
+	<!-- 获取DAO接口的对象 -自动扫描 -->
+	<mybatis:scan base-package="org.mybatis.spring.sample.mapper" />
+	
+	<!-- 启动事务注解模式 -->
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+	<!--配置事务管理器  -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+       <property name="dataSource" ref="dataSource" />
+    </bean>
+	
+	<!--定义一个bean 
+	<bean id="empDaoImpl" class="com.neusoft.oa.hr.dao.impl.EmployeeDaoImpl" />-->
+	
+	<!--依赖注入
+	<bean id="employeeService" class="com.neusoft.oa.hr.service.impl.EmployeeServiceImpl" >
+		<property name="empDaoImpl" ref="empDaoImpl"></property>
+	</bean>  -->
+	
+	<!--
+	<bean id="employeeService01" class="com.neusoft.oa.hr.service.impl.EmployeeServiceImpl">
+		<constructor-arg ref="empDaoImpl"></constructor-arg></bean>-->
+		<!-- 定制参数类型
+		<constructor-arg type="java.lang.String" value="Name"></constructor-arg>
+		<constructor-arg type="int" value="18"></constructor-arg>
+		-->
+		
+		<!-- 指定参数位置 index从0开始
+		<constructor-arg index="0" value="Name"></constructor-arg>
+		<constructor-arg index="1" value="18"></constructor-arg>
+		-->
+
+	
+	<!--启动事务注解模式 (注解模式的业务切面) -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+</beans>

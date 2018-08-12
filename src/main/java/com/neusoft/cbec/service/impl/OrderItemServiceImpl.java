@@ -9,9 +9,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.stereotype.Service;
 
-import com.neusoft.cbec.dao.IManufacturerDao;
 import com.neusoft.cbec.dao.IOrderItemDao;
-import com.neusoft.cbec.model.ManufacturerModel;
 import com.neusoft.cbec.model.OrderItemModel;
 import com.nuesoft.cbec.service.IOrderItemService;
 @Service("IOrderItemService")

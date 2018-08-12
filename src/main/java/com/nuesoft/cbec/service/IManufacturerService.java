@@ -11,5 +11,5 @@ public interface IManufacturerService {
 	
 	public List<ManufacturerModel> getListByAll() throws Exception;
 	
-	public ManufacturerModel getManufacturerById(int no) throws Exception;
+	public ManufacturerModel getManufacturerById(int id) throws Exception;
 }

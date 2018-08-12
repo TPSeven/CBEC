@@ -1,0 +1,43 @@
+<!--所有品牌信息列表
+	author:Wwl 温万龙	
+-->
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>名字</th>
+            <th>地址</th>
+            <th>经营范围</th>
+            <th>描述</th>
+        </tr>
+    </thead>
+    <tbody >
+    	
+    </tbody>
+                
+</table>
+            
+<div class="row col-lg-12">
+	<div >
+	<a style="text-decoration: none;" id="addManufacturerLink"> 
+	<button type="button" class="btn btn-sm btn-default">添加</button> 
+	</a>
+	<a href="#" style="text-decoration: none;" id="modifyManufacturerLink"> 
+	<button type="button" class="btn btn-sm btn-default">修改</button> 
+	</a>
+	<a href="#" style="text-decoration: none;" id="deleteManufacturerLink"> 
+	<button type="button" class="btn btn-sm btn-default">删除</button>
+	</a>
+	<a href="#" style="text-decoration: none;" id="viewManufacturerLink"> 
+	<button type="button" class="btn btn-sm btn-default">查看</button>
+	</a>
+	</div>
+	 品牌商个数：${count} 页数：${page}/${pageCount}
+	<div class="text-right">
+    	<ul class="pagination ">
+    		<li calss="page-item"><a href="?page=1" >首页</a></li>
+    	  	<li calss="page-item"><a href="?page=${page-1}">上页</a></li>
+    	  	<li calss="page-item"><a href="?page=${page+1}">下页</a></li>
+    	  	<li calss="page-item"><a href="?page=${pageCount}">末页</a></li>
+    	</ul> 
+    </div>
+</div>

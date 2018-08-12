@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +27,21 @@ public class ManufacturerController {
 		this.manufacturerService = manufacturerService;
 	}
 	
-	@RequestMapping("/add")
+	@RequestMapping(value="/add",method= {RequestMethod.POST})
 	public String add(ManufacturerModel manufacturer) throws Exception{
 		manufacturerService.add(manufacturer);
+		return "ok";
+	}
+	
+	@RequestMapping(value="/modify",method= {RequestMethod.POST})
+	public String modify(ManufacturerModel manufacturer) throws Exception{
+		manufacturerService.modify(manufacturer);
+		return "ok";
+	}
+	
+	@RequestMapping(value="/delete",method= {RequestMethod.POST})
+	public String delete(ManufacturerModel manufacturer) throws Exception{
+		manufacturerService.delete(manufacturer);
 		return "ok";
 	}
 	
@@ -38,8 +51,8 @@ public class ManufacturerController {
 		return manlist;
 	}
 	
-	@RequestMapping("/toView")
-	public ManufacturerModel toView(@RequestParam(required=true)int id) throws Exception{
+	@RequestMapping(value="/getManuById",method= {RequestMethod.POST,RequestMethod.GET})
+	public ManufacturerModel getManuById(@RequestParam(required=true)int id) throws Exception{
 		return manufacturerService.getManufacturerById(id);
 	}
 }

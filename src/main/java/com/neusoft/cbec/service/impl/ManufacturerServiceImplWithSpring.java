@@ -47,7 +47,10 @@ public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 
 	@Override
 	public ManufacturerModel getManufacturerById(int id) throws Exception {
-		System.out.println(manufacturerDao.selectManufacturerById(id).getName());
+		if(manufacturerDao.selectManufacturerById(id)==null) {
+			System.out.println("id="+id);
+			System.out.println("空的");
+		}
 		return manufacturerDao.selectManufacturerById(id);
 	}
 }

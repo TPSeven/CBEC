@@ -9,12 +9,12 @@
   	<result property="name" column="man_name"/>
   	<result property="address" column="man_address"/>
   	<result property="scope" column="man_scope"/>
-  	<result property="desc" column="man_desc"/>
+  	<result property="mdesc" column="man_desc"/>
   </resultMap>
   
   <insert id="create" parameterType="Manufacturer">
     insert into MANUFACTURER 
-    values(MANUFACTURER_NEXTNO_SQ.nextval,#{name},#{address},#{scope},#{desc})
+    values(MANUFACTURER_NEXTNO_SQ.nextval,#{name},#{address},#{scope},#{mdesc})
   </insert>
   
   <delete id="delete" parameterType="Manufacturer">
@@ -24,7 +24,7 @@
   
   <update id="update" parameterType="Manufacturer">
     update MANUFACTURER 
-    set man_name=#{name},man_address=#{address},man_scope=#{scope},man_desc=#{desc} 
+    set man_name=#{name},man_address=#{address},man_scope=#{scope},man_desc=#{mdesc} 
     where man_id = #{id}
   </update>
   
@@ -34,9 +34,9 @@
   </select>
   
   <select id="selectManufacturerById" parameterType="int" resultType="Manufacturer">
-    select * 
+    select man_id id,man_name name,man_address address,man_scope scope,man_desc mdesc
     from MANUFACTURER 
-    where man_id = #{id}
+    where man_id=#{id}
   </select>
   
 </mapper>

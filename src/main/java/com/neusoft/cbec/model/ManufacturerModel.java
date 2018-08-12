@@ -12,7 +12,7 @@ public class ManufacturerModel {
 	private String name = null;
 	private String address = null;
 	private String scope = null;
-	private String desc = null;
+	private String mdesc = null;
 	public int getId() {
 		return id;
 	}
@@ -37,11 +37,11 @@ public class ManufacturerModel {
 	public void setScope(String scope) {
 		this.scope = scope;
 	}
-	public String getDesc() {
-		return desc;
+	public String getMdesc() {
+		return mdesc;
 	}
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setMdesc(String mdesc) {
+		this.mdesc = mdesc;
 	}
 	
 }

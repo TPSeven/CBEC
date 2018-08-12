@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.cbec.dao.IBrandDao">
+  
+  <resultMap id="BrandResultMap" type="Brand" >
+    <id property="brand_id" column="brand_id" />
+  	<result property="brand_name" column="brand_name"/>
+  	<result property="man_id" column="man_id"/>
+  	<result property="brand_desc" column="brand_desc"/>
+  </resultMap>
+  
+  <insert id="create" parameterType="Brand">
+     insert into Brand (brand_id,brand_name,man_id,brand_desc) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{man_id},#{brand_desc})
+  </insert>
+  
+  <!-- <update id="update" parameterType="Brand">
+    update OA_Department set DEPTCODE=#{code}, DEPTNAME=#{name} where DEPTNO=#{no}
+  </update>
+  
+  <delete id="delete" parameterType="Brand">
+      delete from OA_Department where where DEPTNO=#{no}
+  </delete> -->
+  
+  <select id="selectListByAll" resultMap="BrandResultMap">
+    select * from Brand
+  </select>
+  
+ <!--  <select id="selectByNo" parameterType="int" resultMap="DepartmentResultMap">
+     select * from OA_Department where DEPTNO=#{departmentNo}
+  </select>  -->
+  
+</mapper>

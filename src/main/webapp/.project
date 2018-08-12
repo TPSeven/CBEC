@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>as</name>
 	<comment></comment>
 	<projects>
@@ -420,6 +421,8 @@
 </projectDescription>
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+=======
+>>>>>>> branch 'master' of https://github.com/TPSeven/CBEC.git
 	<name>cbce</name>
 	<comment></comment>
 	<projects>

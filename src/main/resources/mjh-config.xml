@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+  PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+  <typeAliases>
+  <package name = "com.neusoft.cbec.model" />
+   <!--  <typeAlias alias = "Brand" type = "com.neusoft.cbec.model.BrandModel"/> -->
+   </typeAliases>
+  <environments default="Brand">
+    <environment id="Brand">
+      <transactionManager type="JDBC"/>
+      <dataSource type="POOLED">
+        <property name="driver" value="oracle.jdbc.driver.OracleDriver"/>
+        <property name="url" value="jdbc:oracle:thin:@localhost:1521:neuedu"/>
+        <property name="username" value="BusManager"/>
+        <property name="password" value="Admin123"/>
+      </dataSource>
+    </environment>
+  </environments>
+  <mappers>
+    <mapper resource="com/neusoft/cbec/dao/mapper/IBrandDaoMapper.xml"/>
+  </mappers>
+</configuration>

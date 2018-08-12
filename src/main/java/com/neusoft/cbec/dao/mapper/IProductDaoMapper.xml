@@ -31,7 +31,7 @@
   </delete>
   
   <select id="selectListByAll" resultMap = "ProductResultMap">
-  	select pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc from PRODUCT
+  	select pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc from PRODUCT
   </select>
   
 </mapper>

@@ -5,7 +5,6 @@
 $(document).ready(function(){
 	//请求取得部门列表的REST API
 	$.getJSON("product/list/all.mvc",function(productList){
-		alert("start");
 		var lines="";
 		for(var i=0;i<productList.length;i++){
 	lines=lines+"<tr><td>"+productList[i].pro_id+"</td>" +
@@ -22,6 +21,11 @@ $(document).ready(function(){
 		}
 		$("table#productListTable tbody").html(lines);
 	});
-	alert("ok");
+	//点击增加按钮事件处理
+	$("a#ProductAddLink").on("click",function(){
+		$("div#ProductMainContent").load("product/add.html");
+	});
+	
+	
 	
 });

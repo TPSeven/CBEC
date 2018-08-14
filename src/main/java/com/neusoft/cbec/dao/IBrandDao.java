@@ -16,7 +16,7 @@ public interface IBrandDao {
    
     public List<BrandModel>  selectListByAllWithPage(int rows,int page) throws Exception;
    
-   public BrandModel selectByID(int brand_id) throws Exception;
+   public BrandModel selectById(int brand_id) throws Exception;
    
     public int selectCountByAll() throws Exception;
     

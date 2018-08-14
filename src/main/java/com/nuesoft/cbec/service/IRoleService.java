@@ -10,4 +10,5 @@ public interface IRoleService {
 	public void modify(RoleModel role) throws Exception;
 	
 	public List<RoleModel> getListByAll() throws Exception;
+	public RoleModel getRoleById(int id) throws Exception;
 }

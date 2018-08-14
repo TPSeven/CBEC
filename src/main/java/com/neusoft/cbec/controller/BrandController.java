@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.BrandModel;
@@ -34,11 +35,19 @@ public class BrandController {
 	public List<BrandModel> toListByAl() throws Exception{
 		
 		List<BrandModel> list = brandService.getListByAll();
-		return list;
-			
-		
+		return list;	
 	}
 	
+	@RequestMapping(value = "/modify",method = RequestMethod.POST)
+	public String modify(BrandModel brandmodel)throws Exception{
+		brandService.modify(brandmodel);
+		return "ok";
+	}
+	
+	@RequestMapping(value="/getbrandid",method = {RequestMethod.POST ,RequestMethod.GET})
+	public BrandModel getbrandid(@RequestParam(required=true)int id) throws Exception{
+		return brandService.getById(id);
+	}		
 
 
 

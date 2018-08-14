@@ -10,4 +10,5 @@ public interface IRoleDao {
 	public void update(RoleModel role) throws Exception;
 	
 	public List<RoleModel> selectListByAll() throws Exception;
+	public RoleModel selectRoleById(int id) throws Exception;
 }

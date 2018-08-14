@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.cbec.dao.IUserDao">
+
+  <resultMap id="UserResultMap" type="User">
+  	<id property="id" column="user_id" />
+  	<result property="name" column="user_name"/>
+  	<result property="password" column="user_password"/>
+  	<result property="sex" column="user_sex"/>
+  	<result property="phone" column="user_phone"/>
+  	<result property="portrait" column="user_portrait"/>
+  	<result property="email" column="man_email"/>
+  	<association property="role" column="role_name" select="com.neusoft.cbec.dao.IRoleDao.selectListByAll"/>
+  </resultMap>
+  
+  <select id="selectListByAll" resultMap="UserResultMap">
+    select *
+    from UUSER
+  </select>
+  
+</mapper>

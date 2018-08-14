@@ -45,4 +45,10 @@ public class ProductServiceImplWithSpring implements IProductService {
 		return productDao.selectListByAll();
 	}
 
+	@Override
+	public ProductModel getById(int productId) throws Exception {
+		
+		return productDao.selectById(productId);
+	}
+
 }

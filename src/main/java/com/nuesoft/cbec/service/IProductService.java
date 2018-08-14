@@ -13,6 +13,8 @@ public interface IProductService {
 	public void delete(ProductModel product) throws Exception;
 	//查询
 	public List<ProductModel> getListByAll() throws Exception;
+	//按编号查询
+	public ProductModel getById(int productId) throws Exception;
 	
 
 }

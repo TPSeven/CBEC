@@ -30,7 +30,7 @@ $(document).ready(function(){
 					productId=$(this).attr("data-id");
 					//alert(productId);
 					//8-14 0:22
-					$("table#productListTable tbody tr").css("background-color","#FFFFFF")
+					$("table#productListTable tbody tr").css("background-color","#FFFFFF");
 					$(this).css("background-color","#EEEE");
 				});
 			});
@@ -84,10 +84,22 @@ $(document).ready(function(){
 		}
 		else{
 			$("div#ProductMainContent").load("product/modify.html",function(){
-			//取得选择的部门信息	
+			//取得选择的部门信息
+				$.getJSON("product/get/id.mvc",{productId:productId},function(resultData){
+					$("input[name='pro_name']").val(resultData.pro_name);
+					$("input[name='pro_price']").val(resultData.pro_price);
+					$("input[name='pro_weight']").val(resultData.pro_weight);
+					$("input[name='pro_count']").val(resultData.pro_count);
+					$("input[name='pro_kinds_id']").val(resultData.pro_kinds_id);
+					$("input[name='pro_state_id']").val(resultData.pro_state_id);
+					$("input[name='brand_id']").val(resultData.brand_id);
+					$("input[name='pro_photos_id']").val(resultData.pro_photos_id);
+					$("input[name='pro_desc']").val(resultData.pro_desc);
+				});
 			});
 			//取得输入的值
 			//8-14 1:34
+			
 		}
 	});
 	

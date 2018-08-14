@@ -18,5 +18,7 @@ public interface IProductDao {
 	public void delete (ProductModel pd) throws Exception;
 	//查询
 	public List<ProductModel> selectListByAll() throws Exception;
+	//按编号查询
+	public ProductModel selectById(int productId) throws Exception;
 	
 }

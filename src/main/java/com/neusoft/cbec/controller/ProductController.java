@@ -18,6 +18,7 @@ public class ProductController {
 	public void setProdudtService(IProductService productService) {
 		this.productService = productService;
 	}
+	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
 	public String add(ProductModel product) throws Exception {
 		
@@ -41,9 +42,16 @@ public class ProductController {
 		return "ok";
 		
 	}
+	
 	@RequestMapping(value="/list/all",method=RequestMethod.GET)
 	public List<ProductModel> getListByAll() throws Exception{
 		return productService.getListByAll();
+	}
+	
+	@RequestMapping(value="/get/id",method=RequestMethod.GET)
+	public ProductModel getById(int productId) throws Exception{
+		return productService.getById(productId);
+		
 	}
 
 }

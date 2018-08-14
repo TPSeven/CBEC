@@ -36,4 +36,8 @@
   	select pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc from PRODUCT
   </select>
   
+  <select id="selectById" parameterType = "int" resultMap="ProductResultMap">
+  	select * from PRODUCT where pro_id=#{productId}
+  </select>
+  
 </mapper>

@@ -6,15 +6,17 @@
 
   <resultMap id="ManResultMap" type="Manufacturer">
   	<id property="id" column="man_id" />
+  	<result property="no" column="man_no"/>
   	<result property="name" column="man_name"/>
+  	<result property="log" column="man_log"/>
+  	<result property="phone" column="man_phone"/>
   	<result property="address" column="man_address"/>
-  	<result property="scope" column="man_scope"/>
   	<result property="mdesc" column="man_desc"/>
   </resultMap>
   
   <insert id="create" parameterType="Manufacturer">
     insert into MANUFACTURER 
-    values(MANUFACTURER_NEXTNO_SQ.nextval,#{name},#{address},#{scope},#{mdesc})
+    values(MANUFACTURER_NEXTID_SQ.nextval,#{no},#{name},#{log},#{phone},#{address},#{mdesc})
   </insert>
   
   <delete id="delete" parameterType="Manufacturer">
@@ -24,7 +26,7 @@
   
   <update id="update" parameterType="Manufacturer">
     update MANUFACTURER 
-    set man_name=#{name},man_address=#{address},man_scope=#{scope},man_desc=#{mdesc} 
+    set man_no=#{no},man_name=#{name},man_log=#{log},man_phone=#{phone},man_address=#{address},man_desc=#{mdesc} 
     where man_id = #{id}
   </update>
   
@@ -33,8 +35,8 @@
     from MANUFACTURER
   </select>
   
-  <select id="selectManufacturerById" parameterType="int" resultType="Manufacturer">
-    select man_id id,man_name name,man_address address,man_scope scope,man_desc mdesc
+  <select id="selectManufacturerById" parameterType="int" resultMap="ManResultMap">
+    select *
     from MANUFACTURER 
     where man_id=#{id}
   </select>

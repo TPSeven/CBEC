@@ -1,6 +1,6 @@
 -- cbce1.2
 
--- Role ï¿½ï¿½É«ï¿½ï¿½
+-- Role ½ÇÉ«±í
 create table ROLE(
   role_id number(10),
   role_name varchar2(20),
@@ -11,11 +11,11 @@ insert into ROLE values(2,'manufacturer');
 insert into ROLE values(3,'seller');
 select * from ROLE;
 
--- waller Ç®ï¿½ï¿½ï¿½ï¿½
+-- waller Ç®°ü±í
 create table WALLET(
   wallet_id number(10) ,
-  balance number(20), --Ç®ï¿½ï¿½ï¿½ï¿½ï¿½
-  bankcard number(20), --ï¿½ï¿½ï¿½Ð¿ï¿½
+  balance number(20), --Ç®°üÓà¶î
+  bankcard number(20), --ÒøÐÐ¿¨
   constraint pk_wallet_id primary key(wallet_id)
 );
 create sequence WALLET_NEXTID_SQ;
@@ -25,27 +25,27 @@ insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
 insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
 select * from WALLET;
 
--- user ï¿½Ã»ï¿½ï¿½ï¿½
+-- user ÓÃ»§±í
 create table UUSER(
   user_id number(10),
   user_name varchar2(20),
   user_password varchar2(10),
-  user_sex varchar2(4),
+  sex varchar2(4),
   user_email varchar2(20),
   user_phone varchar2(15),
   role_id int,
   wallet_id number(10),
   constraint pk_user_id primary key(user_id),
-  constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --Ç®ï¿½ï¿½idï¿½ï¿½ï¿½
-  constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --ï¿½ï¿½É«idï¿½ï¿½ï¿½
+  constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --Ç®°üidÍâ¼ü
+  constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --½ÇÉ«idÍâ¼ü
 );
 create sequence USER_NEXTID_SQ;
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','ï¿½ï¿½','test@qq.com','10086',1,2);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','ï¿½ï¿½','test1@qq.com','1008611',2,3);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','ï¿½ï¿½','tes1t@qq.com','13800138',3,4);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','ÄÐ','test@qq.com','10086',1,2);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','ÄÐ','test1@qq.com','1008611',2,3);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','ÄÐ','tes1t@qq.com','13800138',3,4);
 select * from UUSER;
 
---manufacturer ï¿½ï¿½ï¿½ï¿½ï¿½Ì±ï¿½
+--manufacturer ÖÆÔìÉÌ±í
 create table MANUFACTURER(
   man_id number(10) constraint pk_man_id primary key, 
   man_no number(10),
@@ -56,13 +56,13 @@ create table MANUFACTURER(
   man_desc varchar2(200)  
 );
 create sequence MANUFACTURER_NEXTID_SQ;
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'Ð¡ï¿½ï¿½',null,'10086','ï¿½ï¿½ï¿½ï¿½','Îªï¿½ï¿½ï¿½Õ¶ï¿½ï¿½ï¿½');
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'Æ»ï¿½ï¿½',null,'1008611','ï¿½ï¿½ï¿½ï¿½','Switch');
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'ï¿½ï¿½Îª',null,'13800','ï¿½Ð¹ï¿½','ï¿½ï¿½ï¿½ï»¥ï¿½ï¿½ï¿½ï¿½');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'Ð¡Ã×',null,'10086','±±¾©','Îª·¢ÉÕ¶øÉú');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'Æ»¹û',null,'1008611','ÃÀ¹ú','Switch');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'»ªÎª',null,'13800','ÖÐ¹ú','ÍòÎï»¥ÁªÍø');
 select * from MANUFACTURER;
 
 
--- ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½
+-- ÓÃ»§ÓëÖÆÔìÉÌ¹ØÁª±í
 create table USER_RLATE_MANU(
   uid number(10) references UUSER(user_id),
   mid number(10) references MANUFACTURER(man_id),
@@ -72,22 +72,22 @@ create table USER_RLATE_MANU(
 
 --brand
 create table BRAND(
-  brand_id number(20) constraint pk_brand_id primary key,  --Æ·ï¿½ï¿½ID
-  brand_name  varchar2(50),  --Æ·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-  man_id number(20),  --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
-  brand_desc varchar2(200)  --Æ·ï¿½Æ¼ï¿½ï¿½
+  brand_id number(20) constraint pk_brand_id primary key,  --Æ·ÅÆID
+  brand_name  varchar2(50),  --Æ·ÅÆÃû×Ö
+  man_id number(20),  --ÖÆÔìÉÌID
+  brand_desc varchar2(200)  --Æ·ÅÆ¼ò½é
 );
 create sequence BRAND_NEXTNO_SQ;
 -- ALTER TABLE BRAND ADD CONSTRAINT BRAND_MANU_FK FOREIGN KEY(man_id) REFERENCES BRAND(man_id); 
 
 --ORDER_ITEM
 create table ORDER_ITEM(
-  order_id number(20) constraint pk_order_id primary key,       --ï¿½ï¿½ï¿½ï¿½ID
-  pro_id number(20),   --ï¿½ï¿½Æ·ID
-  pro_id_count number(20),  --ï¿½ï¿½Æ·ï¿½ï¿½ï¿½ï¿½
-  man_id number(20),    --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
-  seller_id number(20), --ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ID
-  state varchar2(20)    --ï¿½ï¿½ï¿½ï¿½×´Ì¬
+  order_id number(20) constraint pk_order_id primary key,       --¶©µ¥ID
+  pro_id number(20),   --²úÆ·ID
+  pro_id_count number(20),  --²úÆ·ÊýÁ¿
+  man_id number(20),    --ÖÆÔìÉÌID
+  seller_id number(20), --½èÂô·½ID
+  state varchar2(20)    --¶©µ¥×´Ì¬
 );
 
 

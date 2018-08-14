@@ -1,7 +1,12 @@
 package com.neusoft.cbec.service.impl;
 
+import java.io.InputStream;
 import java.util.List;
 
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -54,3 +59,14 @@ public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 		return manufacturerDao.selectManufacturerById(id);
 	}
 }
+
+/*
+String resource = "wwl-config.xml";
+InputStream inputStream = Resources.getResourceAsStream(resource);
+SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+SqlSession session =sqlSessionFactory.openSession();
+IManufacturerDao manufacturerDao = session.getMapper(IManufacturerDao.class);
+manufacturerDao.create(manufacturer);
+session.commit();
+session.close();
+*/

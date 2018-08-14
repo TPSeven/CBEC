@@ -76,6 +76,7 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	    	</list>
 	  </property>
 	  <property name="typeAliasesPackage" value="com.neusoft.cbec.model"/>
+	  <!--property name="configLocation" value="classpath:mybatis-config.xml"/-->
 	  <property name="configuration">
 	    <bean class="org.apache.ibatis.session.Configuration">
 	      <property name="mapUnderscoreToCamelCase" value="true"/>

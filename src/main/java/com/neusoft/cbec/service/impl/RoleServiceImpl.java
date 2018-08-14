@@ -41,4 +41,9 @@ public class RoleServiceImpl implements IRoleService {
 		return roleDao.selectListByAll();
 	}
 
+	@Override
+	public RoleModel getRoleById(int id) throws Exception {
+		return roleDao.selectRoleById(id);
+	}
+
 }

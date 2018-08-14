@@ -3,6 +3,7 @@
 
 
 $(document).ready(function(){
+	var brandId = 0;
 
 	//请求取得部门列表的REST API
 	function showBrandList(){
@@ -15,11 +16,21 @@ $(document).ready(function(){
 				var lines = "";
 				for(var i=0;i<brandList.length;i++){
 					lines=lines+
-					"<tr><td>"+brandList[i].brand_name+
+					"<tr data-id ='"+brandList[i].brand_id+"'><td>"+brandList[i].brand_name+
 					"</td><td>"+brandList[i].man_id+
 					"</td><td>"+brandList[i].brand_desc+
 					"</td></tr>";
 					$("table#brandListTable tbody").html(lines);
+					//点击TR事件处理
+					$("table#brandListTable tbody tr").on('click',function(){
+						brandId = $(this).attr("data-id");
+						
+						$("table#brandListTable tbody tr").css("background-color","#FFFFFF")
+						//选中的行变颜色
+						$(this).css("background-color","#EEEE");
+						alert(brandId);
+						
+					});
 //		          alert (lines);                          
 				}
 			});
@@ -55,7 +66,52 @@ $(document).ready(function(){
 		
 	});
 	//修改按钮处理事件
-	$("a#BrandModifyLink").on("click",function(){
+	$("a#BrandModifyLink").on('click',function(){
+		if(brandId == 0 ){
+			alert("请选择要修改的部门")
+		}
+		else{
+			$("div#BrandMainContext").load("brand/modifybrand.html",function(){
+				
+				//取得选择的部门的信息
+				$.getJSON("brand/getbrandid.mvc",{id:brandId},function(resultData){
+					alert(resultData);
+					var brand_name = $("input[name = 'brand_name']").val(resultData.brand_name);
+					var man_id = $("input[name = 'man_id']").val(resultData.man_id);
+					var brand_desc = $("input[name = 'brand_desc']").val(resultData.brand_desc);
+					
+				});
+				//点击修改按钮
+				
+				$("button#BrandModifyButton").on("click",function(){
+					//取得修改的值
+					var brand_name = $("input[name = 'brand_name']").val();
+					var man_id = $("input[name = 'man_id']").val();
+					var brand_desc = $("input[name = 'brand_desc']").val();
+					//请求REST API
+					$.post("brand/modify.mvc",{brand_id:brandId,brand_name:brand_name,man_id:man_id,brand_desc:brand_desc},function(resultData){
+						
+						if(resultData=="ok"){
+							alert("修改部门成功");
+						}
+						else{
+							alert("修改部门失败");
+						}
+						showBrandList();
+					});
+					
+				});
+				//点击返回按钮事件处理
+				$("button#BrandCancleButton").on("click",function(){
+					showBrandList();
+				});
+				
+				
+			});
+		}
+	});
+	
+	/*$("a#BrandModifyLink").on("click",function(){
 		if(departmentNo==0){
 			alert("请选择要修改的部门");
 		}
@@ -91,5 +147,5 @@ $(document).ready(function(){
 				
 			});
 		}
-	});
+	});*/
 });

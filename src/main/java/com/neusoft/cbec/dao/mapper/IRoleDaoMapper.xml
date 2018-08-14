@@ -14,4 +14,10 @@
     from Role
   </select>
   
+  <select id="selectRoleById" parameterType="int" resultMap="RoleResultMap">
+    select *
+    from Role
+    where role_id = #{id}
+  </select>
+  
 </mapper>

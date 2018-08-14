@@ -12,7 +12,7 @@
   	<result property="phone" column="user_phone"/>
   	<result property="portrait" column="user_portrait"/>
   	<result property="email" column="man_email"/>
-  	<association property="role" column="role_name" select="com.neusoft.cbec.dao.IRoleDao.selectListByAll"/>
+  	<association property="role" column="role_id" select="com.neusoft.cbec.dao.IRoleDao.selectRoleById"/>
   </resultMap>
   
   <select id="selectListByAll" resultMap="UserResultMap">

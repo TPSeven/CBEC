@@ -35,6 +35,8 @@ create table UUSER(
   user_phone varchar2(15),
   role_id int,
   wallet_id number(10),
+  man_id number(10),
+  seller_id number(10),
   constraint pk_user_id primary key(user_id),
   constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --钱包外键
   constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --角色外键
@@ -44,6 +46,7 @@ insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','男','test@qq.com
 insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男','test1@qq.com','1008611',2,3);
 insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女','tes1t@qq.com','13800138',3,4);
 select * from UUSER;
+ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
 
 --manufacturer 制造商
 create table MANUFACTURER(
@@ -60,13 +63,6 @@ insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'小米',nul
 insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'苹果',null,'1008611','美国','Switch');
 insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'华为',null,'13800','中国','万物互联网');
 select * from MANUFACTURER;
-
--- 用户 制造商关联表
-create table USER_RLATE_MANU(
-  uid number(10) references UUSER(user_id),
-  mid number(10) references MANUFACTURER(man_id),
-  primary key(uid,mid)
-);
 
 
 --brand 品牌表

@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
 import com.neusoft.cbec.dao.IOrderItemDao;
 import com.neusoft.cbec.model.OrderItemModel;
 import com.nuesoft.cbec.service.IOrderItemService;
-@Service("IOrderItemService")
+/*@Service*/
 public class OrderItemServiceImpl implements IOrderItemService {
 
 	@Override
 	public void add(OrderItemModel em) throws Exception {
-		String resource = "kaoliulian.xml";
+		String resource = "kaoliulian-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		SqlSession session = sqlSessionFactory.openSession();
@@ -41,7 +41,7 @@ public class OrderItemServiceImpl implements IOrderItemService {
 
 	@Override
 	public List<OrderItemModel> getListByAll() throws Exception {
-		String resource = "kaoliulian.xml";
+		String resource = "kaoliulian-config.xml";
 		InputStream inputStream = Resources.getResourceAsStream(resource);
 		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 		SqlSession session =sqlSessionFactory.openSession();
@@ -50,6 +50,12 @@ public class OrderItemServiceImpl implements IOrderItemService {
 		session.commit();
 		session.close();
 		return list;
+	}
+
+	@Override
+	public OrderItemModel getOrderItemById(int order_id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

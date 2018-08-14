@@ -1,5 +1,9 @@
 package com.neusoft.cbec.model;
+
+import org.apache.ibatis.type.Alias;
+
 /**/
+@Alias("OrderItem")
 public class OrderItemModel {
 	
 			 private int order_id =0;

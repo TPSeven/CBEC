@@ -42,16 +42,16 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	<aop:aspectj-autoproxy />
 	
 	<!-- c3p0 -->	
- 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
-		<property name="user" value="tpseven"/> 
-		<property name="password" value="TPSEVEN"/> 
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@localhost:1521:product"/> 
+		<property name="user" value="scott"/> 
+		<property name="password" value="tiger"/> 
 		<property name="initialPoolSize" value="2"/>
 		<property name="minPoolSize" value="1"/>
-		<property name="maxPoolSize" value="3"/>
+		<property name="maxPoolSize" value="5"/>
 		<property name="acquireIncrement" value="1"/>
-	</bean> 
+	</bean>
 	
 	<!--bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
@@ -76,7 +76,6 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	    	</list>
 	  </property>
 	  <property name="typeAliasesPackage" value="com.neusoft.cbec.model"/>
-	  <!--property name="configLocation" value="classpath:mybatis-config.xml"/-->
 	  <property name="configuration">
 	    <bean class="org.apache.ibatis.session.Configuration">
 	      <property name="mapUnderscoreToCamelCase" value="true"/>

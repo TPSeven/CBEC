@@ -48,4 +48,16 @@ public class BrandServiceImpl implements IBrandService {
 		
 	}
 
+	@Override
+	public void  modify(BrandModel brandmodel) throws Exception {
+		brandDao.update(brandmodel);
+		
+	}
+
+	@Override
+	public BrandModel getById(int id) throws Exception {
+		 return brandDao.selectById(id);
+		}
+	
+
 }

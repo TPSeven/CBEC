@@ -20,9 +20,10 @@ $(document).ready(function(){
 				var lines="";
 				for(var i=0;i<manufacturerList.length;++i){
 					lines=lines+"<tr data-id='"+manufacturerList[i].id+"'>"+
+						"<td>"+manufacturerList[i].no+"</td>"+
 						"<td>"+manufacturerList[i].name+"</td>"+
+						"<td>"+manufacturerList[i].phone+"</td>"+
 						"<td>"+manufacturerList[i].address+"</td>"+
-						"<td>"+manufacturerList[i].scope+"</td>"+
 						"<td>"+manufacturerList[i].mdesc+"</td>"+
 						"</tr>";
 		        	$("div#manufacturer-content table tbody").html(lines);
@@ -51,13 +52,14 @@ $(document).ready(function(){
 				
 				//添加页面，添加按钮响应
 				$("button#addManufacturerBut").on("click",function(){
+					var no = $("input[name='no']").val();
 					var name = $("input[name='name']").val();
 					var address = $("input[name='address']").val();
-					var scope = $("input[name='scope']").val();
+					var phone = $("input[name='phone']").val();
 					var mdesc = $("textarea[name='mdesc']").val();
-					
+					var log = $("input[name='log']").val();
 					//发送请求，添加员工
-					$.post("manufacturer/add.mvc",{name:name,address:address,scope:scope,mdesc:mdesc},function(resultData){
+					$.post("manufacturer/add.mvc",{no:no,name:name,address:address,phone:phone,mdesc:mdesc,log:log},function(resultData){
 						if(resultData=="ok"){
 							alert("添加品牌商成功");
 							showManufacturerList();
@@ -89,22 +91,26 @@ $(document).ready(function(){
 					
 					//回显数据
 					$.getJSON("manufacturer/getManuById.mvc",{id:manufacturerId},function(resuletData){
+						$("input[name='no']").val(resuletData.no);
 						$("input[name='name']").val(resuletData.name);
 						$("input[name='address']").val(resuletData.address);
-						$("input[name='scope']").val(resuletData.scope);
+						$("input[name='phone']").val(resuletData.phone);
 						$("textarea[name='mdesc']").val(resuletData.mdesc);
+						$("input[name='log']").val(resuletData.log);
 					});
 					
 					//修改按钮响应事件
 					$("button#modifyManufacturerBut").on("click",function(){
 						
+						var no = $("input[name='no']").val();
 						var name = $("input[name='name']").val();
 						var address = $("input[name='address']").val();
-						var scope = $("input[name='scope']").val();
+						var phone = $("input[name='phone']").val();
 						var mdesc = $("textarea[name='mdesc']").val();
+						var log = $("input[name='log']").val();
 
 						//发送修改请求
-						$.post("manufacturer/modify.mvc",{id:manufacturerId,name:name,address:address,scope:scope,mdesc:mdesc},function(resultData){
+						$.post("manufacturer/modify.mvc",{id:manufacturerId,no:no,name:name,address:address,phone:phone,mdesc:mdesc,log:log},function(resultData){
 							if(resultData=="ok"){
 								alert("修改品牌商成功");
 								showManufacturerList();
@@ -155,9 +161,10 @@ $(document).ready(function(){
 				$("div#manufacturer-content").load("manufacturer/view.html",function(){
 					//显示数据
 					$.getJSON("manufacturer/getManuById.mvc",{id:manufacturerId},function(resuletData){
+						$("a#viewNo").text("品牌商编号："+resuletData.no);
 						$("a#viewName").text("品牌商名称："+resuletData.name);
+						$("a#viewPhone").text("品牌商电话："+resuletData.phone);
 						$("a#viewAddress").text("品牌商地址："+resuletData.address);
-						$("textarea[name='scope']").val(resuletData.scope);
 						$("textarea[name='mdesc']").val(resuletData.mdesc);
 					});
 					

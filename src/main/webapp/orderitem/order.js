@@ -89,7 +89,7 @@ var o_id=0;  //选择的订单编号
 					var man_id = $("input[name='man_id']").val();
 					var seller_id = $("input[name='seller_id']").val();
 					var state = $("input[name='state']").val();
-					alert(pro_id_count);
+					
 
 					//发送修改请求
 					$.post("orderitem/modify.mvc",{order_id:o_id,pro_id:pro_id,pro_id_count:pro_id_count,man_id:man_id,seller_id:seller_id,state:state},function(resultData){

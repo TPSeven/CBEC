@@ -51,6 +51,12 @@ public class ManufacturerController {
 		return manlist;
 	}
 	
+	@RequestMapping("/toListWithOrderitemsByAll")
+	public List<ManufacturerModel> toListWithOrderitemsByAll() throws Exception{
+		List<ManufacturerModel> manlist = manufacturerService.getListWithOrderitemsByAll();
+		return manlist;
+	}
+	
 	@RequestMapping(value="/getManuById",method= {RequestMethod.POST,RequestMethod.GET})
 	public ManufacturerModel getManuById(@RequestParam(required=true)int id) throws Exception{
 		return manufacturerService.getManufacturerById(id);

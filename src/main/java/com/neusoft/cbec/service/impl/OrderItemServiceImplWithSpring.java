@@ -52,4 +52,10 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 		return orderitemdao.selectByID(order_id);
 	}
 
+	@Override
+	public List<OrderItemModel> getListWithManByAll() throws Exception {
+		
+		return orderitemdao.selectListWithManByAll();
+	}
+
 }

@@ -43,9 +43,6 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- c3p0 -->	
  	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
->>>>>>> branch 'master' of https://github.com/TPSeven/CBEC.git
-
- 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
 		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
 		<property name="user" value="tpseven"/> 
@@ -79,12 +76,12 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	    	</list>
 	  </property>
 	  <property name="typeAliasesPackage" value="com.neusoft.cbec.model"/>
-	  <!--property name="configLocation" value="classpath:mybatis-config.xml"/-->
-	  <property name="configuration">
+	  <property name="configLocation" value="classpath:mybatis-config.xml"/>
+	  <!--property name="configuration">
 	    <bean class="org.apache.ibatis.session.Configuration">
 	      <property name="mapUnderscoreToCamelCase" value="true"/>
 	    </bean>
-  	  </property>
+  	  </property-->
 	</bean>
 	
 	<!--获取session对象 -->

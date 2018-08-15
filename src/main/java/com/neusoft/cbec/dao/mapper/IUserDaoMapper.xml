@@ -4,20 +4,49 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.cbec.dao.IUserDao">
 
+  <!-- 无角色、照片、钱包、 Manu、Seller的映射-->
   <resultMap id="UserResultMap" type="User">
   	<id property="id" column="user_id" />
   	<result property="name" column="user_name"/>
   	<result property="password" column="user_password"/>
   	<result property="sex" column="user_sex"/>
   	<result property="phone" column="user_phone"/>
-  	<result property="portrait" column="user_portrait"/>
   	<result property="email" column="man_email"/>
-  	<association property="role" column="role_id" select="com.neusoft.cbec.dao.IRoleDao.selectRoleById"/>
   </resultMap>
   
+  <!-- 有照片的映射-->
+  <resultMap id="UserWithPortraitResultMap" type="User" extends="UserResultMap">
+  	<result property="portrait" column="user_portrait"/>
+  </resultMap>
+   
+  <!-- 有角色的映射-->
+  <resultMap id="UserWithRoleResultMap" type="User" extends="UserResultMap">
+  	<association property="role" resultMap="com.neusoft.cbec.dao.IRoleDao.RoleResultMap"/>
+  	<!-- <association property="role" column="role_id" select="com.neusoft.cbec.dao.IRoleDao.selectRoleById"/> -->
+  </resultMap>
+  
+  <!--取得所有用户列表 无关联角色、分页-->
   <select id="selectListByAll" resultMap="UserResultMap">
-    select *
-    from UUSER
+    select * from UUSER
+  </select>
+  
+  <!--取得所有用户列表 、有照片、无关联角色、分页-->
+  <select id="selectListWithPortraitByAll" resultMap="UserWithPortraitResultMap">
+    select * from UUSER
+  </select>
+  
+  <!--取得所有用户列表、关联角色、无照片、不 分页-->
+  <select id="selectListWithRoleByAll" resultMap="UserWithRoleResultMap">
+    select u.*,r.role_name 
+    from UUSER u
+    inner join ROLE r
+    on u.role_id = r.role_id
+  </select>
+  
+  <!--根据角色,取得所有用户列表 无关联角色、不分页-->
+  <select id="selectListByRole" parameterType="int" resultMap="UserResultMap">
+    select * from UUSER 
+    where role_id = #{roleId}
   </select>
   
 </mapper>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.UserModel;
@@ -26,7 +28,21 @@ public class UserController {
 	
 	@RequestMapping("/getListByAll")
 	public List<UserModel> getListByAll() throws Exception{
-		List<UserModel> userlist = userService.getListByAll();
-		return userlist;
+		return userService.getListByAll();
+	}
+	
+	@RequestMapping("/getListWithRoleByAll")
+	public List<UserModel> getListWithRoleByAll() throws Exception{
+		return userService.getListWithRoleByAll();
+	}
+	
+	@RequestMapping("/getListWithPortraitByAll")
+	public List<UserModel> getListWithPortraitByAll() throws Exception{
+		return userService.getListWithPortraitByAll();
+	}
+
+	@RequestMapping(value="/getListByRole",method= {RequestMethod.POST,RequestMethod.GET})
+	public List<UserModel> getListByRole(@RequestParam(required=true)int roleId) throws Exception{
+		return userService.getListByRole(roleId);
 	}
 }

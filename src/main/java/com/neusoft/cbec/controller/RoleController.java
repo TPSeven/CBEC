@@ -36,4 +36,9 @@ public class RoleController {
 	public RoleModel getRoleById(@RequestParam(required=true)int id) throws Exception{
 		return roleService.getRoleById(id);
 	}
+	
+	@RequestMapping(value="/getListWithUsersByAll",method= {RequestMethod.POST,RequestMethod.GET})
+	public List<RoleModel> getListWithUsersByAll() throws Exception{
+		return roleService.getListWithUsersByAll();
+	}
 }

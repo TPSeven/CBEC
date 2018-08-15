@@ -1,5 +1,7 @@
 package com.neusoft.cbec.model;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 /**
@@ -8,8 +10,12 @@ import org.apache.ibatis.type.Alias;
  */
 @Alias("Role")
 public class RoleModel {
-	private int id;
-	private String name;
+	private int id = 0;
+	private String name = null ;
+	
+	//关联用户
+	private List<UserModel> users = null;
+	
 	public int getId() {
 		return id;
 	}
@@ -21,6 +27,12 @@ public class RoleModel {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public List<UserModel> getUsers() {
+		return users;
+	}
+	public void setUsers(List<UserModel> users) {
+		this.users = users;
 	}
 	
 }

@@ -10,5 +10,7 @@ public interface IUserDao {
 	public void update(UserModel user) throws Exception;
 	
 	public List<UserModel> selectListByAll() throws Exception;
-	
+	public List<UserModel> selectListByRole(int roleId) throws Exception;
+	public List<UserModel> selectListWithPortraitByAll() throws Exception;
+	public List<UserModel> selectListWithRoleByAll() throws Exception;
 }

@@ -1,5 +1,7 @@
 package com.neusoft.cbec.model;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 /**
@@ -15,6 +17,14 @@ public class ManufacturerModel {
 	private String phone = null;
 	private String address = null;
 	private String mdesc = null;
+	private List<BrandModel> brands = null;
+	
+	public List<BrandModel> getBrands() {
+		return brands;
+	}
+	public void setBrands(List<BrandModel> brands) {
+		this.brands = brands;
+	}
 	public int getId() {
 		return id;
 	}

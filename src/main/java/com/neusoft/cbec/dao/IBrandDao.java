@@ -13,12 +13,16 @@ public interface IBrandDao {
     public void delete(BrandModel brandmodel)throws Exception;
    
     public List<BrandModel> selectListByAll() throws Exception;
+    
+    public List<BrandModel> selectListWithManuByAll() throws Exception;
    
     public List<BrandModel>  selectListByAllWithPage(int rows,int page) throws Exception;
    
    public BrandModel selectById(int brand_id) throws Exception;
    
     public int selectCountByAll() throws Exception;
+
+	
     
 
 }

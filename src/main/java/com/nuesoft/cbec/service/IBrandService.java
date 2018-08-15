@@ -11,7 +11,11 @@ public interface IBrandService {
 	
 	public void modify(BrandModel brandmodel)throws Exception;
 	
+	public void delete(BrandModel brandmodel)throws Exception;
+	
 	public List<BrandModel> getListByAll() throws Exception;
+	
+	public List<BrandModel> getListWithManuByAll() throws Exception;
 	
 	public  BrandModel getById(int Id) throws Exception;
     

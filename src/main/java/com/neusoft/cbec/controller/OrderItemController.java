@@ -36,12 +36,20 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		return "ok";
 	}
 	
-  
+  //取得订单列表 ，无关联制造商
   @RequestMapping(value="/getListByAll",method=RequestMethod.GET)
   public List<OrderItemModel> getListByAll()throws Exception{
 		List<OrderItemModel> list = orderitemService.getListByAll();
 		return list;
   }
+  
+  //取得订单列表，取得制造商
+  @RequestMapping(value="/getListWithManByAll",method=RequestMethod.GET)
+  public List<OrderItemModel> getListWithManByAll()throws Exception{
+		List<OrderItemModel> list = orderitemService.getListWithManByAll();
+		return list;
+  }
+  
   @RequestMapping(value="/getOrderById",method= {RequestMethod.POST,RequestMethod.GET})
 	public OrderItemModel getOrderById(@RequestParam(required=true)int id) throws Exception{
 		return orderitemService.getOrderItemById(id);

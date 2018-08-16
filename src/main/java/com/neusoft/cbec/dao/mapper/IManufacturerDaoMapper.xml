@@ -14,6 +14,10 @@
   	<result property="mdesc" column="man_desc"/>
   </resultMap>
   
+  <resultMap type="Manufacturer" id="ManufacturerWithOrderitemsResultMap" extends="ManResultMap">
+	<collection property="orderitems" javaType="ArrayList" ofType="OrderItem" column="man_id"  select="com.neusoft.cbec.dao.IOrderItemDao.selectListByManufacturer"></collection>
+  </resultMap>
+  
   <insert id="create" parameterType="Manufacturer">
     insert into MANUFACTURER 
     values(MANUFACTURER_NEXTID_SQ.nextval,#{no},#{name},#{log},#{phone},#{address},#{mdesc})
@@ -29,16 +33,22 @@
     set man_no=#{no},man_name=#{name},man_log=#{log},man_phone=#{phone},man_address=#{address},man_desc=#{mdesc} 
     where man_id = #{id}
   </update>
-  
+ <!--  取得所有制造商列表，无关联的订单列表 -->
   <select id="selectListByAll" resultMap="ManResultMap">
     select *
     from MANUFACTURER
   </select>
   
-  <select id="selectManufacturerById" parameterType="int" resultMap="ManResultMap">
+   <!--  取得所有制造商列表，取得关联的订单列表 -->
+  <select id="selectListWithOrderitemsByAll" resultMap="ManufacturerWithOrderitemsResultMap">
     select *
-    from MANUFACTURER 
-    where man_id=#{id}
+    from MANUFACTURER a left outer join ORDER_ITEM b on a.man_id=b.man_id
+  </select>
+  
+  <select id="selectManufacturerById" parameterType="int" resultMap="ManResultMap">
+   select *
+    from MANUFACTURER a left outer join ORDER_ITEM b on a.man_id=b.man_id
+    where a.man_id=#{id}
   </select>
   
 </mapper>

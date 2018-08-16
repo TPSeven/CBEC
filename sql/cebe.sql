@@ -1,6 +1,6 @@
 -- cbce1.2
 
--- Role 角色表
+-- Role ��ɫ��
 create table ROLE(
   role_id number(10),
   role_name varchar2(20),
@@ -11,11 +11,11 @@ insert into ROLE values(2,'manufacturer');
 insert into ROLE values(3,'seller');
 select * from ROLE;
 
--- waller 钱包
+-- waller Ǯ��
 create table WALLET(
   wallet_id number(10) ,
-  balance number(20), --余额
-  bankcard number(20), --银行卡
+  balance number(20), --���
+  bankcard number(20), --���п�
   constraint pk_wallet_id primary key(wallet_id)
 );
 create sequence WALLET_NEXTID_SQ;
@@ -42,9 +42,9 @@ create table UUSER(
   constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --��ɫ���
 );
 create sequence USER_NEXTID_SQ;
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','男','test@qq.com','10086',1,2);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男','test1@qq.com','1008611',2,3);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女','tes1t@qq.com','13800138',3,4);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','��','test@qq.com','10086',1,2);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','��','test1@qq.com','1008611',2,3);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','Ů','tes1t@qq.com','13800138',3,4);
 select * from UUSER;
 ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- ������������
 ALTER TABLE UUSER ADD (user_birthday date default null); -- �����������
@@ -65,7 +65,6 @@ insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'С��',n
 insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'ƻ��',null,'1008611','����','Switch');
 insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'��Ϊ',null,'13800','�й�','���ﻥ����');
 select * from MANUFACTURER;
-
 
 --brand Ʒ�Ʊ�
 create table BRAND(

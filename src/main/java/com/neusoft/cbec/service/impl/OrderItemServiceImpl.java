@@ -58,4 +58,10 @@ public class OrderItemServiceImpl implements IOrderItemService {
 		return null;
 	}
 
+	@Override
+	public List<OrderItemModel> getListWithManByAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -17,9 +17,12 @@
   	<result property="pro_desc" column="pro_desc"/>
   </resultMap>
 
-  <insert id="create" parameterType = "Product">
+  <insert id="create" parameterType = "Product" >
+  	<selectKey keyProperty="pro_id" keyColumn="pro_id" resultType="int" order="BEFORE">
+  		select PRODUCT_NEXTNO_SQ.nextval from dual
+  	</selectKey>
   	insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc) 
-  	values(PRODUCT_NEXTNO_SQ.nextval,#{pro_name},#{pro_price},#{pro_weight},#{pro_count},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc})
+  	values(#{pro_id},#{pro_name},#{pro_price},#{pro_weight},#{pro_count},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc})
   </insert>
   
   <update id="update" parameterType = "Product">
@@ -34,6 +37,10 @@
   
   <select id="selectListByAll" resultMap = "ProductResultMap">
   	select pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc from PRODUCT
+  </select>
+  
+  <select id="selectById" parameterType = "int" resultMap="ProductResultMap">
+  	select * from PRODUCT where pro_id=#{productId}
   </select>
   
 </mapper>

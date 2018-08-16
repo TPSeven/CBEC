@@ -1,5 +1,6 @@
 package com.neusoft.cbec.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,27 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public List<UserModel> getListByAll() throws Exception {
 		return userDao.selectListByAll();
+	}
+
+	@Override
+	public List<UserModel> getListWithRoleByAll() throws Exception {
+		return userDao.selectListWithRoleByAll();
+	}
+
+	@Override
+	public List<UserModel> getListWithPortraitByAll() throws Exception {
+		return userDao.selectListWithPortraitByAll();
+	}
+
+	@Override
+	public List<UserModel> getListByRole(int roleId) throws Exception {
+		return userDao.selectListByRole(roleId);
+	}
+
+	@Override
+	public List<UserModel> getListWithRoleByCondition(String userName, String userSex, Date startDate, Date endDate,
+			String roleName) throws Exception {
+		return userDao.selectListWithRoleByCondition(userName, userSex, startDate, endDate, roleName);
 	}
 
 }

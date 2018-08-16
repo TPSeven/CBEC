@@ -70,8 +70,11 @@
 		<if test="endDate!=null">
 			and user_birthday &lt;= #{endDate}
 		</if>
-		<if test="roleId!=null and roleName!=''">
-			and u.role_id = #{roleId}
+		<if test="roleIds!=null">
+			and u.role_id in  
+			<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
+	         	#{roleId}
+	        </foreach>
 		</if>
 	</trim>
   </select>

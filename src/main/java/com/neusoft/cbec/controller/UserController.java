@@ -53,13 +53,10 @@ public class UserController {
 			@RequestParam(required=false,defaultValue="")String userSex,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
-			@RequestParam(required=false,defaultValue="")String roleName) throws Exception{
+			@RequestParam(required=false)int[] roleIds) throws Exception{
 		if(userName!=null&&userName.trim().length()>0) {
 			userName = "%"+userName+"%";
 		}
-		if(roleName!=null&&roleName.trim().length()>0) {
-			roleName = "%"+roleName+"%";
-		}
-		return userService.getListWithRoleByCondition(userName, userSex, startDate, endDate, roleName);
+		return userService.getListWithRoleByCondition(userName, userSex, startDate, endDate, roleIds);
 	}
 }

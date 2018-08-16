@@ -18,6 +18,11 @@
 	<collection property="orderitems" javaType="ArrayList" ofType="OrderItem"  resultMap="com.neusoft.cbec.dao.IOrderItemDao.OrderItemResultMap"></collection>
   </resultMap>
   
+   <resultMap type="Manufacturer" id="ManufacturerWithBrandsResultMap" extends="ManResultMap">
+	<collection property="brands" javaType="ArrayList" ofType="Brand"  resultMap="com.neusoft.cbec.dao.IBrandDao.BrandResultMap"></collection>
+<!-- 	<collection property="employees" javaType="ArrayList" ofType="Employee" resultMap="com.neusoft.oa.dao.IEmployeeDao.EmployeeResultMap"></collection> -->
+  </resultMap>
+  
   <insert id="create" parameterType="Manufacturer">
     insert into MANUFACTURER 
     values(MANUFACTURER_NEXTID_SQ.nextval,#{no},#{name},#{log},#{phone},#{address},#{mdesc})
@@ -45,6 +50,11 @@
     from MANUFACTURER a left outer join ORDER_ITEM b on a.man_id=b.man_id
   </select>
   
+  <select id="selectListWithBrandsByAll" resultMap="ManufacturerWithBrandsResultMap">
+    select *
+    from MANUFACTURER a left outer join BRAND b on a.man_id=b.man_id
+  </select>
+  
   <select id="selectManufacturerById" parameterType="int" resultMap="ManResultMap">
    select *
     from MANUFACTURER 
@@ -54,6 +64,12 @@
   <select id="selectManufacturerWithOrderItemById" parameterType="int" resultMap="ManufacturerWithOrderitemsResultMap">
    select *
     from MANUFACTURER a left outer join ORDER_ITEM b on a.man_id=b.man_id
+    where a.man_id=#{id}
+  </select>
+  
+  <select id="selectManufacturerWithBrandsById" parameterType="int" resultMap="ManufacturerWithBrandsResultMap">
+   select *
+    from MANUFACTURER a left outer join BRAND b on a.man_id=b.man_id
     where a.man_id=#{id}
   </select>
   

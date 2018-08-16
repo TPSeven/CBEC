@@ -67,9 +67,23 @@ public class ManufacturerServiceImpl implements IManufacturerService {
 	}
 
 	@Override
+
+	public List<ManufacturerModel> getListWithBrandsByAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ManufacturerModel getManufacturerWithBrandsById(int id) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 	public ManufacturerModel getManufacturerWithOrderItemById(int id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

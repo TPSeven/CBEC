@@ -6,7 +6,7 @@
 
   <resultMap id="KindsResultMap" type="Kinds">
   	<id property="pro_kinds_id" column="pro_kinds_id" />
-  	<result property="kinds_name" column="kinds_name"/>
+  	<result property="pro_kinds_name" column="kinds_name"/>
 
   </resultMap>
   
@@ -21,12 +21,12 @@
   		select KINDS_NEXTNO_SQ.nextval from dual
   	</selectKey>
   	insert into KINDS(pro_kinds_id,kinds_name) 
-  	values(#{pro_kinds_id},#{kinds_name})
+  	values(#{pro_kinds_id},#{pro_kinds_name})
   </insert>
   
   <update id="update" parameterType = "Kinds">
   	update kINDS 
-  	set kinds_name=#{kinds_name}
+  	set kinds_name=#{pro_kinds_name}
   	where pro_kinds_id=#{pro_kinds_id}
   </update>
   

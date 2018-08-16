@@ -15,6 +15,9 @@
   	<result property="brand_id" column="brand_id"/>
   	<result property="pro_photos_id" column="pro_photos_id"/>
   	<result property="pro_desc" column="pro_desc"/>
+  	 
+	<association property="kinds" column="pro_kinds_id" select="com.neusoft.cbec.dao.IKindsDao.selectById" ></association>
+ 	
   </resultMap>
   
 
@@ -37,7 +40,7 @@
   </delete>
   
   <select id="selectListByAll" resultMap = "ProductResultMap">
-  	select pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc from PRODUCT
+  	select * from PRODUCT
   </select>
   
   <select id="selectById" parameterType = "int" resultMap="ProductResultMap">

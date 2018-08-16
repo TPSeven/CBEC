@@ -12,6 +12,15 @@ public class OrderItemModel {
 			 private int man_id=0;
 			 private int seller_id=0;
 			 private String state=null;
+			private ManufacturerModel manufacture=null;
+		
+	
+			public ManufacturerModel getManufacture() {
+				return manufacture;
+			}
+			public void setManufacture(ManufacturerModel manufacture) {
+				this.manufacture = manufacture;
+			}
 			public int getOrder_id() {
 				return order_id;
 			}
@@ -30,7 +39,7 @@ public class OrderItemModel {
 			public void setPro_id_count(int pro_id_count) {
 				this.pro_id_count = pro_id_count;
 			}
-			public int getMan_id() {
+		public int getMan_id() {
 				return man_id;
 			}
 			public void setMan_id(int man_id) {

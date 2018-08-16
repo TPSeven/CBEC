@@ -41,4 +41,19 @@ public class UserServiceImpl implements IUserService {
 		return userDao.selectListByAll();
 	}
 
+	@Override
+	public List<UserModel> getListWithRoleByAll() throws Exception {
+		return userDao.selectListWithRoleByAll();
+	}
+
+	@Override
+	public List<UserModel> getListWithPortraitByAll() throws Exception {
+		return userDao.selectListWithPortraitByAll();
+	}
+
+	@Override
+	public List<UserModel> getListByRole(int roleId) throws Exception {
+		return userDao.selectListByRole(roleId);
+	}
+
 }

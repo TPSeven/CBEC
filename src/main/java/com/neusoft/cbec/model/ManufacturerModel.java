@@ -1,5 +1,7 @@
 package com.neusoft.cbec.model;
 
+import java.util.List;
+
 import org.apache.ibatis.type.Alias;
 
 /**
@@ -15,6 +17,15 @@ public class ManufacturerModel {
 	private String phone = null;
 	private String address = null;
 	private String mdesc = null;
+	//关联的订单列表
+	private List<OrderItemModel>  orderitems=null;
+	
+	public List<OrderItemModel> getOrderitems() {
+		return orderitems;
+	}
+	public void setOrderitems(List<OrderItemModel> orderitems) {
+		this.orderitems = orderitems;
+	}
 	public int getId() {
 		return id;
 	}

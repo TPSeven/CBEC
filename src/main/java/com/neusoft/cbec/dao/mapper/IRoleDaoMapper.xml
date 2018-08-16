@@ -9,9 +9,24 @@
   	<result property="name" column="role_name"/>
   </resultMap>
   
+  <resultMap id="RoleWithUsersResultMap" type="Role" extends="RoleResultMap">
+  	<!-- <collection property="users" column="role_id" select="com.neusoft.cbec.dao.IUserDao.selectListByRole"/> -->
+  	<collection property="users" resultMap="com.neusoft.cbec.dao.IUserDao.UserResultMap"/>
+  </resultMap>
+  
+  
+  <!--取得所有角色列表，无关联用户  -->
   <select id="selectListByAll" resultMap="RoleResultMap">
     select *
     from Role
+  </select>
+  
+  <!--取得所有角色列表，关联用户  -->
+  <select id="selectListWithUsersByAll" resultMap="RoleWithUsersResultMap">
+    select r.*,u.* 
+    from ROLE r
+    inner join UUSER u
+    on r.role_id = u.role_id
   </select>
   
   <select id="selectRoleById" parameterType="int" resultMap="RoleResultMap">

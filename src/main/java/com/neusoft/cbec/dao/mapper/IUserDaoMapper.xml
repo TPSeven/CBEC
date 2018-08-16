@@ -10,10 +10,11 @@
   	<result property="name" column="user_name"/>
   	<result property="password" column="user_password"/>
   	<result property="sex" column="user_sex"/>
+  	<result property="age" column="user_age"/>
   	<result property="birthday" column="user_birthday"/>
   	<result property="joinDate" column="user_joindate"/>
   	<result property="phone" column="user_phone"/>
-  	<result property="email" column="man_email"/>
+  	<result property="email" column="user_email"/>
   </resultMap>
   
   <!-- 有照片的映射-->
@@ -81,9 +82,59 @@
   
   <!--根据条件，取得所有用户列表 关联角色、分页-->
   <select id="selectListWithRoleByConditionWithPage" resultMap="UserWithRoleResultMap">
-    select u.*,r.role_name 
-    from UUSER u
-    inner join ROLE r
-    on u.role_id = r.role_id
+    select * from
+	(select ROWNUM rn,a.*
+	from (select u.*,r.role_name 
+		  from UUSER u
+		  inner join ROLE r
+		  on u.role_id = r.role_id
+		  <where> 
+	    	<if test="userName!=null and userName!=''">
+				user_name like #{userName}
+			</if>
+			<if test="userSex!=null and userSex!=''">
+				and user_sex = #{userSex}
+			</if>
+			<if test="startDate!=null">
+				and user_birthday &gt;= #{startDate}
+			</if>
+			<if test="endDate!=null">
+				and user_birthday &lt;= #{endDate}
+			</if>
+			<if test="roleIds!=null">
+				and u.role_id in  
+				<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
+		         	#{roleId}
+		        </foreach>
+			</if>
+  		   </where>
+		  ) a)
+		  where rn&lt;=#{rows}*#{page} and rn&gt;=#{rows}*(#{page}-1)
+  </select>
+  
+  <!--根据条件检索，取得用户的个数-->
+  <select id="selectCountByCondition" resultType="int">
+	select count(user_id)
+ 	from UUSER
+ 	<where> 
+  		<if test="userName!=null and userName!=''">
+		user_name like #{userName}
+		</if>
+		<if test="userSex!=null and userSex!=''">
+			and user_sex = #{userSex}
+		</if>
+		<if test="startDate!=null">
+			and user_birthday &gt;= #{startDate}
+		</if>
+		<if test="endDate!=null">
+			and user_birthday &lt;= #{endDate}
+		</if>
+		<if test="roleIds!=null">
+			and role_id in  
+			<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
+		        	#{roleId}
+		    </foreach>
+		</if>
+	   </where>
   </select>
 </mapper>

@@ -67,7 +67,7 @@ public class ManufacturerServiceImpl implements IManufacturerService {
 	}
 
 	@Override
-<<<<<<< HEAD
+
 	public List<ManufacturerModel> getListWithBrandsByAll() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
@@ -80,12 +80,10 @@ public class ManufacturerServiceImpl implements IManufacturerService {
 	}
 
 	
-	
-=======
 	public ManufacturerModel getManufacturerWithOrderItemById(int id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
->>>>>>> branch 'master' of https://github.com/TPSeven/CBEC.git
+
 
 }

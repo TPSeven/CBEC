@@ -61,7 +61,6 @@ public class ManufacturerController {
 	public ManufacturerModel getManuById(@RequestParam(required=true)int id) throws Exception{
 		return manufacturerService.getManufacturerById(id);
 	}
-<<<<<<< HEAD
 	
 	@RequestMapping("/toListWithBrandsByAll")
 	public List<ManufacturerModel> toListWithBrandsByAll() throws Exception{
@@ -72,10 +71,10 @@ public class ManufacturerController {
 	@RequestMapping(value="/getManuWithBrandsById",method= {RequestMethod.POST,RequestMethod.GET})
 	public ManufacturerModel getManuWithBrandsById(@RequestParam(required=true)int id) throws Exception{
 		return manufacturerService.getManufacturerWithBrandsById(id);
-=======
-	@RequestMapping(value="/getManuWithOrderById",method= {RequestMethod.POST,RequestMethod.GET})
+	}
+
+	@RequestMapping(value="/getManuWithOrderById",method={RequestMethod.POST,RequestMethod.GET})
 	public ManufacturerModel getManuWithOrderById(@RequestParam(required=true)int id) throws Exception{
 		return manufacturerService.getManufacturerWithOrderItemById(id);
->>>>>>> branch 'master' of https://github.com/TPSeven/CBEC.git
 	}
 }

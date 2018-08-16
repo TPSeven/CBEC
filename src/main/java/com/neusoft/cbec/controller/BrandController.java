@@ -43,7 +43,6 @@ public class BrandController {
 		
 		List<BrandModel> list = brandService.getListWithManuByAll();
 		return list;	
-		
 	}
 	
 	@RequestMapping(value = "/modify",method = RequestMethod.POST)

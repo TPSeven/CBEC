@@ -40,8 +40,7 @@
   </select>
   
   <select id="selectById" parameterType="int" resultMap="BrandResultMap">
-     select a.*,b.* from Brand a inner join Manufacturer b
-     on a.man_id = b.man_id where brand_id=#{brand_id}
+     select * from Brand where brand_id=#{brand_id}
   </select>  
   
 </mapper>

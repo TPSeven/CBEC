@@ -17,13 +17,15 @@ public class ManufacturerModel {
 	private String phone = null;
 	private String address = null;
 	private String mdesc = null;
-	private List<BrandModel> brands = null;
+
+	//关联的订单列表
+	private List<OrderItemModel>  orderitems=null;
 	
-	public List<BrandModel> getBrands() {
-		return brands;
+	public List<OrderItemModel> getOrderitems() {
+		return orderitems;
 	}
-	public void setBrands(List<BrandModel> brands) {
-		this.brands = brands;
+	public void setOrderitems(List<OrderItemModel> orderitems) {
+		this.orderitems = orderitems;
 	}
 	public int getId() {
 		return id;

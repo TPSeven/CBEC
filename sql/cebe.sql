@@ -1,6 +1,6 @@
 -- cbce1.2
 
--- Role è§’è‰²è¡¨
+-- Role ½ÇÉ«±í
 create table ROLE(
   role_id number(10),
   role_name varchar2(20),
@@ -11,11 +11,11 @@ insert into ROLE values(2,'manufacturer');
 insert into ROLE values(3,'seller');
 select * from ROLE;
 
--- waller é’±åŒ…
+-- waller Ç®°ü
 create table WALLET(
   wallet_id number(10) ,
-  balance number(20), --ä½™é¢
-  bankcard number(20), --é“¶è¡Œå¡
+  balance number(20), --Óà¶î
+  bankcard number(20), --ÒøĞĞ¿¨
   constraint pk_wallet_id primary key(wallet_id)
 );
 create sequence WALLET_NEXTID_SQ;
@@ -25,7 +25,7 @@ insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
 insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
 select * from WALLET;
 
--- user ç”¨æˆ·è¡¨
+-- user ÓÃ»§±í
 create table UUSER(
   user_id number(10),
   user_name varchar2(20),
@@ -38,17 +38,19 @@ create table UUSER(
   man_id number(10),
   seller_id number(10),
   constraint pk_user_id primary key(user_id),
-  constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --é’±åŒ…å¤–é”®
-  constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --è§’è‰²å¤–é”®
+  constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --Ç®°üÍâ¼ü
+  constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --½ÇÉ«Íâ¼ü
 );
 create sequence USER_NEXTID_SQ;
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','ç”·','test@qq.com','10086',1,2);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','ç”·','test1@qq.com','1008611',2,3);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','å¥³','tes1t@qq.com','13800138',3,4);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','ÄĞ','test@qq.com','10086',1,2);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','ÄĞ','test1@qq.com','1008611',2,3);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','Å®','tes1t@qq.com','13800138',3,4);
 select * from UUSER;
-ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- æ·»åŠ åˆ¶é€ å•†å¤–é”®
+ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- Ìí¼ÓÖÆÔìÉÌÍâ¼ü
+ALTER TABLE UUSER ADD (user_birthday date default null); -- Ìí¼ÓÉúÈÕÊôĞÔ
+ALTER TABLE UUSER ADD (user_joindate date default null); -- ÓÃ»§´´½¨ÈÕÆÚÊôĞÔ
 
---manufacturer åˆ¶é€ å•†
+--manufacturer ÖÆÔìÉÌ
 create table MANUFACTURER(
   man_id number(10) constraint pk_man_id primary key, 
   man_no number(10),
@@ -59,13 +61,13 @@ create table MANUFACTURER(
   man_desc varchar2(200)  
 );
 create sequence MANUFACTURER_NEXTID_SQ;
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'å°ç±³',null,'10086','åŒ—äº¬','ä¸ºå‘çƒ§è€Œç”Ÿ');
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'è‹¹æœ',null,'1008611','ç¾å›½','Switch');
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'åä¸º',null,'13800','ä¸­å›½','ä¸‡ç‰©äº’è”ç½‘');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'Ğ¡Ã×',null,'10086','±±¾©','Îª·¢ÉÕ¶øÉú');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'Æ»¹û',null,'1008611','ÃÀ¹ú','Switch');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'»ªÎª',null,'13800','ÖĞ¹ú','ÍòÎï»¥ÁªÍø');
 select * from MANUFACTURER;
 
 
---brand å“ç‰Œè¡¨
+--brand Æ·ÅÆ±í
 create table BRAND(
   brand_id number(20) constraint pk_brand_id primary key,  
   brand_name  varchar2(50),  

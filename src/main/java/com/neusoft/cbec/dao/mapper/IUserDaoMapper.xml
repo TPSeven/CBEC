@@ -4,12 +4,14 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.neusoft.cbec.dao.IUserDao">
 
-  <!-- 无角色、照片、钱包、 Manu、Seller的映射-->
+  <!-- 无角色、照片、钱包的映射-->
   <resultMap id="UserResultMap" type="User">
   	<id property="id" column="user_id" />
   	<result property="name" column="user_name"/>
   	<result property="password" column="user_password"/>
   	<result property="sex" column="user_sex"/>
+  	<result property="birthday" column="user_birthday"/>
+  	<result property="joinDate" column="user_joindate"/>
   	<result property="phone" column="user_phone"/>
   	<result property="email" column="man_email"/>
   </resultMap>
@@ -48,5 +50,37 @@
     select * from UUSER 
     where role_id = #{roleId}
   </select>
+
+  <!--根据条件，取得所有用户列表 关联角色、不分页-->
+  <select id="selectListWithRoleByCondition" resultMap="UserWithRoleResultMap">
+    select u.*,r.role_name 
+    from UUSER u
+    inner join ROLE r
+    on u.role_id = r.role_id
+	<trim prefix='WHERE' prefixOverrides="AND|OR">
+		<if test="userName!=null and userName!=''">
+			and user_name like #{userName}
+		</if>
+		<if test="userSex!=null and userSex!=''">
+			and user_sex = #{userSex}
+		</if>
+		<if test="startDate!=null">
+			and user_birthday &gt;= #{startDate}
+		</if>
+		<if test="endDate!=null">
+			and user_birthday &lt;= #{endDate}
+		</if>
+		<if test="roleId!=null and roleName!=''">
+			and u.role_id = #{roleId}
+		</if>
+	</trim>
+  </select>
   
+  <!--根据条件，取得所有用户列表 关联角色、分页-->
+  <select id="selectListWithRoleByConditionWithPage" resultMap="UserWithRoleResultMap">
+    select u.*,r.role_name 
+    from UUSER u
+    inner join ROLE r
+    on u.role_id = r.role_id
+  </select>
 </mapper>

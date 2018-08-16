@@ -11,10 +11,10 @@ insert into ROLE values(2,'manufacturer');
 insert into ROLE values(3,'seller');
 select * from ROLE;
 
--- waller 钱包表
+-- waller 钱包
 create table WALLET(
   wallet_id number(10) ,
-  balance number(20), --钱包余额
+  balance number(20), --余额
   bankcard number(20), --银行卡
   constraint pk_wallet_id primary key(wallet_id)
 );
@@ -30,22 +30,25 @@ create table UUSER(
   user_id number(10),
   user_name varchar2(20),
   user_password varchar2(10),
-  sex varchar2(4),
+  user_sex varchar2(4),
   user_email varchar2(20),
   user_phone varchar2(15),
   role_id int,
   wallet_id number(10),
+  man_id number(10),
+  seller_id number(10),
   constraint pk_user_id primary key(user_id),
-  constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --钱包id外键
-  constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --角色id外键
+  constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --钱包外键
+  constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --角色外键
 );
 create sequence USER_NEXTID_SQ;
 insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','男','test@qq.com','10086',1,2);
 insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男','test1@qq.com','1008611',2,3);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','男','tes1t@qq.com','13800138',3,4);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女','tes1t@qq.com','13800138',3,4);
 select * from UUSER;
+ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
 
---manufacturer 制造商表
+--manufacturer 制造商
 create table MANUFACTURER(
   man_id number(10) constraint pk_man_id primary key, 
   man_no number(10),
@@ -62,32 +65,24 @@ insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'华为',null,
 select * from MANUFACTURER;
 
 
--- 用户与制造商关联表
-create table USER_RLATE_MANU(
-  uid number(10) references UUSER(user_id),
-  mid number(10) references MANUFACTURER(man_id),
-  primary key(uid,mid)
-);
-
-
---brand
+--brand 品牌表
 create table BRAND(
-  brand_id number(20) constraint pk_brand_id primary key,  --品牌ID
-  brand_name  varchar2(50),  --品牌名字
-  man_id number(20),  --制造商ID
-  brand_desc varchar2(200)  --品牌简介
+  brand_id number(20) constraint pk_brand_id primary key,  
+  brand_name  varchar2(50),  
+  man_id number(20),  
+  brand_desc varchar2(200)  
 );
 create sequence BRAND_NEXTNO_SQ;
 -- ALTER TABLE BRAND ADD CONSTRAINT BRAND_MANU_FK FOREIGN KEY(man_id) REFERENCES BRAND(man_id); 
 
 --ORDER_ITEM
 create table ORDER_ITEM(
-  order_id number(20) constraint pk_order_id primary key,       --订单ID
-  pro_id number(20),   --产品ID
-  pro_id_count number(20),  --产品数量
-  man_id number(20),    --制造商ID
-  seller_id number(20), --借卖方ID
-  state varchar2(20)    --订单状态
+  order_id number(20) constraint pk_order_id primary key,       
+  pro_id number(20),
+  pro_id_count number(20),  
+  man_id number(20),   
+  seller_id number(20), 
+  state varchar2(20) 
 );
 
 

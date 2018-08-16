@@ -16,7 +16,14 @@ public interface IManufacturerDao {
 	public List<ManufacturerModel> selectListByAll() throws Exception;
 	
 	public ManufacturerModel selectManufacturerById(int id) throws Exception;
+	public ManufacturerModel selectManufacturerWithOrderItemById(int id) throws Exception;
 //取得所有制造商列表，取得关联订单的列表	
 	public List<ManufacturerModel> selectListWithOrderitemsByAll() throws Exception;
-
+	
+	//取得所有制造商列表，取得关联品牌商的列表	
+	public List<ManufacturerModel> selectListWithBrandsByAll() throws Exception;
+    
+	//取得所有的制造商列表，并关联品牌商的列表
+	
+	public ManufacturerModel selectManufacturerWithBrandsById(int id) throws Exception;
 }

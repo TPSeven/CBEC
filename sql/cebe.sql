@@ -102,6 +102,7 @@ create table PRODUCT(
   pro_photos_id  number(20),
   pro_desc  varchar2(200)
 );
+-- CONSTRAINT "FK_KINDS_PRODUCT" FOREIGN KEY ("PRO_KINDS_ID") REFERENCES "KINDS" ("PRO_KINDS_ID") ENABLE
 
 insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight)
 values(2,'a',1,20)

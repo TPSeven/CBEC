@@ -64,6 +64,18 @@ public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 		// TODO Auto-generated method stub
 		return manufacturerDao.selectListWithOrderitemsByAll();
 	}
+
+	@Override
+	public List<ManufacturerModel> getListWithBrandsByAll() throws Exception {
+		
+		return manufacturerDao.selectListWithBrandsByAll();
+	}
+
+	@Override
+	public ManufacturerModel getManufacturerWithBrandsById(int id) throws Exception {
+		
+		return manufacturerDao.selectManufacturerWithBrandsById(id);
+	}
 }
 
 /*

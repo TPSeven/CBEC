@@ -15,7 +15,7 @@
   </resultMap>
   
   <resultMap type="Manufacturer" id="ManufacturerWithOrderitemsResultMap" extends="ManResultMap">
-	<collection property="orderitems" javaType="ArrayList" ofType="OrderItem" column="man_id"  select="com.neusoft.cbec.dao.IOrderItemDao.selectListByManufacturer"></collection>
+	<collection property="orderitems" javaType="ArrayList" ofType="OrderItem"  resultMap="com.neusoft.cbec.dao.IOrderItemDao.OrderItemResultMap"></collection>
   </resultMap>
   
   <insert id="create" parameterType="Manufacturer">
@@ -46,6 +46,12 @@
   </select>
   
   <select id="selectManufacturerById" parameterType="int" resultMap="ManResultMap">
+   select *
+    from MANUFACTURER 
+    where man_id=#{id}
+  </select>
+   
+  <select id="selectManufacturerWithOrderItemById" parameterType="int" resultMap="ManufacturerWithOrderitemsResultMap">
    select *
     from MANUFACTURER a left outer join ORDER_ITEM b on a.man_id=b.man_id
     where a.man_id=#{id}

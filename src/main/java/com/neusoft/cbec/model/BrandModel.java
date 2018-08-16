@@ -5,9 +5,18 @@ import org.apache.ibatis.type.Alias;
 @Alias("Brand")
 public class BrandModel {
 	private int brand_id = 0;
+
 	private String brand_name =null;
 	private int man_id = 0;
 	private String brand_desc = null;
+	//关联属性
+	private ManufacturerModel manufacturer = null;
+	public ManufacturerModel getManufacturer() {
+		return manufacturer;
+	}
+	public void setManufacturer(ManufacturerModel manufacturer) {
+		this.manufacturer = manufacturer;
+	}
 	public int getBrand_id() {
 		return brand_id;
 	}

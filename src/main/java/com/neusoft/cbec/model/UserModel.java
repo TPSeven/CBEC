@@ -1,6 +1,11 @@
 package com.neusoft.cbec.model;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * @author Wwl
@@ -12,13 +17,18 @@ public class UserModel {
 	private String name = null;
 	private String password = null;
 	private String sex = null;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	private Date birthday = null;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+	private Date joinDate = null;
 	private byte[] portrait = null; //头像
 	private String email = null;
 	private String phone = null;
 	
 	//关联的属性
 	private RoleModel role = null;//权限
-	
 	
 	public int getId() {
 		return id;
@@ -44,6 +54,12 @@ public class UserModel {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+	public Date getBirthday() {
+		return birthday;
+	}
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
 	public byte[] getPortrait() {
 		return portrait;
 	}
@@ -68,7 +84,12 @@ public class UserModel {
 	public void setRole(RoleModel role) {
 		this.role = role;
 	}
-
+	public Date getJoinDate() {
+		return joinDate;
+	}
+	public void setJoinDate(Date joinDate) {
+		this.joinDate = joinDate;
+	}
 	
 }
 

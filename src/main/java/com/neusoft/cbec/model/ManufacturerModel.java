@@ -17,6 +17,7 @@ public class ManufacturerModel {
 	private String phone = null;
 	private String address = null;
 	private String mdesc = null;
+
 	//关联的订单列表
 	private List<OrderItemModel>  orderitems=null;
 	

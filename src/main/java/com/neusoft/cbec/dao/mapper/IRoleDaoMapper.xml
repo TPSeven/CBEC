@@ -9,6 +9,7 @@
   	<result property="name" column="role_name"/>
   </resultMap>
   
+   <!--角色关联用户的映射-->
   <resultMap id="RoleWithUsersResultMap" type="Role" extends="RoleResultMap">
   	<!-- <collection property="users" column="role_id" select="com.neusoft.cbec.dao.IUserDao.selectListByRole"/> -->
   	<collection property="users" resultMap="com.neusoft.cbec.dao.IUserDao.UserResultMap"/>

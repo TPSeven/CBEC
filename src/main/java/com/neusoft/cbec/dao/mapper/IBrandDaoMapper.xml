@@ -9,8 +9,15 @@
   	<result property="brand_name" column="brand_name"/>
   	<result property="man_id" column="man_id"/>
   	<result property="brand_desc" column="brand_desc"/>
+  	
   </resultMap>
   
+   <resultMap id="BrandWithManuResultMap" type="Brand" extends = "BrandResultMap">
+  	<!-- <association property = "manufacturer" column = "man_id" select = "com.neusoft.cbec.dao.IManufacturerDao.selectManufacturerById" fetchType = "eager" >
+  	</association> -->
+  	<association property = "manufacturer" resultMap = "com.neusoft.cbec.dao.IManufacturerDao.ManResultMap"></association>
+  </resultMap>
+   
   <insert id="create" parameterType="Brand">
      insert into Brand (brand_id,brand_name,man_id,brand_desc) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{man_id},#{brand_desc})
   </insert>
@@ -23,8 +30,13 @@
       delete from Brand where brand_id=#{brand_id}
   </delete>
   
-  <select id="selectListByAll" resultMap="BrandResultMap">
+   <select id="selectListByAll" resultMap="BrandResultMap">
     select * from Brand
+  </select>
+  
+  <select id="selectListWithManuByAll" resultMap="BrandWithManuResultMap">
+    select a.*,b.* from Brand a inner join Manufacturer b
+     on a.man_id = b.man_id
   </select>
   
   <select id="selectById" parameterType="int" resultMap="BrandResultMap">

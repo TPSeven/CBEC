@@ -31,10 +31,17 @@ public class BrandController {
 		return "ok";
 	}
 	
-	@RequestMapping(value = "/listbyall",method = RequestMethod.GET) 
-	public List<BrandModel> toListByAl() throws Exception{
+	@RequestMapping(value = "/listbyall/nomanu",method = RequestMethod.GET) 
+	public List<BrandModel> toListByAll() throws Exception{
 		
 		List<BrandModel> list = brandService.getListByAll();
+		return list;	
+	}
+	
+	@RequestMapping(value = "/listbyall/wtihmanu",method = RequestMethod.GET) 
+	public List<BrandModel> toListWithManuByAl() throws Exception{
+		
+		List<BrandModel> list = brandService.getListWithManuByAll();
 		return list;	
 	}
 	
@@ -44,13 +51,16 @@ public class BrandController {
 		return "ok";
 	}
 	
-	@RequestMapping(value="/getbrandid",method = {RequestMethod.POST ,RequestMethod.GET})
+	@RequestMapping(value = "/getbrandid" ,method = {RequestMethod.POST ,RequestMethod.GET})
 	public BrandModel getbrandid(@RequestParam(required=true)int id) throws Exception{
 		return brandService.getById(id);
 	}		
+    
+	@RequestMapping(value="/delete",method= {RequestMethod.POST})
+	public String delete(BrandModel brandmodel) throws Exception{
+		brandService.delete(brandmodel);
+		return "ok";
+	}
 
-
-
-	
 	
 }

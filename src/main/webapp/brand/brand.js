@@ -28,7 +28,6 @@ $(document).ready(function(){
 						$("table#brandListTable tbody tr").css("background-color","#FFFFFF")
 						//选中的行变颜色
 						$(this).css("background-color","#EEEE");
-						alert(brandId);
 						
 					});
 //		          alert (lines);                          
@@ -110,42 +109,26 @@ $(document).ready(function(){
 			});
 		}
 	});
-	
-	/*$("a#BrandModifyLink").on("click",function(){
-		if(departmentNo==0){
-			alert("请选择要修改的部门");
+	//点击删除按钮事件处理
+	$("a#BrandDeleteLink").on("click",function(){
+		if(brandId==0){
+			alert("请选择要删除的部门");
 		}
 		else{
-			$("div#DepartmentMainContent").load("department/modify.html",function(){
-				//取得选择的部门的信息
-				$.getJSON("department/get.mvc",{no:departmentNo},function(resultData){
-					$("input[name='code']").val(resultData.code);
-					$("input[name='name']").val(resultData.name);
+			var confirmResult=confirm("确认要删除选择的部门么？");
+			alert(brandId)
+			if(confirmResult){
+				$.post("brand/delete.mvc",{brand_id:brandId},function(resultData){
+					if(resultData=="ok"){
+						alert("删除部门成功");
+					}
+					else{
+						alert("删除部门失败");
+					}
+					showBrandList();
 				});
-				//点击修改提交按钮处理
-				$("button#DepartmentModifyButton").on("click",function(){
-					//取得输入的CODE和name值
-					var code=$("input[name='code']").val();
-					var name=$("input[name='name']").val();
-					//请求REST API
-					$.post("department/modify.mvc",{no:departmentNo,code:code,name:name},function(resultData){
-						if(resultData=="ok"){
-							alert("修改部门成功");
-						}
-						else{
-							alert("修改部门失败");
-						}
-						
-						showDepartmentList();
-					});
-				});
-				//点击返回按钮事件处理	
-				$("button#DepartmentCancelButton").on("click",function(){
-					showDepartmentList();
-				});
-				
-				
-			});
+			}
 		}
-	});*/
+	});
+	
 });

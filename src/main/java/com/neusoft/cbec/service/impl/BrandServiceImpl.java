@@ -55,9 +55,20 @@ public class BrandServiceImpl implements IBrandService {
 	}
 
 	@Override
-	public BrandModel getById(int id) throws Exception {
-		 return brandDao.selectById(id);
+	public BrandModel getById(int Id) throws Exception {
+		 return brandDao.selectById(Id);
 		}
+
+	@Override
+	public void delete(BrandModel brandmodel) throws Exception {
+		brandDao.delete(brandmodel);
+		
+	}
+
+	@Override
+	public List<BrandModel> getListWithManuByAll() throws Exception {
+		return brandDao.selectListWithManuByAll();
+	}
 	
 
 }

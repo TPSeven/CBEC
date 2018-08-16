@@ -47,6 +47,8 @@ insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男','tes
 insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女','tes1t@qq.com','13800138',3,4);
 select * from UUSER;
 ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
+ALTER TABLE UUSER ADD (user_birthday date default null); -- 添加生日
+ALTER TABLE UUSER ADD (user_joindate date default null); -- 加入日期
 
 --manufacturer 制造商
 create table MANUFACTURER(
@@ -99,6 +101,7 @@ create table PRODUCT(
   pro_photos_id  number(20),
   pro_desc  varchar2(200)
 );
+-- CONSTRAINT "FK_KINDS_PRODUCT" FOREIGN KEY ("PRO_KINDS_ID") REFERENCES "KINDS" ("PRO_KINDS_ID") ENABLE
 
 insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight)
 values(2,'a',1,20)

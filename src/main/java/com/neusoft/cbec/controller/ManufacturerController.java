@@ -61,4 +61,8 @@ public class ManufacturerController {
 	public ManufacturerModel getManuById(@RequestParam(required=true)int id) throws Exception{
 		return manufacturerService.getManufacturerById(id);
 	}
+	@RequestMapping(value="/getManuWithOrderById",method= {RequestMethod.POST,RequestMethod.GET})
+	public ManufacturerModel getManuWithOrderById(@RequestParam(required=true)int id) throws Exception{
+		return manufacturerService.getManufacturerWithOrderItemById(id);
+	}
 }

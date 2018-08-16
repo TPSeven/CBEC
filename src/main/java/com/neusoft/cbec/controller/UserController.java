@@ -1,8 +1,10 @@
 package com.neusoft.cbec.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,5 +46,17 @@ public class UserController {
 	@RequestMapping(value="/getListByRole",method= {RequestMethod.POST,RequestMethod.GET})
 	public List<UserModel> getListByRole(@RequestParam(required=true)int roleId) throws Exception{
 		return userService.getListByRole(roleId);
+	}
+	
+	@RequestMapping(value="/getListWithRoleByCondition",method= {RequestMethod.GET})
+	public List<UserModel> getListWithRoleByCondition(@RequestParam(required=false,defaultValue="")String userName,
+			@RequestParam(required=false,defaultValue="")String userSex,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
+			@RequestParam(required=false)int[] roleIds) throws Exception{
+		if(userName!=null&&userName.trim().length()>0) {
+			userName = "%"+userName+"%";
+		}
+		return userService.getListWithRoleByCondition(userName, userSex, startDate, endDate, roleIds);
 	}
 }

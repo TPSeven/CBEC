@@ -16,6 +16,7 @@
   	<result property="pro_photos_id" column="pro_photos_id"/>
   	<result property="pro_desc" column="pro_desc"/>
   </resultMap>
+  
 
   <insert id="create" parameterType = "Product" >
   	<selectKey keyProperty="pro_id" keyColumn="pro_id" resultType="int" order="BEFORE">

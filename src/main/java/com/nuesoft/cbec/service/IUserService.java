@@ -16,5 +16,5 @@ public interface IUserService {
 	public List<UserModel> getListByRole(int roleId) throws Exception;
 	public List<UserModel> getListWithPortraitByAll() throws Exception;
 	public List<UserModel> getListWithRoleByAll() throws Exception;
-	public List<UserModel> getListWithRoleByCondition(String userName,String userSex,Date startDate,Date endDate,String roleName) throws Exception;
+	public List<UserModel> getListWithRoleByCondition(String userName,String userSex,Date startDate,Date endDate,int[] roleIds) throws Exception;
 }

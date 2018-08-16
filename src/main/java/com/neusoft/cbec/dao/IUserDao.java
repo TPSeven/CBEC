@@ -17,6 +17,6 @@ public interface IUserDao {
 	public List<UserModel> selectListWithPortraitByAll() throws Exception;
 	public List<UserModel> selectListWithRoleByAll() throws Exception;
 	
-	public List<UserModel> selectListWithRoleByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,String roleName) throws Exception;
-	public List<UserModel> selectListWithRoleByConditionWithPage() throws Exception;
+	public List<UserModel> selectListWithRoleByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("roleIds")int[] roleIds) throws Exception;
+	public List<UserModel> selectListWithRoleByConditionWithPage(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("roleIds")int[] roleIds,@Param("rows")int rows,@Param("page")int page) throws Exception;
 }

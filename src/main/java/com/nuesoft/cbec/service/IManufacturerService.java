@@ -12,7 +12,7 @@ public interface IManufacturerService {
 	public List<ManufacturerModel> getListByAll() throws Exception;
 	
 	public ManufacturerModel getManufacturerById(int id) throws Exception;
-	
+	public ManufacturerModel getManufacturerWithOrderItemById(int id) throws Exception;
 	public  List<ManufacturerModel> getListWithOrderitemsByAll() throws Exception;
 	
 	public  List<ManufacturerModel> getListWithBrandsByAll() throws Exception;

@@ -59,8 +59,8 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<UserModel> getListWithRoleByCondition(String userName, String userSex, Date startDate, Date endDate,
-			String roleName) throws Exception {
-		return userDao.selectListWithRoleByCondition(userName, userSex, startDate, endDate, roleName);
+			int[] roleIds) throws Exception {
+		return userDao.selectListWithRoleByCondition(userName, userSex, startDate, endDate, roleIds);
 	}
 
 }

@@ -42,10 +42,20 @@ public class ProductController {
 		return "ok";
 		
 	}
-	
+	 
 	@RequestMapping(value="/list/all",method=RequestMethod.GET)
 	public List<ProductModel> getListByAll() throws Exception{
 		return productService.getListByAll();
+	}
+	//无种类
+	@RequestMapping(value="/list/all/withoutkinds",method=RequestMethod.GET)
+	public List<ProductModel> getListWithoutKindsByAll() throws Exception{
+		return productService.getListWithoutKindsByAll();
+	}
+	//有种类
+	@RequestMapping(value="/list/all/withkinds",method=RequestMethod.GET)
+	public List<ProductModel> getListWithKindsByAll() throws Exception{
+		return productService.getListWithKindsByAll();
 	}
 	
 	@RequestMapping(value="/get/id",method=RequestMethod.GET)

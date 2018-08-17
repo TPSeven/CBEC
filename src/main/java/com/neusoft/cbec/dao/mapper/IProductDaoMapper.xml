@@ -15,11 +15,27 @@
   	<result property="brand_id" column="brand_id"/>
   	<result property="pro_photos_id" column="pro_photos_id"/>
   	<result property="pro_desc" column="pro_desc"/>
-  	 
+  	<!--  
 	<association property="kinds" column="pro_kinds_id" select="com.neusoft.cbec.dao.IKindsDao.selectById" ></association>
  	
+ 	<association property="kinds" resultMap="com.neusoft.cbec.dao.IKindsDao.KindsResultMap"></association>
+ 	-->
   </resultMap>
   
+  <!-- 有图片 无种类字段映射的resultMap-->
+  <resultMap id="ProductWithPhotosResultMap" type="Product" extends="ProductResultMap">
+  	<result property="pro_photos_id" column="pro_photos_id"/> 
+  </resultMap>
+  
+  <!--  无图 有种类字段映射的resultMap-->
+  <resultMap id="ProductWithKindsResultMap" type="Product" extends="ProductResultMap">
+  	<association property="kinds" resultMap="com.neusoft.cbec.dao.IKindsDao.KindsResultMap"></association>
+  </resultMap>
+  
+  <!-- 有图 有种类字段映射的resultMap
+  <resultMap id="ProductWithKindsAndPhotosResultMap" type="Product" extends="ProductWithPhotosResultMap,ProductWithKindsResultMap">
+  </resultMap>
+  -->
 
   <insert id="create" parameterType = "Product" >
   	<selectKey keyProperty="pro_id" keyColumn="pro_id" resultType="int" order="BEFORE">
@@ -40,11 +56,21 @@
   </delete>
   
   <select id="selectListByAll" resultMap = "ProductResultMap">
-  	select * from PRODUCT
+  	select a.*,b.pro_kinds_id,b.kinds_id from PRODUCT a inner join KINDS b
+  	on a.pro_kinds_id=b.pro_kinds_id
   </select>
   
   <select id="selectById" parameterType = "int" resultMap="ProductResultMap">
   	select * from PRODUCT where pro_id=#{productId}
+  </select>
+  
+  <select id="selectListWithoutKindsByAll" resultMap = "ProductResultMap">
+  	select * from PRODUCT 
+  </select>
+  
+  <select id="selectListWithKindsByAll" resultMap = "ProductWithKindsResultMap">
+  	select a.*,b.pro_kinds_id,b.kinds_id from PRODUCT a inner join KINDS b
+  	on a.pro_kinds_id=b.pro_kinds_id
   </select>
   
 </mapper>

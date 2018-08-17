@@ -1,6 +1,7 @@
 package com.neusoft.cbec.service.impl;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -63,5 +64,21 @@ public class OrderItemServiceImpl implements IOrderItemService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<OrderItemModel> getListByCondition(int order_id, int man_id, Date startDate, Date endDate, String name)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<OrderItemModel> getListByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate,
+			String name, int start, int end) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 }

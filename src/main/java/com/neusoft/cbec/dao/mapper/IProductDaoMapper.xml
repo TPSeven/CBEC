@@ -56,7 +56,7 @@
   </delete>
   
   <select id="selectListByAll" resultMap = "ProductResultMap">
-  	select a.*,b.pro_kinds_id,b.kinds_id from PRODUCT a inner join KINDS b
+  	select a.*,b.pro_kinds_id,b.kinds_name from PRODUCT a inner join KINDS b
   	on a.pro_kinds_id=b.pro_kinds_id
   </select>
   
@@ -69,8 +69,13 @@
   </select>
   
   <select id="selectListWithKindsByAll" resultMap = "ProductWithKindsResultMap">
-  	select a.*,b.pro_kinds_id,b.kinds_id from PRODUCT a inner join KINDS b
+  	select a.*,b.pro_kinds_id,b.kinds_name from PRODUCT a inner join KINDS b
   	on a.pro_kinds_id=b.pro_kinds_id
+  </select>
+  
+  <!-- 根据商品种类ID取得商品表 -->
+  <select id="selectListByKinds" parameterType="int" resultMap="ProductResultMap">
+  	select * from PRODUCT where pro_kinds_id=#{KindsId}
   </select>
   
 </mapper>

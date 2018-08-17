@@ -49,4 +49,9 @@ public class IKindsServiceImplWithSpring implements IKindsService{
 		return kindsDao.selectById(kindsId);
 	}
 
+	@Override
+	public List<KindsModel> getListWithProductByAll() throws Exception {
+		return kindsDao.selectListWithProductByAll();
+	}
+
 }

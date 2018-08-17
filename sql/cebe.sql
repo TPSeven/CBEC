@@ -31,6 +31,7 @@ create table UUSER(
   user_name varchar2(20),
   user_password varchar2(10),
   user_sex varchar2(4),
+  user_age number(2),
   user_email varchar2(20),
   user_phone varchar2(15),
   role_id int,
@@ -42,13 +43,13 @@ create table UUSER(
   constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --角色外键
 );
 create sequence USER_NEXTID_SQ;
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','男','test@qq.com','10086',1,2);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男','test1@qq.com','1008611',2,3);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女','tes1t@qq.com','13800138',3,4);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','男',20,'test@qq.com','10086',1,2);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,'test1@qq.com','1008611',2,3);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',22,'tes1t@qq.com','13800138',3,4);
 select * from UUSER;
 ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
 ALTER TABLE UUSER ADD (user_birthday date default null); -- 添加生日
-ALTER TABLE UUSER ADD (user_joindate date default null); -- 加入日期
+ALTER TABLE UUSER ADD (user_joindate date default null); -- 添加日期
 
 --manufacturer 制造商
 create table MANUFACTURER(
@@ -101,6 +102,7 @@ create table PRODUCT(
   pro_photos_id  number(20),
   pro_desc  varchar2(200)
 );
+-- CONSTRAINT "FK_KINDS_PRODUCT" FOREIGN KEY ("PRO_KINDS_ID") REFERENCES "KINDS" ("PRO_KINDS_ID") ENABLE
 
 insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight)
 values(2,'a',1,20)

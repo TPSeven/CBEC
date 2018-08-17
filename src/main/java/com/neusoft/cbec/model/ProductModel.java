@@ -15,6 +15,16 @@ public class ProductModel {
 	private int brand_id = 0;
 	private int pro_photos_id = 0;
 	private String pro_desc = null;
+	//关联-商品类型
+	private KindsModel kinds = null;
+	
+	
+	public KindsModel getKinds() {
+		return kinds;
+	}
+	public void setKinds(KindsModel kinds) {
+		this.kinds = kinds;
+	}
 	public int getPro_id() {
 		return pro_id;
 	}

@@ -19,11 +19,11 @@
   </resultMap>
    
   <insert id="create" parameterType="Brand">
-     insert into Brand (brand_id,brand_name,man_id,brand_desc) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{man_id},#{brand_desc})
+     insert into Brand (brand_id,brand_name,man_id,brand_desc) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{manufacturer.id},#{brand_desc})
   </insert>
   
   <update id="update" parameterType="Brand">
-    update Brand set brand_name=#{brand_name},man_id=#{man_id},brand_desc=#{brand_desc} where brand_id=#{brand_id}
+    update Brand set brand_name=#{brand_name},man_id=#{manufacturer.id},brand_desc=#{brand_desc} where brand_id=#{brand_id}
   </update>
   
   <delete id="delete" parameterType="Brand">
@@ -36,11 +36,12 @@
   
   <select id="selectListWithManuByAll" resultMap="BrandWithManuResultMap">
     select a.*,b.* from Brand a inner join Manufacturer b
-     on a.man_id = b.man_id
+     on a.man_id = b.man_id 
   </select>
   
-  <select id="selectById" parameterType="int" resultMap="BrandResultMap">
-     select * from Brand where brand_id=#{brand_id}
+  <select id="selectById" parameterType="int" resultMap="BrandWithManuResultMap">
+      select a.brand_id,a.brand_name,a.brand_desc, b.* from Brand a inner join Manufacturer b
+     on a.man_id = b.man_id  where brand_id=#{brand_id}
   </select>  
   
 </mapper>

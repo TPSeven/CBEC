@@ -21,6 +21,14 @@ public class ManufacturerModel {
 	//关联的订单列表
 	private List<OrderItemModel>  orderitems=null;
 	
+	private List<BrandModel> brands = null;
+	
+	public List<BrandModel> getBrandmodel() {
+		return brands;
+	}
+	public void setBrandmodel(List<BrandModel> brands) {
+		this.brands = brands;
+	}
 	public List<OrderItemModel> getOrderitems() {
 		return orderitems;
 	}

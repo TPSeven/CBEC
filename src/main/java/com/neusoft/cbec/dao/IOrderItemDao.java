@@ -1,6 +1,9 @@
 package com.neusoft.cbec.dao;
 
+import java.util.Date;
 import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.neusoft.cbec.model.OrderItemModel;
 
@@ -19,7 +22,14 @@ public interface IOrderItemDao {
     public List<OrderItemModel> selectListWithManByAll() throws Exception;
    //分页
     public List<OrderItemModel>  selectListByAllWithPage(int rows,int page) throws Exception;
-   //取得订单编号
+   //根据检索条件取得订单的列表 ,无分页
+    public List<OrderItemModel> selectListByCondition(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name) throws Exception;
+    
+    //根据检索条件取得订单的列表 ,有分页
+    public List<OrderItemModel> selectListByConditionWithPage(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name,@Param("start")int start,@Param("end")int end) throws Exception;
+    
+    
+    //取得订单编号
    public OrderItemModel selectByID(int order_id) throws Exception;
    //订单个数
     public int selectCountByAll() throws Exception;

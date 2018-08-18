@@ -1,6 +1,11 @@
 package com.neusoft.cbec.model;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**/
 @Alias("OrderItem")
@@ -12,6 +17,18 @@ public class OrderItemModel {
 			 private int man_id=0;
 			 private int seller_id=0;
 			 private String state=null;
+				@DateTimeFormat(pattern="yyyy-MM-dd")
+				@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
+			 private Date  order_date=null;
+			 
+			 
+			 
+			public Date getOrder_date() {
+				return order_date;
+			}
+			public void setOrder_date(Date order_date) {
+				this.order_date = order_date;
+			}
 			private ManufacturerModel manufacture=null;
 		
 	

@@ -11,8 +11,11 @@
   </welcome-file-list>
   
   <context-param>
+
     <param-name>contextConfigLocation</param-name>
+
     <param-value>/WEB-INF/classes/context.xml</param-value>
+
   </context-param>
   
   <listener>

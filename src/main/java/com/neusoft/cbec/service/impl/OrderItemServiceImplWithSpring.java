@@ -1,5 +1,6 @@
 package com.neusoft.cbec.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,20 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 	public List<OrderItemModel> getListWithManByAll() throws Exception {
 		
 		return orderitemdao.selectListWithManByAll();
+	}
+
+	@Override
+	public List<OrderItemModel> getListByCondition(int order_id, int man_id, Date startDate, Date endDate,String man_name) throws Exception {
+	
+		return orderitemdao.selectListByCondition(order_id, man_id, startDate, endDate,man_name);
+	}
+
+	@Override
+	public List<OrderItemModel> getListByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate,String man_name, int rows,
+			int page)
+			throws Exception {
+	
+		return orderitemdao.selectListByConditionWithPage(order_id, man_id,startDate, endDate,man_name,rows*(page-1)+1,rows*page);
 	}
 
 }

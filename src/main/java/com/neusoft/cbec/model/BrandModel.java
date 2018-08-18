@@ -1,6 +1,11 @@
 package com.neusoft.cbec.model;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Alias("Brand")
 public class BrandModel {
@@ -9,6 +14,9 @@ public class BrandModel {
 	private String brand_name =null;
 	private int man_id = 0;
 	private String brand_desc = null;
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-mm-dd")
+	private Date brand_time = null;      //公司注册时间
 	//关联属性
 	private ManufacturerModel manufacturer = null;
 	public ManufacturerModel getManufacturer() {

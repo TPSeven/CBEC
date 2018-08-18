@@ -23,12 +23,12 @@ public interface IUserService {
 	//关联用户角色，取得所用用户列表，无分页
 	public List<UserModel> getListWithRoleByAll() throws Exception;
 	//条件检索，取得所用用户列表（关联用户角色），无分页
-	public List<UserModel> getListWithRoleByCondition(String userName,String userSex,Date startDate,Date endDate,int[] roleIds) throws Exception;
+	public List<UserModel> getListWithRoleByCondition(String userName,String userSex,Date startDate,Date endDate,int lowerAge,int upperAge,String userPhone,int[] roleIds) throws Exception;
 	//条件检索，取得所用用户列表（关联用户角色），分页
-	public List<UserModel> getListWithRoleByConditionWithPage(String userName,String userSex,Date startDate,Date endDate,int[] roleIds,int rows,int page) throws Exception;
+	public List<UserModel> getListWithRoleByConditionWithPage(String userName,String userSex,Date startDate,Date endDate,int lowerAge,int upperAge,String userPhone,int[] roleIds,int rows,int page) throws Exception;
 	//根据条件检索，统计符合条件的用户数
-	public int getCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("roleIds")int[] roleIds) throws Exception;
+	public int getCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("lowerAge") int lowerAge,@Param("upperAge") int upperAge,@Param("userPhone")String userPhone,@Param("roleIds")int[] roleIds) throws Exception;
 	//根据检索条件，取得用户显示页数
-	public int getPageCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("roleIds")int[] roleIds,int rows) throws Exception;
+	public int getPageCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("lowerAge") int lowerAge,@Param("upperAge") int upperAge,@Param("userPhone")String userPhone,@Param("roleIds")int[] roleIds,int rows) throws Exception;
 				
 }

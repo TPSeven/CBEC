@@ -14,3 +14,5 @@ $(document).ready(function(){
 	});
 	
 });
+
+jQuery.ajaxSettings.traditional = true; 

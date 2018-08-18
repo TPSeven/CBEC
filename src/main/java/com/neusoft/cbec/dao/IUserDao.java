@@ -27,10 +27,10 @@ public interface IUserDao {
 	//取得所有用户列表，关联角色，无分页
 	public List<UserModel> selectListWithRoleByAll() throws Exception;
 	//根据条件检索，取得用户列表，关联角色，无分页
-	public List<UserModel> selectListWithRoleByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("roleIds")int[] roleIds) throws Exception;
+	public List<UserModel> selectListWithRoleByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("lowerAge") int lowerAge,@Param("upperAge") int upperAge,@Param("userPhone")String userPhone,@Param("roleIds")int[] roleIds) throws Exception;
 	//根据条件检索，取得用户列表，关联角色，分页
-	public List<UserModel> selectListWithRoleByConditionWithPage(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("roleIds")int[] roleIds,@Param("rows")int rows,@Param("page")int page) throws Exception;
+	public List<UserModel> selectListWithRoleByConditionWithPage(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("lowerAge") int lowerAge,@Param("upperAge") int upperAge,@Param("userPhone")String userPhone,@Param("roleIds")int[] roleIds,@Param("rows")int rows,@Param("page")int page) throws Exception;
 	//根据条件检索，取得用户的个数
-	public int selectCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("roleIds")int[] roleIds) throws Exception;
+	public int selectCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("lowerAge") int lowerAge,@Param("upperAge") int upperAge,@Param("userPhone")String userPhone,@Param("roleIds")int[] roleIds) throws Exception;
 	
 }

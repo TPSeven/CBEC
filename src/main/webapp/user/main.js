@@ -5,19 +5,27 @@
 
 $(document).ready(function(){
 	var userId = 0; 
+	var userSex = null;
+	var userName = null;
+	var userPhone = null;
+	var startDate = null;
+	var endDate = null;
+	var lowerAge = null;
+	var upperAge = null;
+	var roleIds = null;
+	
+	//加载用户列表
 	function showManufacturerList(){
-		
 		$("div#user-content").load("user/list.html",function(){
 			
 			//获取JSON数据 显示员工列表表格
 			$("table#userGrid").jqGrid({
-				url: 'user/getListWithRoleByConditionWithPage.mvc',
+				url: 'user/list/role/byCondition/page.mvc',
 	         	mtype: "GET",
 			 	styleUI : 'Bootstrap',
 	         	datatype: "json",
 	         	colModel: [
-//	         		{ label: 'id', name: 'id', key: true, width: 60 },
-	        		{ label: '账户', name: 'name',width: 60 },
+	        		{ label: '名称', name: 'name',width: 60 },
 	            	{ label: '密码', name: 'password', width: 60 },
 		            { label: '性别', name: 'sex', width: 30 },
 		            { label: '年龄', name: 'age', width: 30 },
@@ -42,6 +50,113 @@ $(document).ready(function(){
 		});
 	}
 	
+	//设置请求参数，载入Grid数据，刷新Grid
+	function setParamAndReloadGrid(){
+		var datas = {userName:userName,userSex:userSex,userPhone:userPhone,lowerAge:lowerAge,upperAge:upperAge};
+		
+		if(startDate!=null){
+			datas.startDate=startDate;
+		}
+		if(endDate!=null){
+			datas.endDate=endDate;
+		}
+		
+		if(roleIds!=null){
+			datas.roleIds=roleIds;
+		}
+		//清空postData
+	    var postData = $("table#userGrid").jqGrid("getGridParam","postData");
+        $.each(postData, function (k, v) {
+            delete postData[k];
+        });                    
+		$("table#userGrid").jqGrid("setGridParam",{postData:datas}).trigger("reloadGrid");
+		
+		//强制清空postData
+//		$("table#userGrid").jqGrid("setGridParam",{postData:null}).trigger("reloadGrid");
+		
+	}
+	
+	
 	showManufacturerList();
+	
+	//===加载检索条件菜单===
+	//取得角色列表，生成角色复选框	
+	$.getJSON("role/list.mvc",function(roleList){
+		$.each(roleList,function(index,rl){
+			$("div#roleCheckboxArea").append("<label class='radio-inline'>"+"<input type='checkbox' name='roles' value='"+rl.id+"'>"+rl.name);
+		});
+		
+		//角色复选框点击事件处理
+		$("input[type='checkbox'][name='roles']").on("click",function(){
+			//创建保存选中角色编号的数组
+			roleIds=new Array();
+			//取得选中的角色
+			$("input[type='checkbox'][name='roles']:checked").each(function(index,role){
+				//通过$(this) 或 $(role)取得选中的复选框
+				//alert($(role).val());
+				roleIds.push($(role).val());
+			});
+			setParamAndReloadGrid();
+		});
+		
+	});
+	
+	
+	//===检索条件菜单事件处理===
+	//名称检索
+	$("input#userName").on("change",function(){
+		userName = $("input#userName").val();
+		setParamAndReloadGrid();
+	});
+	
+	//电话检索
+	$("input#userPhone").on("change",function(){
+		userPhone = $("input#userPhone").val();
+		setParamAndReloadGrid();
+	});
+	
+	//起始日期更改事件处理
+	$("input#startBirDate").on("change",function(){
+		startDate=$("input#startBirDate").val();
+		setParamAndReloadGrid();
+	});
+	
+	//截止日期更改事件处理
+	$("input#endBirDate").on("change",function(){
+		endDate=$("input#endBirDate").val();
+		setParamAndReloadGrid();
+	});
+	
+	//最小年龄更改事件处理
+	$("input#lowerAge").on("change",function(){
+		lowerAge=$("input#lowerAge").val();
+		setParamAndReloadGrid();
+	});
+	
+	//最大年龄更改事件处理
+	$("input#upperAge").on("change",function(){
+		upperAge=$("input#upperAge").val();
+		setParamAndReloadGrid();
+	});
+	
+	//性别检索
+	$("input[type='radio'][name='userSex']").on("change",function(){
+		userSex=$(this).val();
+		setParamAndReloadGrid();
+	});
+	
+	
+/*	取得角色列表，填充角色下拉框 
+	$.getJSON("role/list.mvc",function(roleList){
+		$.each(roleList,function(index,rl){
+			$("select#roleSelection").append("<option value='"+rl.id+"'>"+rl.name+"</option>");
+		});
+	});
+	//角色下拉框更改事件处理
+	$("select#roleSelection").on("change",function(){
+		roleId = $("select#roleSelection").val();
+		alert(roleId);
+		setParamAndReloadGrid();
+	});*/
 	
 });

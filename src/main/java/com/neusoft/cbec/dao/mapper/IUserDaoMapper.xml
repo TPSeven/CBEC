@@ -71,6 +71,15 @@
 		<if test="endDate!=null">
 			and user_birthday &lt;= #{endDate}
 		</if>
+		<if test="lowerAge!=null and lowerAge!=''">
+			and user_age &gt;= #{lowerAge}
+		</if>
+		<if test="upperAge!=null and upperAge!=''">
+			and user_age &lt;= #{upperAge}
+		</if>
+		<if test="userPhone!=null and userPhone!=''">
+			and user_Phone like #{userPhone}
+		</if>
 		<if test="roleIds!=null">
 			and u.role_id in  
 			<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
@@ -101,7 +110,16 @@
 			<if test="endDate!=null">
 				and user_birthday &lt;= #{endDate}
 			</if>
-			<if test="roleIds!=null">
+			<if test="lowerAge!=null and lowerAge!=''">
+				and user_age &gt;= #{lowerAge}
+			</if>
+			<if test="upperAge!=null and upperAge!=''">
+				and user_age &lt;= #{upperAge}
+			</if>
+			<if test="userPhone!=null and userPhone!=''">
+				and user_Phone like #{userPhone}
+			</if>
+			<if test="roleIds!=null and roleIds.length!=0">
 				and u.role_id in  
 				<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
 		         	#{roleId}
@@ -129,7 +147,16 @@
 		<if test="endDate!=null">
 			and user_birthday &lt;= #{endDate}
 		</if>
-		<if test="roleIds!=null">
+		<if test="lowerAge!=null and lowerAge!=''">
+			and user_age &gt;= #{lowerAge}
+		</if>
+		<if test="upperAge!=null and upperAge!=''">
+			and user_age &lt;= #{upperAge}
+		</if>
+		<if test="userPhone!=null and userPhone!=''">
+			and user_Phone like #{userPhone}
+		</if>
+		<if test="roleIds!=null and roleIds.length!=0">
 			and role_id in  
 			<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
 		        	#{roleId}

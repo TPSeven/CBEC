@@ -16,8 +16,11 @@ public interface IKindsDao {
 	public void update (KindsModel kd) throws Exception;
 	//删除
 	public void delete (KindsModel kd) throws Exception;
-	//查询所有
+	//查询所有-无关联商品表
 	public List<KindsModel> selectListByAll() throws Exception;
+	//查询所有-取得关联商品表
+	public List<KindsModel> selectListWithProductByAll() throws Exception;
+	
 	//查询所有，分页
 	public List<KindsModel> selectListByAllWithPage(int rows,int page) throws Exception;
 	//按编号查询

@@ -82,6 +82,8 @@ public class ManufacturerServiceImpl implements IManufacturerService {
 	
 	
 
+
+	
 	public ManufacturerModel getManufacturerWithOrderItemById(int id) throws Exception {
 		// TODO Auto-generated method stub
 		return null;

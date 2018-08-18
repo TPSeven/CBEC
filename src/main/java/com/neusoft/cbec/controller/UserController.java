@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.UserModel;
+import com.neusoft.cbec.result.GridResult;
 import com.nuesoft.cbec.service.IUserService;
 
 
@@ -58,5 +59,35 @@ public class UserController {
 			userName = "%"+userName+"%";
 		}
 		return userService.getListWithRoleByCondition(userName, userSex, startDate, endDate, roleIds);
+	}
+	
+	
+	//根据检索条件，得到所有的用户列表
+	@RequestMapping(value="/getListWithRoleByConditionWithPage",method= {RequestMethod.GET})
+	public GridResult<UserModel> getListWithRoleByConditionWithPage(@RequestParam(required=false,defaultValue="")String userName,
+			@RequestParam(required=false,defaultValue="")String userSex,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
+			@RequestParam(required=false)int[] roleIds,
+			@RequestParam(required=false,defaultValue="5")int rows,
+			@RequestParam(required=false,defaultValue="1")int page) throws Exception{
+		if(userName!=null&&userName.trim().length()>0) {
+			userName = "%"+userName+"%";
+		}
+		
+		GridResult<UserModel> gridResult = new GridResult<UserModel>();
+		//总个数
+		gridResult.setRecords(userService.getCountByCondition(userName, userSex, startDate, endDate, roleIds));
+		int total = userService.getPageCountByCondition(userName, userSex, startDate, endDate, roleIds, rows);
+		//总页数
+		gridResult.setTotal(total);
+		if(page<0 || page>total) {
+			page = 1;
+		}
+		//当前页
+		gridResult.setPage(page);
+		
+		gridResult.setRows(userService.getListWithRoleByConditionWithPage(userName, userSex, startDate, endDate, roleIds, rows, page));
+		return gridResult;
 	}
 }

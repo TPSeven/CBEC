@@ -6,8 +6,12 @@
 
   <resultMap id="KindsResultMap" type="Kinds">
   	<id property="pro_kinds_id" column="pro_kinds_id" />
-  	<result property="kinds_name" column="kinds_name"/>
+  	<result property="pro_kinds_name" column="kinds_name"/>
 
+  </resultMap>
+  
+  <resultMap id="KindsWithProductResultMap" type="Kinds" extends="KindsResultMap">
+  	<collection property="product" javaType="ArrayList" ofType="Product" column="pro_kinds_id" select="com.neusoft.cbec.dao.IProductDao.selectListByKinds"></collection>
   </resultMap>
   
   <!--  
@@ -17,29 +21,32 @@
    -->
 
   <insert id="create" parameterType = "Kinds" >
-  	<selectKey keyProperty="pro_kinds_id" keyColumn="pro_kinds_id" resultType="int" order="BEFORE">
-  		select KINDS_NEXTNO_SQ.nextval from dual
-  	</selectKey>
   	insert into KINDS(pro_kinds_id,kinds_name) 
-  	values(#{pro_kinds_id},#{kinds_name})
+  	values(#{pro_kinds_id},#{pro_kinds_name})
   </insert>
   
   <update id="update" parameterType = "Kinds">
-  	update kINDS 
-  	set kinds_name=#{kinds_name}
+  	update KINDS 
+  	set kinds_name=#{pro_kinds_name}
   	where pro_kinds_id=#{pro_kinds_id}
   </update>
   
   <delete id="delete" parameterType = "Kinds">
   	delete from KINDS where pro_kinds_id=#{pro_kinds_id}
   </delete>
-  
+  <!-- 取得所有的种类无关联商品 -->
   <select id="selectListByAll" resultMap = "KindsResultMap">
   	select pro_kinds_id,kinds_name from KINDS
+  </select>
+  <!-- 取得所有的种类有关联商品 -->
+  <select id="selectListWithProductByAll" resultMap = "KindsWithProductResultMap">
+  	select * from KINDS
   </select>
   
   <select id="selectById" parameterType = "int" resultMap="KindsResultMap">
   	select * from KINDS where pro_kinds_id=#{KindsId}
   </select>
+  
+
   
 </mapper>

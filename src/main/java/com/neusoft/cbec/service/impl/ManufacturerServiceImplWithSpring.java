@@ -66,7 +66,7 @@ public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 	}
 
 	@Override
-<<<<<<< HEAD
+
 	public List<ManufacturerModel> getListWithBrandsByAll() throws Exception {
 		
 		return manufacturerDao.selectListWithBrandsByAll();
@@ -76,11 +76,12 @@ public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 	public ManufacturerModel getManufacturerWithBrandsById(int id) throws Exception {
 		
 		return manufacturerDao.selectManufacturerWithBrandsById(id);
-=======
+	}
+
 	public ManufacturerModel getManufacturerWithOrderItemById(int id) throws Exception {
 	
 		return manufacturerDao.selectManufacturerWithOrderItemById(id);
->>>>>>> branch 'master' of https://github.com/TPSeven/CBEC.git
+
 	}
 }
 

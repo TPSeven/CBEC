@@ -1,8 +1,10 @@
 package com.neusoft.cbec.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.BrandModel;
+
 import com.nuesoft.cbec.service.IBrandService;
 
 
@@ -61,6 +64,49 @@ public class BrandController {
 		brandService.delete(brandmodel);
 		return "ok";
 	}
+	
+	@RequestMapping(value="/list/condition/page",method = {RequestMethod.POST ,RequestMethod.GET})
+	public List<BrandModel> getByConditionWithPage(@RequestParam(required = false,defaultValue = "0")int manuid,
+			@RequestParam(required = false,defaultValue = "") String name,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+			@RequestParam(required=false,defaultValue="10" )int rows,
+			@RequestParam(required=false,defaultValue="1")int page) throws Exception{
+		     if(name!=null&&name.trim().length()>0) {
+		    	 name="%"+name+"%";
+		     }
+		     return brandService.getListByConditionWithPage(manuid, name, startDate, endDate, rows, page);
+		
+	}
+	
+	@RequestMapping(value="/list/condition",method = {RequestMethod.POST ,RequestMethod.GET})
+	public List<BrandModel> getByCondition(@RequestParam(required = false,defaultValue = "0")int manuid,
+			@RequestParam(required = false,defaultValue = "") String name,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate
+			) throws Exception{
+		     if(name!=null&&name.trim().length()>0) {
+		    	 name="%"+name+"%";
+		     }
+		     return brandService.getListByCondition(manuid, name, startDate, endDate);
+		
+	}
+			
+	/*public List<EmployeeModel> getByConditionWithPage(@RequestParam(required=false,defaultValue="0") int departmentNo, 
+			@RequestParam(required=false,defaultValue="") String sex, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+			@RequestParam(required=false,defaultValue="") String name, 
+			@RequestParam(required=false) int[] roles, 
+			@RequestParam(required=false,defaultValue="10") int rows, 
+			@RequestParam(required=false,defaultValue="1") int page) throws Exception {
+		if(name!=null&&name.trim().length()>0) {
+			name="%"+name+"%";
+			
+		}
+		return employeeService.getListByConditionWithPage(departmentNo, sex, startDate, endDate, name, roles, rows, page);
+	}*/
+	
 
 	
 }

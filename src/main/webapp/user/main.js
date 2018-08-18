@@ -145,9 +145,29 @@ $(document).ready(function(){
 		setParamAndReloadGrid();
 	});
 	
+	//===增删改查按钮事件处理===
+	//增加
+	$("a#addUserLink").on("click",function(){
+		alert("1");
+	});
+	
+	//修改
+	$("a#modifyUserLink").on("click",function(){
+		alert("2");
+	});
+	
+	//删除
+	$("a#deleteUserLink").on("click",function(){
+		alert("3");
+	});
+	
+	//查看
+	$("a#viewUserLink").on("click",function(){
+		alert("4");
+	});
 	
 /*	取得角色列表，填充角色下拉框 
-	$.getJSON("role/list.mvc",function(roleList){
+	$.getJSON("role/list.mvc",afunction(roleList){
 		$.each(roleList,function(index,rl){
 			$("select#roleSelection").append("<option value='"+rl.id+"'>"+rl.name+"</option>");
 		});

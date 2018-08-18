@@ -32,24 +32,30 @@ create table UUSER(
   user_password varchar2(10),
   user_sex varchar2(4),
   user_age number(2),
-  user_email varchar2(20),
+  user_portrait BLOB,
+	portraitFileName varchar2(100),
+  portraitContentType varchar2(100),
+
+  user_email varchar2(50),
   user_phone varchar2(15),
-  role_id int,
-  wallet_id number(10),
+  user_birthday date,
+  user_joindate date,
+  user_desc varchar(200),
+
+  role_id number(2),
+  wallet_id number(5),
   man_id number(10),
   seller_id number(10),
-  constraint pk_user_id primary key(user_id),
-  constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --钱包外键
-  constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id) --角色外键
+  constraint pk_user_id primary key(user_id)
 );
 create sequence USER_NEXTID_SQ;
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','123','男',20,'test@qq.com','10086',1,2);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,'test1@qq.com','1008611',2,3);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',22,'tes1t@qq.com','13800138',3,4);
+--ALTER TABLE UUSER ADD constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --钱包外键
+ALTER TABLE UUSER ADD constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id); --角色外键
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','admin','男',20,null,null,null,'test@qq.com','10086','1-12月-1998','8-1月-2015','管理员账号',1,0,0,0);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商账号',2,0,0,0);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个借卖家账号',3,0,0,0);
 select * from UUSER;
 ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
-ALTER TABLE UUSER ADD (user_birthday date default null); -- 添加生日
-ALTER TABLE UUSER ADD (user_joindate date default null); -- 添加日期
 
 --manufacturer 制造商
 create table MANUFACTURER(
@@ -102,7 +108,6 @@ create table PRODUCT(
   pro_photos_id  number(20),
   pro_desc  varchar2(200)
 );
--- CONSTRAINT "FK_KINDS_PRODUCT" FOREIGN KEY ("PRO_KINDS_ID") REFERENCES "KINDS" ("PRO_KINDS_ID") ENABLE
 
 insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight)
 values(2,'a',1,20)

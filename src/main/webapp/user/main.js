@@ -148,8 +148,37 @@ $(document).ready(function(){
 	//===增删改查按钮事件处理===
 	//增加
 	$("a#addUserLink").on("click",function(){
-		alert("1");
+		$("div#userDialog").load("user/add.html",function(){
+			//取得权限列表（角色列表），填充下拉框
+			$.getJSON("role/list.mvc",function(roleList){
+				$.each(roleList, function(index,rl) {
+					$("select#addUserRoleSelection").append("<option value='"+rl.id+"'>"+rl.name+"</option>");
+				});
+			});
+			
+			//拦截表单提交导致的页面跳转
+			$("form#addUserForm").ajaxForm(function(result){
+				alert(result.message);
+				//重新获得检索参数，刷新Grid，显示
+				setParamAndReloadGrid();
+				$("div#userDialog").dialog("close");
+			});
+			
+			
+			//取消按钮点击事件处理
+			$("a#userCancelLink").on("click",function(){
+				$("div#userDialog").dialog("close");
+			});
+		});
+		
+		$("div#userDialog").dialog({
+			title:"添加新用户",
+			width:500,
+			height:600
+		});
 	});
+	
+	
 	
 	//修改
 	$("a#modifyUserLink").on("click",function(){
@@ -167,7 +196,7 @@ $(document).ready(function(){
 	});
 	
 /*	取得角色列表，填充角色下拉框 
-	$.getJSON("role/list.mvc",afunction(roleList){
+	$.getJSON("role/list.mvc",function(roleList){
 		$.each(roleList,function(index,rl){
 			$("select#roleSelection").append("<option value='"+rl.id+"'>"+rl.name+"</option>");
 		});

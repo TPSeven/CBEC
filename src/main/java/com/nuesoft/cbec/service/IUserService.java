@@ -8,7 +8,12 @@ import org.apache.ibatis.annotations.Param;
 import com.neusoft.cbec.model.UserModel;
 
 public interface IUserService {
-	public void add(UserModel user) throws Exception;
+	
+	//添加用户，无照片
+	public void addWithoutPhoto(UserModel user) throws Exception;
+	//添加用户，有照片
+	public void addWithPhoto(UserModel user) throws Exception;
+	
 	public void delete(UserModel user) throws Exception;
 	public void modify(UserModel user) throws Exception;
 	

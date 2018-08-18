@@ -27,9 +27,16 @@ public class UserServiceImpl implements IUserService {
 	}
 	
 	@Override
-	public void add(UserModel user) throws Exception {
+	public void addWithoutPhoto(UserModel user) throws Exception {
+		userDao.createWithoutPhoto(user);
 	}
 
+
+	@Override
+	public void addWithPhoto(UserModel user) throws Exception {
+		userDao.createWithPhoto(user);
+	}
+	
 	@Override
 	public void delete(UserModel user) throws Exception {
 	}
@@ -90,5 +97,6 @@ public class UserServiceImpl implements IUserService {
 		}
 		return total;
 	}
+
 
 }

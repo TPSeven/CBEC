@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.neusoft.cbec.model.UserModel;
+import com.neusoft.cbec.result.ControllerResult;
 import com.neusoft.cbec.result.GridResult;
 import com.nuesoft.cbec.service.IUserService;
 
@@ -29,6 +31,33 @@ public class UserController {
 		this.userService = userService;
 	}
 	
+	@RequestMapping(value="/add",method= {RequestMethod.POST})
+	public ControllerResult add(UserModel user,@RequestParam(required=false)MultipartFile portrait) throws Exception{
+		ControllerResult result = null;
+		try {
+			result = new ControllerResult();
+			//无图片提交
+			if(portrait==null || portrait.isEmpty()) {
+				userService.addWithoutPhoto(user);
+			}else{
+				//有图片提交
+				String fileName = portrait.getOriginalFilename();
+				String contentType = portrait.getContentType();
+				user.setPortrait(portrait.getBytes());
+				user.setPortraitFileName(fileName);
+				user.setPortraitContentType(contentType);
+				userService.addWithPhoto(user);
+			}
+			result.setStaus("0k");
+			result.setMessage("增加用户成功");
+			return result;
+		} catch (Exception e) {
+			result.setStaus("false");
+			result.setMessage(e.getMessage());
+		}
+		return result;
+	}
+	
 	@RequestMapping("/list")
 	public List<UserModel> getListByAll() throws Exception{
 		return userService.getListByAll();
@@ -43,12 +72,14 @@ public class UserController {
 	public List<UserModel> getListWithPortraitByAll() throws Exception{
 		return userService.getListWithPortraitByAll();
 	}
-
+	
+	//根据角色id，得到用户列表
 	@RequestMapping(value="/list/byRole",method= {RequestMethod.POST,RequestMethod.GET})
 	public List<UserModel> getListByRole(@RequestParam(required=true)int roleId) throws Exception{
 		return userService.getListByRole(roleId);
 	}
 	
+	//根据检索条件，得到用户列表
 	@RequestMapping(value="/list/role/byCondition",method= {RequestMethod.GET})
 	public List<UserModel> getListWithRoleByCondition(@RequestParam(required=false,defaultValue="")String userName,
 			@RequestParam(required=false,defaultValue="")String userSex,
@@ -68,7 +99,7 @@ public class UserController {
 	}
 	
 	
-	//根据检索条件，得到所有的用户列表
+	//根据检索条件，得到用户列表 分页
 	@RequestMapping(value="/list/role/byCondition/page",method= {RequestMethod.GET})
 	public GridResult<UserModel> getListWithRoleByConditionWithPage(@RequestParam(required=false,defaultValue="")String userName,
 			@RequestParam(required=false,defaultValue="")String userSex,

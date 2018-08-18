@@ -15,6 +15,7 @@
   	<result property="joinDate" column="user_joindate"/>
   	<result property="phone" column="user_phone"/>
   	<result property="email" column="user_email"/>
+  	<result property="desc" column="user_desc"/>
   </resultMap>
   
   <!-- 有照片的映射-->
@@ -28,6 +29,7 @@
   	<!-- <association property="role" column="role_id" select="com.neusoft.cbec.dao.IRoleDao.selectRoleById"/> -->
   </resultMap>
   
+  <!--================查询语句相关映射================-->
   <!--取得所有用户列表 无关联角色、分页-->
   <select id="selectListByAll" resultMap="UserResultMap">
     select * from UUSER
@@ -164,4 +166,18 @@
 		</if>
 	   </where>
   </select>
+  
+  <!--================增加语句相关映射================-->
+  <!--添加用户，无照片  -->
+  <insert id="createWithoutPhoto" parameterType="User" >
+  	insert into UUSER(user_id,user_name,user_password,user_sex,user_age,user_email,user_phone,user_birthday,user_joindate,user_desc,role_id,wallet_id,man_id,seller_id)
+  	values(USER_NEXTID_SQ.NEXTVAL,#{name},#{password},#{sex},#{age},#{email},#{phone},#{birthday,jdbcType=DATE},#{joinDate,jdbcType=DATE},#{desc},#{role.id},0,0,0)
+  </insert>
+  <!--添加照片，有照片  -->
+  <insert id="createWithPhoto" parameterType="User" >
+  	insert into UUSER(user_id,user_name,user_password,user_sex,user_age,user_portrait,portraitFileName,portraitContentType,user_email,user_phone,user_birthday,user_joindate,user_desc,role_id,wallet_id,man_id,seller_id)
+  	values(USER_NEXTID_SQ.NEXTVAL,#{name},#{password},#{sex},#{age},#{portrait},#{portraitFileName},#{portraitContentType},#{email},#{phone},#{birthday,jdbcType=DATE},#{joinDate,jdbcType=DATE},#{desc},#{role.id},0,0,0)
+  </insert>
+  <!--================修改语句相关映射================-->
+  <!--================删除语句相关映射================-->
 </mapper>

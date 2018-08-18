@@ -12,7 +12,12 @@ import com.neusoft.cbec.model.UserModel;
  * 用户 数据库访问接口
  */
 public interface IUserDao {
-	public void create(UserModel user) throws Exception;
+	
+	//添加用户，无照片
+	public void createWithoutPhoto(UserModel user) throws Exception;
+	//添加用户，有照片
+	public void createWithPhoto(UserModel user) throws Exception;
+	
 	public void delete(UserModel user) throws Exception;
 	public void update(UserModel user) throws Exception;
 	

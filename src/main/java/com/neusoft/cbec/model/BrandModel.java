@@ -1,3 +1,9 @@
+
+
+/*
+ *  @author Jarvis
+**   Brand  品牌商
+**/
 package com.neusoft.cbec.model;
 
 import java.util.Date;
@@ -12,13 +18,22 @@ public class BrandModel {
 	private int brand_id = 0;
 
 	private String brand_name =null;
-	private int man_id = 0;
+	
 	private String brand_desc = null;
-	@DateTimeFormat(pattern = "yyyy-mm-dd")
-	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-mm-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@JsonFormat(timezone = "GMT+8",pattern = "yyyy-MM-dd")
 	private Date brand_time = null;      //公司注册时间
 	//关联属性
+	
+	//man_id = manufacturer.id
 	private ManufacturerModel manufacturer = null;
+	
+	public Date getBrand_time() {
+		return brand_time;
+	}
+	public void setBrand_time(Date brand_time) {
+		this.brand_time = brand_time;
+	}
 	public ManufacturerModel getManufacturer() {
 		return manufacturer;
 	}
@@ -34,15 +49,11 @@ public class BrandModel {
 	public String getBrand_name() {
 		return brand_name;
 	}
+	
 	public void setBrand_name(String brand_name) {
 		this.brand_name = brand_name;
 	}
-	public int getMan_id() {
-		return man_id;
-	}
-	public void setMan_id(int man_id) {
-		this.man_id = man_id;
-	}
+
 	public String getBrand_desc() {
 		return brand_desc;
 	}

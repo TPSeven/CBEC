@@ -7,8 +7,9 @@
   <resultMap id="BrandResultMap" type="Brand" >
     <id property="brand_id" column="brand_id" />
   	<result property="brand_name" column="brand_name"/>
-  	<result property="man_id" column="man_id"/>
+  	<!-- <result property="man_id" column="man_id"/> -->
   	<result property="brand_desc" column="brand_desc"/>
+  	<result property="brand_time" column="brand_time"/>
   	
   </resultMap>
   
@@ -44,7 +45,7 @@
      on a.man_id = b.man_id  where brand_id=#{brand_id}
   </select>  
   
-  <select id="selectListByCondition" resultMap="BrandWithManuResultMap">
+  <select id="selectListByCondition" resultMap="BrandResultMap">
 	    select a.* from Brand a
       <trim prefix = "WHERE" prefixOverrides="AND/OR">
       
@@ -66,14 +67,14 @@
        
        </trim>
 	 </select>
-  <select id = "selectListByConditionWithPage" resultMap = "BrandWithManuResultMap" >
+  <select id = "selectListByConditionWithPage" resultMap = "BrandResultMap" >
       select * from (select X.*, ROWNUM RN   FROM(
        select a.* from Brand a
       <trim prefix = "WHERE" prefixOverrides="AND/OR">
       
        <if test = "manuid!=0">
        and a.man_id = #{manuid}
-       </if>
+       </if> 
        
        <if test = "startDate!=null">
        and a.brand_time &gt; = #{startDate}
@@ -87,7 +88,7 @@
        and a.brand_name like #{name}
        </if>
        
-       </trim>)X WHERE ROWNUM &lt;={end} ) WHERE RN &gt;=#{start} 
+       </trim>)X WHERE ROWNUM &lt;=#{end} ) WHERE RN &gt;=#{start} 
      
   </select>
   

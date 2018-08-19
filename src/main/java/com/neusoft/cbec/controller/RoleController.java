@@ -26,18 +26,18 @@ public class RoleController {
 		this.roleService = roleService;
 	}
 	
-	@RequestMapping("/getListByAll")
+	@RequestMapping("/list")
 	public List<RoleModel> getListByAll() throws Exception{
 		List<RoleModel> rolelist = roleService.getListByAll();
 		return rolelist;
 	}
 	
-	@RequestMapping(value="/getRoleById",method= {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/get/byId",method= {RequestMethod.GET})
 	public RoleModel getRoleById(@RequestParam(required=true)int id) throws Exception{
 		return roleService.getRoleById(id);
 	}
 	
-	@RequestMapping(value="/getListWithUsersByAll",method= {RequestMethod.POST,RequestMethod.GET})
+	@RequestMapping(value="/list/users",method= {RequestMethod.GET})
 	public List<RoleModel> getListWithUsersByAll() throws Exception{
 		return roleService.getListWithUsersByAll();
 	}

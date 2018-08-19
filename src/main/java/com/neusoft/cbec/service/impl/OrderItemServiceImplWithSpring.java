@@ -73,4 +73,23 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 		return orderitemdao.selectListByConditionWithPage(order_id, man_id,startDate, endDate,man_name,rows*(page-1)+1,rows*page);
 	}
 
+	@Override
+	public int getCountByCondition(int order_id, int man_id, Date startDate, Date endDate, String man_name)
+			throws Exception {
+	  return orderitemdao.selectCountByCondition(order_id, man_id, startDate, endDate,man_name);
+	}
+
+	@Override
+	public int getPageByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate, String man_name,
+			int rows) throws Exception {
+		int pageCount =0;
+		int count =this.getCountByCondition(order_id, man_id, startDate, endDate, man_name);
+		if(count%rows==0) {
+		  pageCount=count/rows;
+		}else {
+			  pageCount=count/rows+1;
+		}
+		return pageCount;
+	}
+
 }

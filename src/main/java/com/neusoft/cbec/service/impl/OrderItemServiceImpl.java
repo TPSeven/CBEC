@@ -79,6 +79,20 @@ public class OrderItemServiceImpl implements IOrderItemService {
 		return null;
 	}
 
+	@Override
+	public int getCountByCondition(int order_id, int man_id, Date startDate, Date endDate, String man_name)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPageByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate, String man_name,
+			int rows) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 }

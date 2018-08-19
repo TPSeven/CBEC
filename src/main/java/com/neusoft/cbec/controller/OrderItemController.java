@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.ManufacturerModel;
 import com.neusoft.cbec.model.OrderItemModel;
+import com.neusoft.cbec.result.GridResult;
 import com.nuesoft.cbec.service.IOrderItemService;
 
 @RestController 
@@ -66,11 +67,50 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	}
 
   @RequestMapping(value="listbyconditionwithpage")
-	public List<OrderItemModel> getListByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate,String man_name, int rows,
-			int page)
+	public GridResult<OrderItemModel> getListByConditionWithPage(
+			@RequestParam(required=false,defaultValue="0")int order_id,
+			@RequestParam(required=false,defaultValue="0")int man_id,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
+			@RequestParam(required=false,defaultValue="") String man_name,
+			@RequestParam(required=false,defaultValue="10")int rows,
+			@RequestParam(required=false,defaultValue="1")int page)
 			throws Exception {
-	
-		return orderitemService.getListByConditionWithPage(order_id, man_id, endDate, startDate, man_name,rows*(page-1)+1,rows*page);
+	  
+	  
+	  if(man_name!=null&&man_name.trim().length()>0){
+			man_name="%"+man_name+"%";
+		}
+		GridResult<OrderItemModel>  result=new GridResult<OrderItemModel>();
+		
+		result.setRecords(orderitemService.getCountByCondition(order_id, man_id, startDate, endDate,man_name ));
+		int pageCount=orderitemService.getPageByConditionWithPage(order_id, man_id, startDate, endDate, man_name, rows);
+		if(page>pageCount) {
+			page=pageCount;
+		}
+		if(page<1) {
+			page=1;
+		}
+		result.setPage(page);
+		result.setTotal(pageCount);
+		result.setRows(orderitemService.getListByConditionWithPage(order_id, man_id, startDate, endDate,man_name ,rows,page));
+		
+		return result;
 	}
+/*  @RequestMapping(value="listbyconditionwithpage")
+  public List<OrderItemModel> getListByConditionWithPage(
+			@RequestParam(required=false,defaultValue="0")int order_id,
+			@RequestParam(required=false,defaultValue="0")int man_id,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
+			@RequestParam(required=false,defaultValue="") String man_name,
+			@RequestParam(required=false,defaultValue="10")int rows,
+			@RequestParam(required=false,defaultValue="1")int page)
+			throws Exception {
+	  if(man_name!=null&&man_name.trim().length()>0){
+			man_name="%"+man_name+"%";
+		}
+		return orderitemService.getListByConditionWithPage(order_id, man_id, startDate, endDate,man_name,rows,page);
+}*/
+}
   
-} 

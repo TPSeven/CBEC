@@ -18,9 +18,13 @@
 
 <resultMap type="OrderItem" id="OrderItemWithManMap" extends="OrderItemResultMap">
 <association property="manufacture" resultMap="com.neusoft.cbec.dao.IManufacturerDao.ManResultMap"></association>
-
+<!-- <association property="manufacture" column="man_id" select="com.neusoft.cbec.dao.IManufacturerDao.selectListByAll"></association> -->
 </resultMap>
 
+<resultMap type="OrderItem" id="OrderItemWithManMap1" extends="OrderItemResultMap">
+
+<association property="manufacture" column="man_id" select="com.neusoft.cbec.dao.IManufacturerDao.selectManufacturerById"></association> 
+</resultMap>
 
 <insert id ="create" parameterType="OrderItem">
  insert into  ORDER_ITEM (Order_id,pro_id,pro_id_count,man_id,seller_id,state,order_date) values (ORDER_ITEM_NEXTNO_SQ.nextval,#{pro_id},#{pro_id_count},#{man_id},#{seller_id},#{state},#{order_date})
@@ -84,10 +88,56 @@ select * from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_id=b.man_id
 </trim>
  
 </select>
-
-
 <!-- 根据检索条件取得订单列表，有分页 -->
+<select id="selectListByConditionWithPage"  resultMap="OrderItemWithManMap1">
+select * from(select x.*,ROWNUM RN
+from(
+select a.*from ORDER_ITEM a  
+<trim prefix="WHERE" prefixOverrides="AND|OR"> 
 
+<if test="man_id!=0">
+ and a.man_id=#{man_id}
+</if>
+<if test="order_id!=0">
+ and  a.order_id=#{order_id}
+</if>
+
+<if test="startDate!=null">
+ and a.order_date &gt;= #{startDate}
+</if>
+<if test="endDate!=null">
+ and a.order_date &lt;= #{endDate}
+ </if>
+ <if test="man_name!=null and man_name!=''">
+ and b.man_name like #{man_name}
+ </if>
+</trim>
+)X where ROWNUM &lt; =#{end}) where RN &gt;=#{start}
+</select>
+
+<!-- 根据检索条件取得订单个数 -->
+<select id="selectCountByCondition" resultType="int">
+select count(a.order_id) from ORDER_ITEM a
+<trim prefix="WHERE" prefixOverrides="AND|OR"> 
+
+<if test="man_id!=0">
+ and a.man_id=#{man_id}
+</if>
+<if test="order_id!=0">
+ and  a.order_id=#{order_id}
+</if>
+
+<if test="startDate!=null">
+ and a.order_date &gt;= #{startDate}
+</if>
+<if test="endDate!=null">
+ and a.order_date &lt;= #{endDate}
+ </if>
+ <if test="man_name!=null and man_name!=''">
+ and b.man_name like #{man_name}
+ </if>
+</trim>
+</select>
 </mapper> 
 <!-- ORDER_ID order_id, PRO_ID pro_id,PRO_ID_COUNT pro_id_count,MAN_ID man_id,SELLER_ID seller_id,STATE state -->
 

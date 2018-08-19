@@ -15,11 +15,13 @@
   	<result property="brand_id" column="brand_id"/>
   	<result property="pro_photos_id" column="pro_photos_id"/>
   	<result property="pro_desc" column="pro_desc"/>
-  	<!--  
+  	<result property="up_date" column="up_date"/>
+  	<!--  内嵌式select
 	<association property="kinds" column="pro_kinds_id" select="com.neusoft.cbec.dao.IKindsDao.selectById" ></association>
- 	
+ 	  内嵌式resultMap
  	<association property="kinds" resultMap="com.neusoft.cbec.dao.IKindsDao.KindsResultMap"></association>
  	-->
+ 	
   </resultMap>
   
   <!-- 有图片 无种类字段映射的resultMap-->
@@ -41,13 +43,13 @@
   	<selectKey keyProperty="pro_id" keyColumn="pro_id" resultType="int" order="BEFORE">
   		select PRODUCT_NEXTNO_SQ.nextval from dual
   	</selectKey>
-  	insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc) 
-  	values(#{pro_id},#{pro_name},#{pro_price},#{pro_weight},#{pro_count},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc})
+  	insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc,up_date) 
+  	values(#{pro_id},#{pro_name},#{pro_price},#{pro_weight},#{pro_count},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc},#{up_date})
   </insert>
   
   <update id="update" parameterType = "Product">
   	update PRODUCT 
-  	set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_count=#{pro_count},pro_kinds_id=#{pro_kinds_id},pro_state_id=#{pro_state_id},brand_id=#{brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc}
+  	set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_count=#{pro_count},pro_kinds_id=#{pro_kinds_id},pro_state_id=#{pro_state_id},brand_id=#{brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc},up_date=#{up_date}
   	where pro_id=#{pro_id}
   </update>
   
@@ -55,19 +57,20 @@
   	delete from PRODUCT where pro_id=#{pro_id}
   </delete>
   
-  <select id="selectListByAll" resultMap = "ProductResultMap">
-  	select a.*,b.pro_kinds_id,b.kinds_name from PRODUCT a inner join KINDS b
-  	on a.pro_kinds_id=b.pro_kinds_id
-  </select>
+  <!--select id="selectListByAll" resultMap = "ProductResultMap">
+  	select * from PRODUCT 
+  </select-->
   
   <select id="selectById" parameterType = "int" resultMap="ProductResultMap">
   	select * from PRODUCT where pro_id=#{productId}
   </select>
   
+  <!-- 查询所有-无关联种类 -->
   <select id="selectListWithoutKindsByAll" resultMap = "ProductResultMap">
   	select * from PRODUCT 
   </select>
   
+  <!-- 查询所有-有关联种类 -->
   <select id="selectListWithKindsByAll" resultMap = "ProductWithKindsResultMap">
   	select a.*,b.pro_kinds_id,b.kinds_name from PRODUCT a inner join KINDS b
   	on a.pro_kinds_id=b.pro_kinds_id
@@ -75,7 +78,31 @@
   
   <!-- 根据商品种类ID取得商品表 -->
   <select id="selectListByKinds" parameterType="int" resultMap="ProductResultMap">
-  	select * from PRODUCT where pro_kinds_id=#{KindsId}
+  	select * from PRODUCT where pro_kinds_id=#{kindsId}
   </select>
+  
+  <!-- 根据检索条件取得员工列表-无分页 -->
+  <select id="selectListByCondition" resultMap="ProductWithKindsResultMap">
+    select a.* from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+  	<trim prefix="WHERE" prefixOverrides="AND|OR ">
+	   <if test="kindsId!=0">
+	     and a.pro_kinds_id=#{kindsId}
+	   </if>
+	   <if test="pro_price!=0">
+	      and a.pro_price=#{price} 
+	   </if>
+	   <if test="startDate!=null">
+	      and a.up_date &gt;=#{startDate}
+	   </if>
+	   <if test="endDate!=null">
+	      and a.up_date &lt;=#{endDate}
+	   </if>
+	   <if test="name!=null and name!=''">
+	      and a.pro_name like #{name}
+	   </if>
+	</trim> 
+  </select>
+  
+  <!-- 根据检索条件取得员工列表-有分页 -->
   
 </mapper>

@@ -21,10 +21,10 @@ public interface IKindsDao {
 	//查询所有-取得关联商品表
 	public List<KindsModel> selectListWithProductByAll() throws Exception;
 	
-	//查询所有，分页
+	//查询所有-分页
 	public List<KindsModel> selectListByAllWithPage(int rows,int page) throws Exception;
 	//按编号查询
-	public KindsModel selectById(int KindsId) throws Exception;
+	public KindsModel selectById(int kindsId) throws Exception;
 	//取得所有品种个数
 	public int selectCountByAll() throws Exception;
 

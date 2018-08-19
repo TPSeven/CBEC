@@ -1,6 +1,7 @@
 package com.neusoft.cbec.service.impl;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -70,6 +71,13 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public List<ProductModel> getListWithKindsByAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductModel> getListByCondition(int kindsId, int price, int brand, Date startDate, Date endDate,
+			String name) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,6 +1,7 @@
 package com.neusoft.cbec.service.impl;
 
 import java.io.InputStream;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.io.Resources;
@@ -68,6 +69,19 @@ public class BrandServiceImpl implements IBrandService {
 	@Override
 	public List<BrandModel> getListWithManuByAll() throws Exception {
 		return brandDao.selectListWithManuByAll();
+	}
+
+	@Override
+	public List<BrandModel> getListByConditionWithPage(int manuid, String name, Date startDate, Date endDate, int rows,
+			int page) throws Exception {
+		
+		return brandDao.selectListByConditionWithPage(manuid, name, startDate, endDate, rows*(page-1)+1, rows*page);
+	}
+
+	@Override
+	public List<BrandModel> getListByCondition(int manuid, String name, Date startDate, Date endDate) throws Exception {
+		// TODO Auto-generated method stub
+		 return brandDao.selectListByCondition(manuid, name, startDate, endDate);
 	}
 	
 

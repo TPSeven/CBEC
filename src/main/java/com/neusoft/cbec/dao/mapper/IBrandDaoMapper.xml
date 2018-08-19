@@ -7,8 +7,9 @@
   <resultMap id="BrandResultMap" type="Brand" >
     <id property="brand_id" column="brand_id" />
   	<result property="brand_name" column="brand_name"/>
-  	<result property="man_id" column="man_id"/>
+  	<!-- <result property="man_id" column="man_id"/> -->
   	<result property="brand_desc" column="brand_desc"/>
+  	<result property="brand_time" column="brand_time"/>
   	
   </resultMap>
   
@@ -19,11 +20,11 @@
   </resultMap>
    
   <insert id="create" parameterType="Brand">
-     insert into Brand (brand_id,brand_name,man_id,brand_desc) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{manufacturer.id},#{brand_desc})
+     insert into Brand (brand_id,brand_name,man_id,brand_desc,brand_time) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{manufacturer.id},#{brand_desc},#{brand_time})
   </insert>
   
   <update id="update" parameterType="Brand">
-    update Brand set brand_name=#{brand_name},man_id=#{manufacturer.id},brand_desc=#{brand_desc} where brand_id=#{brand_id}
+    update Brand set brand_name=#{brand_name},man_id=#{manufacturer.id},brand_desc=#{brand_desc},brand_time=#{brand_time} where brand_id=#{brand_id}
   </update>
   
   <delete id="delete" parameterType="Brand">
@@ -40,8 +41,55 @@
   </select>
   
   <select id="selectById" parameterType="int" resultMap="BrandWithManuResultMap">
-      select a.brand_id,a.brand_name,a.brand_desc, b.* from Brand a inner join Manufacturer b
+      select a.*, b.* from Brand a inner join Manufacturer b
      on a.man_id = b.man_id  where brand_id=#{brand_id}
   </select>  
+  
+  <select id="selectListByCondition" resultMap="BrandResultMap">
+	    select a.* from Brand a
+      <trim prefix = "WHERE" prefixOverrides="AND/OR">
+      
+       <if test = "manuid!=0">
+       and a.man_id = #{manuid}
+       </if>
+       
+       <if test = "startDate!=null">
+       and a.brand_time &gt; = #{startDate}
+       </if>
+       
+       <if test = "endDate!=null">
+       and a.brand_time &lt; = #{endDate}
+       </if>
+       
+       <if test = "name!=null and name!=''">
+       and a.brand_name like #{name}
+       </if>
+       
+       </trim>
+	 </select>
+  <select id = "selectListByConditionWithPage" resultMap = "BrandResultMap" >
+      select * from (select X.*, ROWNUM RN   FROM(
+       select a.* from Brand a
+      <trim prefix = "WHERE" prefixOverrides="AND/OR">
+      
+       <if test = "manuid!=0">
+       and a.man_id = #{manuid}
+       </if> 
+       
+       <if test = "startDate!=null">
+       and a.brand_time &gt; = #{startDate}
+       </if>
+       
+       <if test = "endDate!=null">
+       and a.brand_time &lt; = #{endDate}
+       </if>
+       
+       <if test = "name!=null and name!=''">
+       and a.brand_name like #{name}
+       </if>
+       
+       </trim>)X WHERE ROWNUM &lt;=#{end} ) WHERE RN &gt;=#{start} 
+     
+  </select>
   
 </mapper>

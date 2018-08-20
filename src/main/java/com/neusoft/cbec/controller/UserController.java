@@ -133,4 +133,29 @@ public class UserController {
 		gridResult.setRows(userService.getListWithRoleByConditionWithPage(userName, userSex, startDate, endDate, lowerAge, upperAge, userPhone, roleIds, rows, page));
 		return gridResult;
 	}
+	
+	//校验用户名是否已经注册  false：已经注册，不能被使用 ;true：没注册，能被使用 --表单变量名相同
+	@RequestMapping(value="/checkNameCanBeUsed")
+	public boolean checkNameCanBeUsed(String name)throws Exception {
+		List<UserModel> list =  userService.getListByAll();
+		for(UserModel user : list) {
+			if(user.getName().equals(name)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	//校验邮箱是否已经注册   false：已经注册，不能被使用 ;true：没注册，能被使用 --表单变量名不相同
+	@RequestMapping(value="/checkEmailCanBeUsed",method= {RequestMethod.POST})
+	public boolean checkEmailCanBeUsed(String userEmail)throws Exception {
+		List<UserModel> list =  userService.getListByAll();
+		for(UserModel user : list) {
+			if(user.getEmail().equals(userEmail)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 }

@@ -161,11 +161,12 @@ $(document).ready(function(){
 				rules:{
 					name:{
 						required:true,
-						rangelength:[4,15]
+						remote:"user/checkNameCanBeUsed.mvc",
+						rangelenghtForCBEC:[4,15]
 					},
 					password:{
 						required:true,
-						rangelength:[6,8]
+						checkpassword:true
 					},
 					repassword:{
 						equalTo:"input[name='password']",
@@ -178,10 +179,19 @@ $(document).ready(function(){
 						required:true
 					},
 					phone:{
-						rangelength:[11,11]
+						mobile:true
 					},
 					email:{
 						required:true,
+						remote:{
+							url:"user/checkEmailCanBeUsed.mvc",
+							type:"POST",
+							data:{
+								userEmail:function(){
+									return $("input[name='email']").val();
+								}
+							}
+						},
 					 	email:true
 					},
 					joinDate:{
@@ -194,7 +204,8 @@ $(document).ready(function(){
 				messages:{
 					name:{
 						required:"账号不能为空",
-						rangelength:"账号长度为4~15位"
+						remote:"用户名称已经被注册",
+						rangelenghtForCBEC:"账号长度为4~15位"
 					},
 					password:{
 						required:"密码账号不能为空",
@@ -210,11 +221,9 @@ $(document).ready(function(){
 					birthday:{
 						required:"生日不能为空"
 					},
-					phone:{
-						rangelength:"电话号码不合法"
-					},
 					email:{
 						required:"邮箱不能为空",
+						remote:"该邮箱已经被注册",
 						email:"邮件名称不合法"
 					},
 					joinDate:{

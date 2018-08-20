@@ -62,6 +62,18 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
+	@Override
+	public List<ProductModel> getListWithoutKindsByAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductModel> getListWithKindsByAll() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

@@ -3,6 +3,7 @@ package com.neusoft.cbec.service.impl;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,24 +67,24 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 	}
 
 	@Override
-	public List<OrderItemModel> getListByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate,String man_name, int rows,
+	public List<OrderItemModel> getListByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate,String man_name, String state,int rows,
 			int page)
 			throws Exception {
 	
-		return orderitemdao.selectListByConditionWithPage(order_id, man_id,startDate, endDate,man_name,rows*(page-1)+1,rows*page);
+		return orderitemdao.selectListByConditionWithPage(order_id, man_id,startDate, endDate,man_name,state,rows*(page-1)+1,rows*page);
 	}
 
 	@Override
-	public int getCountByCondition(int order_id, int man_id, Date startDate, Date endDate, String man_name)
+	public int getCountByCondition(int order_id, int man_id, Date startDate, Date endDate, String man_name,String state)
 			throws Exception {
-	  return orderitemdao.selectCountByCondition(order_id, man_id, startDate, endDate,man_name);
+	  return orderitemdao.selectCountByCondition(order_id, man_id, startDate, endDate,man_name, state);
 	}
 
 	@Override
-	public int getPageByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate, String man_name,
+	public int getPageByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate, String man_name,String state,
 			int rows) throws Exception {
 		int pageCount =0;
-		int count =this.getCountByCondition(order_id, man_id, startDate, endDate, man_name);
+		int count =this.getCountByCondition(order_id, man_id, startDate, endDate, man_name,state);
 		if(count%rows==0) {
 		  pageCount=count/rows;
 		}else {

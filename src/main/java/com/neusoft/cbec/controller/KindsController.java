@@ -48,6 +48,11 @@ public class KindsController {
 		return kindsService.getListByAll();
 	}
 	
+	@RequestMapping(value="/list/all/withproduct",method=RequestMethod.GET)
+	public List<KindsModel> getListWithProductByAll() throws Exception{
+		return kindsService.getListWithProductByAll();
+	}
+	
 	@RequestMapping(value="/get/id",method=RequestMethod.GET)
 	public KindsModel getById(int kindsId) throws Exception{
 		return kindsService.getById(kindsId);

@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.neusoft.cbec.model.UserModel;
+import com.neusoft.cbec.result.ControllerResult;
 import com.neusoft.cbec.result.GridResult;
 import com.nuesoft.cbec.service.IUserService;
 
@@ -29,56 +31,97 @@ public class UserController {
 		this.userService = userService;
 	}
 	
-	@RequestMapping("/getListByAll")
+	@RequestMapping(value="/add",method= {RequestMethod.POST})
+	public ControllerResult add(UserModel user,@RequestParam(required=false)MultipartFile portrait) throws Exception{
+		ControllerResult result = null;
+		try {
+			result = new ControllerResult();
+			//无图片提交
+			if(portrait==null || portrait.isEmpty()) {
+				userService.addWithoutPhoto(user);
+			}else{
+				//有图片提交
+				String fileName = portrait.getOriginalFilename();
+				String contentType = portrait.getContentType();
+				user.setPortrait(portrait.getBytes());
+				user.setPortraitFileName(fileName);
+				user.setPortraitContentType(contentType);
+				userService.addWithPhoto(user);
+			}
+			result.setStaus("0k");
+			result.setMessage("增加用户成功");
+			return result;
+		} catch (Exception e) {
+			result.setStaus("false");
+			result.setMessage(e.getMessage());
+		}
+		return result;
+	}
+	
+	@RequestMapping("/list")
 	public List<UserModel> getListByAll() throws Exception{
 		return userService.getListByAll();
 	}
 	
-	@RequestMapping("/getListWithRoleByAll")
+	@RequestMapping("/list/role")
 	public List<UserModel> getListWithRoleByAll() throws Exception{
 		return userService.getListWithRoleByAll();
 	}
 	
-	@RequestMapping("/getListWithPortraitByAll")
+	@RequestMapping("/list/portrait")
 	public List<UserModel> getListWithPortraitByAll() throws Exception{
 		return userService.getListWithPortraitByAll();
 	}
-
-	@RequestMapping(value="/getListByRole",method= {RequestMethod.POST,RequestMethod.GET})
+	
+	//根据角色id，得到用户列表
+	@RequestMapping(value="/list/byRole",method= {RequestMethod.POST,RequestMethod.GET})
 	public List<UserModel> getListByRole(@RequestParam(required=true)int roleId) throws Exception{
 		return userService.getListByRole(roleId);
 	}
 	
-	@RequestMapping(value="/getListWithRoleByCondition",method= {RequestMethod.GET})
+	//根据检索条件，得到用户列表
+	@RequestMapping(value="/list/role/byCondition",method= {RequestMethod.GET})
 	public List<UserModel> getListWithRoleByCondition(@RequestParam(required=false,defaultValue="")String userName,
 			@RequestParam(required=false,defaultValue="")String userSex,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
+			@RequestParam(required=false,defaultValue="0") int lowerAge,
+			@RequestParam(required=false,defaultValue="0")int upperAge,
+			@RequestParam(required=false,defaultValue="")String userPhone,
 			@RequestParam(required=false)int[] roleIds) throws Exception{
 		if(userName!=null&&userName.trim().length()>0) {
 			userName = "%"+userName+"%";
 		}
-		return userService.getListWithRoleByCondition(userName, userSex, startDate, endDate, roleIds);
+		if(userPhone!=null&userPhone.trim().length()>0) {
+			userPhone = "%"+userPhone+"%";
+		}
+		return userService.getListWithRoleByCondition(userName, userSex, startDate, endDate, lowerAge, upperAge, userPhone, roleIds);
 	}
 	
 	
-	//根据检索条件，得到所有的用户列表
-	@RequestMapping(value="/getListWithRoleByConditionWithPage",method= {RequestMethod.GET})
+	//根据检索条件，得到用户列表 分页
+	@RequestMapping(value="/list/role/byCondition/page",method= {RequestMethod.GET})
 	public GridResult<UserModel> getListWithRoleByConditionWithPage(@RequestParam(required=false,defaultValue="")String userName,
 			@RequestParam(required=false,defaultValue="")String userSex,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
 			@RequestParam(required=false)int[] roleIds,
+			@RequestParam(required=false,defaultValue="0") int lowerAge,
+			@RequestParam(required=false,defaultValue="0")int upperAge,
+			@RequestParam(required=false,defaultValue="")String userPhone,
 			@RequestParam(required=false,defaultValue="5")int rows,
 			@RequestParam(required=false,defaultValue="1")int page) throws Exception{
 		if(userName!=null&&userName.trim().length()>0) {
 			userName = "%"+userName+"%";
 		}
+		if(userPhone!=null&userPhone.trim().length()>0) {
+			userPhone = "%"+userPhone+"%";
+		}
 		
 		GridResult<UserModel> gridResult = new GridResult<UserModel>();
 		//总个数
-		gridResult.setRecords(userService.getCountByCondition(userName, userSex, startDate, endDate, roleIds));
-		int total = userService.getPageCountByCondition(userName, userSex, startDate, endDate, roleIds, rows);
+		gridResult.setRecords(userService.getCountByCondition(userName, userSex, startDate, endDate, lowerAge, upperAge, userPhone, roleIds));
+		int total = userService.getPageCountByCondition(userName, userSex, startDate, endDate, lowerAge, upperAge, userPhone, roleIds, rows);
 		//总页数
 		gridResult.setTotal(total);
 		if(page<0 || page>total) {
@@ -87,7 +130,7 @@ public class UserController {
 		//当前页
 		gridResult.setPage(page);
 		
-		gridResult.setRows(userService.getListWithRoleByConditionWithPage(userName, userSex, startDate, endDate, roleIds, rows, page));
+		gridResult.setRows(userService.getListWithRoleByConditionWithPage(userName, userSex, startDate, endDate, lowerAge, upperAge, userPhone, roleIds, rows, page));
 		return gridResult;
 	}
 }

@@ -58,7 +58,7 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		return orderitemService.getOrderItemById(id);
 	}
   
-  @RequestMapping(value="listbycondition")
+  @RequestMapping(value="/listbycondition")
 	public List<OrderItemModel> getListByCondition(@RequestParam(required=false,defaultValue="0") int order_id, @RequestParam(required=false,defaultValue="0") int man_id, @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")  Date endDate,@RequestParam(required=false,defaultValue="") String man_name) throws Exception {
 	if(man_name!=null&&man_name.trim().length()>0){
 		man_name="%"+man_name+"%";
@@ -66,25 +66,28 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		return orderitemService.getListByCondition(order_id, man_id, startDate, endDate,man_name);
 	}
 
-  @RequestMapping(value="listbyconditionwithpage")
+  @RequestMapping(value="/listbyconditionwithpage")
 	public GridResult<OrderItemModel> getListByConditionWithPage(
 			@RequestParam(required=false,defaultValue="0")int order_id,
 			@RequestParam(required=false,defaultValue="0")int man_id,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate, 
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
 			@RequestParam(required=false,defaultValue="") String man_name,
+			@RequestParam(required=false,defaultValue="") String state,
 			@RequestParam(required=false,defaultValue="10")int rows,
 			@RequestParam(required=false,defaultValue="1")int page)
 			throws Exception {
 	  
-	  
+		System.out.println("111");
 	  if(man_name!=null&&man_name.trim().length()>0){
 			man_name="%"+man_name+"%";
 		}
 		GridResult<OrderItemModel>  result=new GridResult<OrderItemModel>();
 		
-		result.setRecords(orderitemService.getCountByCondition(order_id, man_id, startDate, endDate,man_name ));
-		int pageCount=orderitemService.getPageByConditionWithPage(order_id, man_id, startDate, endDate, man_name, rows);
+		result.setRecords(orderitemService.getCountByCondition(order_id, man_id, startDate, endDate,man_name ,state));
+		System.out.println("111");
+
+		int pageCount=orderitemService.getPageByConditionWithPage(order_id, man_id, startDate, endDate, man_name,state, rows);
 		if(page>pageCount) {
 			page=pageCount;
 		}
@@ -93,8 +96,11 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(orderitemService.getListByConditionWithPage(order_id, man_id, startDate, endDate,man_name ,rows,page));
-		
+		System.out.println(page);
+		System.out.println("111");		
+		System.out.println(pageCount);
+		result.setRows(orderitemService.getListByConditionWithPage(order_id, man_id, startDate, endDate,man_name,state,rows,page));
+		System.out.println("111");
 		return result;
 	}
 /*  @RequestMapping(value="listbyconditionwithpage")

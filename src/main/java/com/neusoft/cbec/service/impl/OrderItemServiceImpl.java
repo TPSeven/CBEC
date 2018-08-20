@@ -1,4 +1,4 @@
-package com.neusoft.cbec.service.impl;
+/*package com.neusoft.cbec.service.impl;
 
 import java.io.InputStream;
 import java.util.Date;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import com.neusoft.cbec.dao.IOrderItemDao;
 import com.neusoft.cbec.model.OrderItemModel;
 import com.nuesoft.cbec.service.IOrderItemService;
-/*@Service*/
+@Service
 public class OrderItemServiceImpl implements IOrderItemService {
 
 	@Override
@@ -93,6 +93,20 @@ public class OrderItemServiceImpl implements IOrderItemService {
 		return 0;
 	}
 
+	@Override
+	public List<OrderItemModel> getListByConditionWithPage(int order_id, int man_id, Date startDate, Date endDate,
+			String man_name, String state, int start, int end) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCountByCondition(int order_id, int man_id, Date startDate, Date endDate, String man_name,
+			String state) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 
 
-}
+
+}*/

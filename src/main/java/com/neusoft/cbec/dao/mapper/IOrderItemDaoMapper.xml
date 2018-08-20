@@ -85,22 +85,25 @@ select * from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_id=b.man_id
  <if test="man_name!=null and man_name!=''">
  and b.man_name like #{man_name}
  </if>
+ <if test="state!=null and state!=''">
+ and a.state= #{state}
+</if>
 </trim>
  
 </select>
 <!-- 根据检索条件取得订单列表，有分页 -->
-<select id="selectListByConditionWithPage"  resultMap="OrderItemWithManMap1">
-select * from(select x.*,ROWNUM RN
+<select id="selectListByConditionWithPage"  resultMap="OrderItemWithManMap">
+select * from (select x.*,ROWNUM RN
 from(
-select a.*from ORDER_ITEM a  
+select * from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_id=b.man_id
 <trim prefix="WHERE" prefixOverrides="AND|OR"> 
-
-<if test="man_id!=0">
- and a.man_id=#{man_id}
-</if>
 <if test="order_id!=0">
  and  a.order_id=#{order_id}
 </if>
+<if test="man_id!=0">
+ and a.man_id=#{man_id}
+</if>
+
 
 <if test="startDate!=null">
  and a.order_date &gt;= #{startDate}
@@ -111,21 +114,24 @@ select a.*from ORDER_ITEM a
  <if test="man_name!=null and man_name!=''">
  and b.man_name like #{man_name}
  </if>
+ <if test="state!=null and state!=''">
+ and a.state= #{state}
+</if>
 </trim>
 )X where ROWNUM &lt; =#{end}) where RN &gt;=#{start}
 </select>
 
 <!-- 根据检索条件取得订单个数 -->
 <select id="selectCountByCondition" resultType="int">
-select count(a.order_id) from ORDER_ITEM a
+select count(a.order_id) from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_id=b.man_id
 <trim prefix="WHERE" prefixOverrides="AND|OR"> 
-
-<if test="man_id!=0">
- and a.man_id=#{man_id}
-</if>
 <if test="order_id!=0">
  and  a.order_id=#{order_id}
 </if>
+<if test="man_id!=0">
+ and a.man_id=#{man_id}
+</if>
+
 
 <if test="startDate!=null">
  and a.order_date &gt;= #{startDate}
@@ -136,6 +142,9 @@ select count(a.order_id) from ORDER_ITEM a
  <if test="man_name!=null and man_name!=''">
  and b.man_name like #{man_name}
  </if>
+<if test="state!=null and state!=''">
+ and a.state= #{state}
+</if>
 </trim>
 </select>
 </mapper> 

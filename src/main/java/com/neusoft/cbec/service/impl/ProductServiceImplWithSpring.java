@@ -50,5 +50,19 @@ public class ProductServiceImplWithSpring implements IProductService {
 		
 		return productDao.selectById(productId);
 	}
+	
+
+	//取得所有商品列表-无关联种类-无分页
+	@Override
+	public List<ProductModel> getListWithoutKindsByAll() throws Exception {
+		
+		return productDao.selectListWithoutKindsByAll();
+	}
+
+	//取得所有商品列表-有关联种类-无分页
+	@Override
+	public List<ProductModel> getListWithKindsByAll() throws Exception {
+		return productDao.selectListWithKindsByAll();
+	}
 
 }

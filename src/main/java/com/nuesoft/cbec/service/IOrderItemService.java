@@ -21,9 +21,9 @@ public interface IOrderItemService {
 	    public List<OrderItemModel> getListByCondition(int order_id,int man_id,Date startDate,Date endDate,String man_name) throws Exception;
 	    
 	    //根据检索条件取得订单的列表 ,有分页
-	    public List<OrderItemModel> getListByConditionWithPage(int order_id,int man_id,Date startDate,Date endDate,String man_name,int start,int end) throws Exception;
+	    public List<OrderItemModel> getListByConditionWithPage(int order_id,int man_id,Date startDate,Date endDate,String man_name,String state,int start,int end) throws Exception;
 		//根据检索条件取得订单个数
-	    public int  getCountByCondition(int order_id,int man_id,Date startDate,Date endDate,String man_name) throws Exception;
+	    public int  getCountByCondition(int order_id,int man_id,Date startDate,Date endDate,String man_name,String state) throws Exception;
         //根据检索条件取得订单的页数
-	    public int getPageByConditionWithPage(int order_id,int man_id,Date startDate,Date endDate,String man_name,int rows) throws Exception;
+	    public int getPageByConditionWithPage(int order_id,int man_id,Date startDate,Date endDate,String man_name,String state,int rows) throws Exception;
  }

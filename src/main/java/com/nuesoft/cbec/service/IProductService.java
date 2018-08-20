@@ -16,5 +16,9 @@ public interface IProductService {
 	//按编号查询
 	public ProductModel getById(int productId) throws Exception;
 	
+	//取得所有商品列表-无关联种类-无分页
+	public List<ProductModel> getListWithoutKindsByAll() throws Exception;
+	//取得所有商品列表-有关联种类-无分页
+	public List<ProductModel> getListWithKindsByAll() throws Exception;
 
 }

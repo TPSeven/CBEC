@@ -43,6 +43,8 @@ public interface IProductDao {
 	//根据检索条件取得员工列表-无分页
 	public List<ProductModel> selectListByCondition(@Param("kindsId") int kindsId,@Param("pro_price") int price,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name)throws Exception;
 	//根据检索条件取得员工列表-有分页
-	public List<ProductModel> selectListByConditionWithPage(@Param("kindsId") int kindId,@Param("pro_price") int price,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("start") int start,@Param("end") int end)throws Exception;
+	public List<ProductModel> selectListByConditionWithPage(@Param("kindsId") int kindsId,@Param("pro_price") int price,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("rows") int rows,@Param("page") int page)throws Exception;
 	
+	//根据检索条件取得员工个数
+	public int selectCountByCondition(@Param("kindsId") int kindsId,@Param("pro_price") int price,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name) throws Exception;
 }

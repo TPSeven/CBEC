@@ -23,5 +23,10 @@ public interface IProductService {
 	public List<ProductModel> getListWithKindsByAll() throws Exception;
 	
 	public List<ProductModel> getListByCondition(int kindsId,int price,int brand,Date startDate,Date endDate,String name)throws Exception;
+	public List<ProductModel> getListByConditionWithPage(int kindsId,int price,int brand,Date startDate,Date endDate,String name,int rows,int page)throws Exception;
 
+	//根据检索条件取得商品个数
+	public int getCountByCondition(int kindsId,int price,int brand,Date startDate,Date endDate,String name) throws Exception;
+	//根据检索条件取得商品总页数
+	public int getPageCountByCondition(int kindsId,int price,int brand,Date startDate,Date endDate,String name,int rows) throws Exception;
 }

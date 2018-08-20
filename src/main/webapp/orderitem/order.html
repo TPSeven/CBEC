@@ -1,22 +1,120 @@
 <meta http-equiv="Content-Type" content="order.html; charset=utf-8"/>
 
-
+<!-- 
   <div class="panel panel-default">
-                        <div class="panel-heading">
-                        <div class="row">
-                                <div class="col-md-6">订单管理</div>
-                        
-                         <div class="col-md-6  text-right" >  
-                        <a href="#"   id="orderlistAddLink" class="btn btn-default">增加</a><a href="#"  id="orderlistModifyLink" class="btn btn-default">修改</a><a href="#" id="orderlistDeleteLink" class="btn btn-default">删除</a><a href="#" id="orderlistViewLink" class="btn btn-default">查看</a>
-                         </div>
-                      </div>
-                      </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body"  id="OrderitemMainContent">
-                            
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-  
-    <script src="orderitem/order.js"></script>
+                  <div class="panel-heading">
+                  <div class="row">
+                          <div class="col-md-6">订单管理</div>
+                </div>
+                </div>
+                  /.panel-heading
+              <div class="panel-body">
+              <div class="row">
+              <div class="col-md-1">
+                                 订单
+              </div>
+              </div>
+              
+              
+              
+               <table id="orderitemGrid"></table>
+               <div  id="orderitemGridPager"></div>
+            
+              </div>
+          /.panel-body
+          </div> -->
+          <!-- <script src="employee/main.js"></script> -->
+<div class="panel panel-default">
+         <div class="panel-heading">
+            <b>订单管理</b>
+            
+         </div>
+
+         <div class="panel-body">
+           <div class="row">
+          <div class="col-md-1 text-right">
+            	订单编号
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-controll" id="order_id" />
+            </div> 
+            	
+          <div class="col-md-1 text-right">
+            	制造商号
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-controll" id="man_id" />
+            </div> 	
+            <div class="col-md-1 text-right">
+            	制造商名
+            </div>
+            <div class="col-md-3">
+              <input type="text" class="form-controll" id="man_name" />
+            </div> 	  
+          </div>
+                  <br/>
+            <div class="row">
+                    
+            <div class="col-md-1 text-right">
+            
+            	起始日期
+            </div>
+            <div class="col-md-1">
+              <input type="date" class="form-controll" id="startDate" />
+            </div>
+            <div class="col-md-3 text-right">
+           
+            	截止日期
+            </div>
+            <div class="col-md-1">
+	            <input type="date" class="form-controll" id="endDate" />
+            </div>
+              
+            </div> 
+             <br/>
+            <div class="row">
+             <div class="col-md-1 text-right">
+	            	订单状态
+	            </div>
+	            <div class="col-md-3 ">
+		            <label class="radio-inline">
+				        <input type="radio"  name="state"  value="" checked>全部
+				    </label>
+				    <label class="radio-inline">
+				        <input type="radio" name="state" value="1" >1
+				    </label>
+				    <label class="radio-inline">
+				        <input type="radio" name="state" value="2" >2
+				    </label>
+	            </div>
+	            </div>
+            <br/>
+<!--             <div class="row">
+            <div class="col-md-1">
+            	角色
+            </div>
+            <div class="col-md-10">
+              <label class="checkbox-inline">
+			        <input type="checkbox" id="inlineCheckbox1" value="option1"> 选项 1
+			  </label>
+			  <label class="checkbox-inline">
+			        <input type="checkbox" id="inlineCheckbox2" value="option2"> 选项 2
+			  </label>
+			  <label class="checkbox-inline">
+			        <input type="checkbox" id="inlineCheckbox3" value="option3"> 选项 3
+			  </label>
+            </div> 	
+            </div> -->
+            
+            
+            <div class="col-md-12">
+            <table id="orderitemGrid"></table>
+			<div id="orderitemGridPager"></div>
+			</div>
+             
+         </div>
+         <!-- /.panel-body -->
+     </div>
+          
+
+<script src="orderitem/order.js"></script>

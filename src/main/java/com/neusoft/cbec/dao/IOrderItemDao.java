@@ -26,8 +26,9 @@ public interface IOrderItemDao {
     public List<OrderItemModel> selectListByCondition(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name) throws Exception;
     
     //根据检索条件取得订单的列表 ,有分页
-    public List<OrderItemModel> selectListByConditionWithPage(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name,@Param("start")int start,@Param("end")int end) throws Exception;
-    
+    public List<OrderItemModel> selectListByConditionWithPage(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name,@Param("state")String state,@Param("start")int start,@Param("end")int end) throws Exception;
+    //根据检索条件取得订单的个数
+    public int selectCountByCondition(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name,@Param("state")String state) throws Exception;
     
     //取得订单编号
    public OrderItemModel selectByID(int order_id) throws Exception;

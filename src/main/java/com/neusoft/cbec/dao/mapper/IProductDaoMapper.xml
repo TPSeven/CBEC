@@ -83,7 +83,7 @@
   
   <!-- 根据检索条件取得员工列表-无分页 -->
   <select id="selectListByCondition" resultMap="ProductWithKindsResultMap">
-    select a.* from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+    select a.* ,b.kinds_name from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
   	<trim prefix="WHERE" prefixOverrides="AND|OR ">
 	   <if test="kindsId!=0">
 	     and a.pro_kinds_id=#{kindsId}
@@ -104,5 +104,52 @@
   </select>
   
   <!-- 根据检索条件取得员工列表-有分页 -->
+  <select id="selectListByConditionWithPage" resultMap="ProductWithKindsResultMap">
+  SELECT * FROM  (SELECT X.*, ROWNUM RN
+  FROM (
+    select a.* ,b.kinds_name from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+  	<trim prefix="WHERE" prefixOverrides="AND|OR ">
+	   <if test="kindsId!=0">
+	     and a.pro_kinds_id=#{kindsId}
+	   </if>
+	   <if test="pro_price!=0">
+	      and a.pro_price=#{price} 
+	   </if>
+	   <if test="startDate!=null">
+	      and a.up_date &gt;=#{startDate}
+	   </if>
+	   <if test="endDate!=null">
+	      and a.up_date &lt;=#{endDate}
+	   </if>
+	   <if test="name!=null and name!=''">
+	      and a.pro_name like #{name}
+	   </if>
+	</trim> 
+	)
+	 X WHERE ROWNUM &lt;=#{rows})  WHERE RN &gt;=#{page}
+  </select>
+  
+  <!-- 根据检索条件取得员工的个数 -->
+  <select id="selectCountByCondition" resultType="int">
+    select count(a.pro_kinds_id) from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+  	<trim prefix="WHERE" prefixOverrides="AND|OR ">
+	   <if test="kindsId!=0">
+	     and a.pro_kinds_id=#{kindsId}
+	   </if>
+	   <if test="pro_price!=0">
+	      and a.pro_price=#{price} 
+	   </if>
+	   <if test="startDate!=null">
+	      and a.up_date &gt;=#{startDate}
+	   </if>
+	   <if test="endDate!=null">
+	      and a.up_date &lt;=#{endDate}
+	   </if>
+	   <if test="name!=null and name!=''">
+	      and a.pro_name like #{name}
+	   </if>
+	</trim> 
+  </select>
+  
   
 </mapper>

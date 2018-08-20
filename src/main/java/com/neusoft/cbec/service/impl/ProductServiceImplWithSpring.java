@@ -1,5 +1,6 @@
 package com.neusoft.cbec.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +64,13 @@ public class ProductServiceImplWithSpring implements IProductService {
 	@Override
 	public List<ProductModel> getListWithKindsByAll() throws Exception {
 		return productDao.selectListWithKindsByAll();
+	}
+
+	@Override
+	public List<ProductModel> getListByCondition(int kindsId, int price, int brand, Date startDate, Date endDate,
+			String name) throws Exception {
+		
+		return productDao.selectListByCondition(kindsId, price, brand, startDate, endDate, name);
 	}
 
 }

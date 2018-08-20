@@ -156,6 +156,76 @@ $(document).ready(function(){
 				});
 			});
 			
+			//验证--使用JQueryValidate对员工进行数据验证
+			$("form#addUserForm").validate({
+				rules:{
+					name:{
+						required:true,
+						rangelength:[4,15]
+					},
+					password:{
+						required:true,
+						rangelength:[6,8]
+					},
+					repassword:{
+						equalTo:"input[name='password']",
+					},
+					age:{
+						digits:true,
+					 	range:[18,60]
+					},
+					birthday:{
+						required:true
+					},
+					phone:{
+						rangelength:[11,11]
+					},
+					email:{
+						required:true,
+					 	email:true
+					},
+					joinDate:{
+						required:true
+					},
+					portrait:{
+						accept:"image/*"
+					}
+				},
+				messages:{
+					name:{
+						required:"账号不能为空",
+						rangelength:"账号长度为4~15位"
+					},
+					password:{
+						required:"密码账号不能为空",
+						rangelength:"密码长度为6~8位"
+					},
+					repassword:{
+						equalTo:"两次密码不一致",
+					},
+					age:{
+						digits:"年龄必须为整数",
+					 	range:"年龄范围为18~60"
+					},
+					birthday:{
+						required:"生日不能为空"
+					},
+					phone:{
+						rangelength:"电话号码不合法"
+					},
+					email:{
+						required:"邮箱不能为空",
+						email:"邮件名称不合法"
+					},
+					joinDate:{
+						required:"注册日期为空"
+					},
+					portrait:{
+						accept:"文件类型必须为图片"
+					}
+				}
+			});
+			
 			//拦截表单提交导致的页面跳转
 			$("form#addUserForm").ajaxForm(function(result){
 				alert(result.message);

@@ -82,6 +82,27 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
+	@Override
+	public List<ProductModel> getListByConditionWithPage(int kindsId, int price, int brand, Date startDate,
+			Date endDate, String name, int start, int end) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCountByCondition(int kindsId, int price, int brand, Date startDate, Date endDate, String name)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int getPageCountByCondition(int kindsId, int price, int brand, Date startDate, Date endDate, String name,
+			int rows) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 
 

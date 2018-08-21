@@ -5,13 +5,16 @@
 $(document).ready(function(){
 	var productId = null;
 	alert("PRO OK");
+	//填充下拉框
 	$.getJSON("kinds/list/all.mvc",function(kindsList){
 		var options="<option value='0'>所有</option>"
 		$.each(kindsList,function(index,kd){
-			options=options+"<option value='"+kd.pro_kinds_id+"'>"+kd.pro_kinds_name+"</option>"
-			$("select#KindsSelection").html(options);
+			$("select#KindsSelection").append("<option value='"+kd.pro_kinds_id+"'>"+kd.pro_kinds_name+"</option>");
 		});
 	});
+	
+	//商品品牌复选框
+	
 	
 	//显示员工列表表格
     $("table#productGrid").jqGrid({

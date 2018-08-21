@@ -70,26 +70,30 @@ public class ProductController {
 		
 	@RequestMapping(value="/list/condition",method=RequestMethod.POST)
 	public List<ProductModel> getListByCondition(@RequestParam(required=false,defaultValue="0") int kindsId, 
-			@RequestParam(required=false,defaultValue="0") int price,
-			@RequestParam(required=false,defaultValue="0") int brand,
-			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
-			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
-			@RequestParam(required=false,defaultValue="") String name) throws Exception {
-		if(name!=null&&name.trim().length()>0) {
-			name="%"+name+"%";
-			
-		}
-		return productService.getListByCondition(kindsId, price, brand, startDate, endDate, name);
-	}	
-	
-	@RequestMapping(value="/list/condition/page",method=RequestMethod.POST)
-	public GridResult<ProductModel> getListByConditionWithPage(@RequestParam(required=false,defaultValue="0") int kindsId, 
-			@RequestParam(required=false,defaultValue="0") int price,
+			@RequestParam(required=false,defaultValue="0") int sprice,
+			@RequestParam(required=false,defaultValue="0") int eprice,
 			@RequestParam(required=false,defaultValue="0") int brand,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
 			@RequestParam(required=false,defaultValue="") String name,
-			@RequestParam(required=false,defaultValue="3") int rows, 
+			@RequestParam(required=false,defaultValue="") String state) throws Exception {
+		if(name!=null&&name.trim().length()>0) {
+			name="%"+name+"%";
+			
+		}
+		return productService.getListByCondition(kindsId, sprice, eprice, brand, startDate, endDate, name, state);
+	}	
+	
+	@RequestMapping(value="/list/condition/page",method=RequestMethod.POST)
+	public GridResult<ProductModel> getListByConditionWithPage(@RequestParam(required=false,defaultValue="0") int kindsId, 
+			@RequestParam(required=false,defaultValue="0") int sprice,
+			@RequestParam(required=false,defaultValue="0") int eprice,
+			@RequestParam(required=false,defaultValue="0") int brand,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
+			@RequestParam(required=false,defaultValue="") String name,
+			@RequestParam(required=false,defaultValue="") String state,
+			@RequestParam(required=false,defaultValue="3") int rows,
 			@RequestParam(required=false,defaultValue="1") int page) throws Exception {
 		if(name!=null&&name.trim().length()>0) {
 			name="%"+name+"%";
@@ -97,8 +101,8 @@ public class ProductController {
 		}
 		GridResult<ProductModel>  result=new GridResult<ProductModel>();
 		
-		result.setRecords(productService.getCountByCondition(kindsId, price,brand, startDate, endDate, name));
-		int pageCount=productService.getPageCountByCondition(kindsId, price, brand, startDate, endDate, name, rows);
+		result.setRecords(productService.getCountByCondition(kindsId, sprice, eprice, brand, startDate, endDate, name, state));
+		int pageCount=productService.getPageCountByCondition(kindsId, sprice, eprice, brand, startDate, endDate, name, state, rows);
 		if(page>pageCount) {
 			page=pageCount;
 		}
@@ -107,7 +111,7 @@ public class ProductController {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(productService.getListByConditionWithPage(kindsId, price, brand, startDate, endDate, name, rows, page));
+		result.setRows(productService.getListByConditionWithPage(kindsId, sprice, eprice, brand, startDate, endDate, name, state, rows, page));
 		
 		return result;
 	}	

@@ -1,11 +1,45 @@
 <script src="brand/brand.js"></script>
        <div class="panel panel-default">
 	          <div class="panel-heading">
-	              <div class="col-md-6"><b>品牌商管理</b></div>                                        
+	              <div class="row">
+	              <div class="col-md-6"><b>品牌商管理</b></div> 
+	              <div class="col-md-8 text-right"> <a href="#" id="EmployeeAddLink" class="btn btn-default">增加</a><a href="#" id="EmployeeModifyLink" class="btn btn-default">修改</a><a href="#" id="EmployeeDeleteLink" class="btn btn-default">删除</a><a href="#" id="EmployeeViewLink" class="btn btn-default">查看</a></div>                                       
+	              </div>
 	          </div>
-	
+	          
 	          <div class="panel-body" id = "BrandMainContext" >
-	                        
+	               <div class="row">
+	            <div class="col-md-1">
+	            	制造商
+	            </div>
+	            <div class="col-md-3">
+	              <select class="form-control" id="ManufacturerSelection">
+	                 <option value="0">所有</option>
+	                
+	              </select>
+	            </div>
+	            <div class="col-md-1">
+	            	品牌商名字
+	            </div>
+	            <div class="col-md-3">
+	              <input type="text" class="form-control" id="brandName" />
+	            </div> 	
+            </div>
+            <div class="row">
+	            <div class="col-md-1">
+	            	起始时间
+	            </div>
+	            <div class="col-md-3">
+	              <input type="date" class="form-control" id="StartDate" />
+	            </div>
+	            <div class="col-md-1">
+	            	截止时间
+	            </div>
+	            <div class="col-md-3">
+		            <input type="date" class="form-control" id="EndDate" />
+	            </div>
+	            </div>	
+            </div>          
 			      <table id = "BrandGrid"></table>
 			      <div id = "BrandGridPager"></div>
 	                           

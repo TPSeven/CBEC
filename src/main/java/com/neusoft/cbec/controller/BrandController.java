@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.BrandModel;
-
+import com.neusoft.cbec.result.GridResult;
 import com.nuesoft.cbec.service.IBrandService;
 
 
@@ -64,21 +64,38 @@ public class BrandController {
 		brandService.delete(brandmodel);
 		return "ok";
 	}
-	
+	//检索条件取得员工列表有分页
 	@RequestMapping(value="/list/condition/page",method = {RequestMethod.POST ,RequestMethod.GET})
-	public List<BrandModel> getByConditionWithPage(@RequestParam(required = false,defaultValue = "0")int manuid,
+	public GridResult<BrandModel> getByConditionWithPage(@RequestParam(required = false,defaultValue = "0")int manuid,
+			/*@RequestParam(required = false,defaultValue = "") String man_name,*/
 			@RequestParam(required = false,defaultValue = "") String name,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
 			@RequestParam(required=false,defaultValue="10" )int rows,
 			@RequestParam(required=false,defaultValue="1")int page) throws Exception{
+		    System.out.println(manuid);
+
 		     if(name!=null&&name.trim().length()>0) {
 		    	 name="%"+name+"%";
 		     }
-		     return brandService.getListByConditionWithPage(manuid, name, startDate, endDate, rows, page);
-		
+		     
+		     GridResult<BrandModel>  result = new GridResult<BrandModel>();
+		     result.setRecords(brandService.getCountByCondition(manuid, name, startDate, endDate));
+		     int pageCount=brandService.getPageCountByCondition(manuid, name, startDate, endDate, rows);
+		     if(page>pageCount) {
+		    	 page=pageCount;
+		    	 
+		     }
+		     if(page<1) {
+		    	 page=1;
+		     }
+		     result.setPage(page);
+		     result.setTotal(pageCount);
+		     result.setRows(brandService.getListByConditionWithPage(manuid, name, startDate, endDate, rows, page));
+		     return result;
+	      	 
 	}
-	
+	//检索条件取得员工列表无分页
 	@RequestMapping(value="/list/condition",method = {RequestMethod.POST ,RequestMethod.GET})
 	public List<BrandModel> getByCondition(@RequestParam(required = false,defaultValue = "0")int manuid,
 			@RequestParam(required = false,defaultValue = "") String name,
@@ -92,20 +109,7 @@ public class BrandController {
 		
 	}
 			
-	/*public List<EmployeeModel> getByConditionWithPage(@RequestParam(required=false,defaultValue="0") int departmentNo, 
-			@RequestParam(required=false,defaultValue="") String sex, 
-			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
-			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
-			@RequestParam(required=false,defaultValue="") String name, 
-			@RequestParam(required=false) int[] roles, 
-			@RequestParam(required=false,defaultValue="10") int rows, 
-			@RequestParam(required=false,defaultValue="1") int page) throws Exception {
-		if(name!=null&&name.trim().length()>0) {
-			name="%"+name+"%";
-			
-		}
-		return employeeService.getListByConditionWithPage(departmentNo, sex, startDate, endDate, name, roles, rows, page);
-	}*/
+	
 	
 
 	

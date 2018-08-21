@@ -83,6 +83,30 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		 return brandDao.selectListByCondition(manuid, name, startDate, endDate);
 	}
+    
+	
+	//根据检索条件取得员工个数
+	@Override
+	public int getCountByCondition(int manuid, String name, Date startDate, Date endDate) throws Exception {
+		
+		return brandDao.selectCountByCondition(manuid, name, startDate, endDate);
+	}
+
+	@Override
+	//rows一页显示几个
+	//根据检索条件取得员工显示页数
+	public int getPageCountByCondition(int manuid, String name, Date startDate, Date endDate, int rows)
+			throws Exception {
+		int pageCount = 0;
+		int count = this.getCountByCondition(manuid, name, startDate, endDate);
+		if(count%rows==0) {
+			pageCount=count/rows;
+		}
+		else {
+			pageCount=count/rows+1;
+		}
+		return pageCount;
+	}
 	
 
 }

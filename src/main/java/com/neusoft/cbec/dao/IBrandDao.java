@@ -25,13 +25,13 @@ public interface IBrandDao {
    
     public int selectCountByAll() throws Exception;
     
-    //根据检索条件取得员工列表，有分页
+   //根据检索条件取得员工列表，无分页
     public List<BrandModel> selectListByCondition(@Param("manuid") int manuid, @Param("name")  String name,@Param("startDate") Date startDate, @Param("endDate") Date endDate) throws Exception;
 
-    
     //根据检索条件取得员工列表，有分页
     public List<BrandModel> selectListByConditionWithPage(@Param("manuid") int manuid, @Param("name")  String name,@Param("startDate") Date startDate, @Param("endDate") Date endDate,@Param("start")  int start,@Param("end")  int end) throws Exception;
-
+    //根据检索条件取得员工个数
+    public int selectCountByCondition(@Param("manuid") int manuid, @Param("name")  String name,@Param("startDate") Date startDate, @Param("endDate") Date endDate)throws Exception;
 	
     
 

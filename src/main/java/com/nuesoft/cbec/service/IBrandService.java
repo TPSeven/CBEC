@@ -22,11 +22,14 @@ public interface IBrandService {
 	public List<BrandModel> getListWithManuByAll() throws Exception;
 	
 	public  BrandModel getById(int Id) throws Exception;
-	//根据检索条件取得员工列表，有分页
+	//根据检索条件取得品牌商列表，有分页
 	public List<BrandModel> getListByConditionWithPage(int manuid,String name,Date startDate,Date endDate,int start,int end) throws Exception;
 	
-	//根据检索条件取得员工列表，无分页
+	//根据检索条件取得品牌商列表，无分页
 	public List<BrandModel> getListByCondition(int manuid,String name,Date startDate,Date endDate) throws Exception;
-	
-	
+	//根据检索条件取得品牌商个数
+	public int getCountByCondition(int manuid,String name,Date startDate,Date endDate) throws Exception;
+	//根据检索条件取得品牌商显示页数
+	public int getPageCountByCondition(int manuid,String name,Date startDate,Date endDate,int rows) throws Exception;
+
 }

@@ -107,7 +107,7 @@ public class ProductController {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(productService.getListByCondition(kindsId, price, brand, startDate, endDate, name));
+		result.setRows(productService.getListByConditionWithPage(kindsId, price, brand, startDate, endDate, name, rows, page));
 		
 		return result;
 	}	

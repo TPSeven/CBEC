@@ -14,7 +14,88 @@
 					        </div>  	
 					    </div>
                         <!-- /.panel-heading -->
-                        <div class="panel-body" id="ProductMainContent">
+                        
+                        
+                        
+                <div class="panel-body" id="ProductMainContent">
+                <div class="row">
+	            <div class="col-md-1">
+	            	品种
+	            </div>
+	            <div class="col-md-3">
+	              <select class="form-control" id="KindsSelection">
+	                 <option value="0">所有</option>
+	                
+	              </select>
+	            </div>
+
+	            <div class="col-md-1">
+	            	状态
+	            </div>
+	            <div class="col-md-3">
+		            <label class="radio-inline">
+				        <input type="radio"  name="pro_state_id"  value="" checked>全部
+				    </label>
+				    <label class="radio-inline">
+				        <input type="radio" name="pro_state_id" value="1" >在售
+				    </label>
+				    <label class="radio-inline">
+				        <input type="radio" name="pro_state_id" value="2" >下架
+				    </label>
+	            </div>
+	            </div>
+	            <!--rows-->
+	            <br>
+	            
+	            <div class="row">
+	            <div class="col-md-1">
+	            	名称
+	            </div>
+	            <div class="col-md-3">
+	              <input type="text" class="form-control" id="productName" />
+	            </div>
+                </div>
+	            <!--rows-->
+                <br>
+                
+                <div class="row">
+	            <div class="col-md-1">
+	            	起始
+	            </div>
+	            <div class="col-md-3">
+	              <input type="date" class="form-control" id="StartUp_Date" />
+	            </div>
+	            <div class="col-md-1">
+	            	截止
+	            </div>
+	            <div class="col-md-3">
+		            <input type="date" class="form-control" id="EndUp_Date" />
+	            </div>
+	            </div>
+	            <!--rows-->
+	            <br>
+	            
+	            <div class="row">
+	           	<div class="col-md-1">
+	            	品牌
+	            </div>
+	            <div class="col-md-10">
+	            	<label class="checkbox-inline">
+	            		<input type="checkbox" id="inlineCheckbox1" value="option1">1
+	            	</label>
+	            		<label class="checkbox-inline">
+	            		<input type="checkbox" id="inlineCheckbox2" value="option1">2
+	            	</label>
+	            		<label class="checkbox-inline">
+	            		<input type="checkbox" id="inlineCheckbox3" value="option1">3
+	            	</label>
+	            		<label class="checkbox-inline">
+	            		<input type="checkbox" id="inlineCheckbox4" value="option1">4
+	            	</label>	
+                </div>
+                </div>
+                <br>
+	            
                             <table id="productGrid"></table>
                             <div id="productGridPager"></div>
                             

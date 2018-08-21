@@ -156,6 +156,85 @@ $(document).ready(function(){
 				});
 			});
 			
+			//验证--使用JQueryValidate对员工进行数据验证
+			$("form#addUserForm").validate({
+				rules:{
+					name:{
+						required:true,
+						remote:"user/checkNameCanBeUsed.mvc",
+						rangelenghtForCBEC:[4,15]
+					},
+					password:{
+						required:true,
+						checkpassword:true
+					},
+					repassword:{
+						equalTo:"input[name='password']",
+					},
+					age:{
+						digits:true,
+					 	range:[18,60]
+					},
+					birthday:{
+						required:true
+					},
+					phone:{
+						mobile:true
+					},
+					email:{
+						required:true,
+						remote:{
+							url:"user/checkEmailCanBeUsed.mvc",
+							type:"POST",
+							data:{
+								userEmail:function(){
+									return $("input[name='email']").val();
+								}
+							}
+						},
+					 	email:true
+					},
+					joinDate:{
+						required:true
+					},
+					portrait:{
+						accept:"image/*"
+					}
+				},
+				messages:{
+					name:{
+						required:"账号不能为空",
+						remote:"用户名称已经被注册",
+						rangelenghtForCBEC:"账号长度为4~15位"
+					},
+					password:{
+						required:"密码账号不能为空",
+						rangelength:"密码长度为6~8位"
+					},
+					repassword:{
+						equalTo:"两次密码不一致",
+					},
+					age:{
+						digits:"年龄必须为整数",
+					 	range:"年龄范围为18~60"
+					},
+					birthday:{
+						required:"生日不能为空"
+					},
+					email:{
+						required:"邮箱不能为空",
+						remote:"该邮箱已经被注册",
+						email:"邮件名称不合法"
+					},
+					joinDate:{
+						required:"注册日期为空"
+					},
+					portrait:{
+						accept:"文件类型必须为图片"
+					}
+				}
+			});
+			
 			//拦截表单提交导致的页面跳转
 			$("form#addUserForm").ajaxForm(function(result){
 				alert(result.message);

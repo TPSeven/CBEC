@@ -1,5 +1,6 @@
 package com.nuesoft.cbec.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.neusoft.cbec.model.ProductModel;
@@ -20,5 +21,12 @@ public interface IProductService {
 	public List<ProductModel> getListWithoutKindsByAll() throws Exception;
 	//取得所有商品列表-有关联种类-无分页
 	public List<ProductModel> getListWithKindsByAll() throws Exception;
+	
+	public List<ProductModel> getListByCondition(int kindsId,int price,int brand,Date startDate,Date endDate,String name)throws Exception;
+	public List<ProductModel> getListByConditionWithPage(int kindsId,int price,int brand,Date startDate,Date endDate,String name,int rows,int page)throws Exception;
 
+	//根据检索条件取得商品个数
+	public int getCountByCondition(int kindsId,int price,int brand,Date startDate,Date endDate,String name) throws Exception;
+	//根据检索条件取得商品总页数
+	public int getPageCountByCondition(int kindsId,int price,int brand,Date startDate,Date endDate,String name,int rows) throws Exception;
 }

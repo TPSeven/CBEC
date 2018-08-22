@@ -3,7 +3,19 @@
  */
 //页面载入成功事件
 $(document).ready(function(){
+	var productId = null;
 	alert("PRO OK");
+	//填充下拉框
+	$.getJSON("kinds/list/all.mvc",function(kindsList){
+		var options="<option value='0'>所有</option>"
+		$.each(kindsList,function(index,kd){
+			$("select#KindsSelection").append("<option value='"+kd.pro_kinds_id+"'>"+kd.pro_kinds_name+"</option>");
+		});
+	});
+	
+	//商品品牌复选框
+	
+	
 	//显示员工列表表格
     $("table#productGrid").jqGrid({
         url: 'product/list/condition/page.mvc',
@@ -26,7 +38,21 @@ $(document).ready(function(){
 		viewrecords: true,
 		width:"100%",
         height: 350,
-        rowNum: 15,
-        pager: "#productGridPager"
+        rowNum: 10,
+        rowList:[2,5,10],
+        pager: "#productGridPager",
+        jsonReader : {
+        	root:"rows",
+        	page:"page",
+        	total:"total",
+        	records:"records",
+        	repeatitems:true,
+        	id:"pro_id"
+        },
+        multiselect:false,
+        onSelectRow:function(id){
+        	productId=id;
+        	alert(productId);
+        }
     });
 });

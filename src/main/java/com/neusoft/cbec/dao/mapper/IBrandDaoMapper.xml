@@ -44,14 +44,15 @@
       select a.*, b.* from Brand a inner join Manufacturer b
      on a.man_id = b.man_id  where brand_id=#{brand_id}
   </select>  
-  
+  <!-- 根据检索条件取得员工的列表，无分页-->
   <select id="selectListByCondition" resultMap="BrandResultMap">
 	    select a.* from Brand a
       <trim prefix = "WHERE" prefixOverrides="AND/OR">
       
+       
        <if test = "manuid!=0">
        and a.man_id = #{manuid}
-       </if>
+       </if> 
        
        <if test = "startDate!=null">
        and a.brand_time &gt; = #{startDate}
@@ -67,13 +68,15 @@
        
        </trim>
 	 </select>
-  <select id = "selectListByConditionWithPage" resultMap = "BrandResultMap" >
+	 <!-- 根据检索条件取得员工的列表，有分页-->
+  <select id = "selectListByConditionWithPage" resultMap = "BrandWithManuResultMap" >
       select * from (select X.*, ROWNUM RN   FROM(
-       select a.* from Brand a
+       select a.*, b.man_name from Brand a  inner join Manufacturer b
+       on a.man_id = b.man_id
       <trim prefix = "WHERE" prefixOverrides="AND/OR">
       
        <if test = "manuid!=0">
-       and a.man_id = #{manuid}
+        a.man_id = #{manuid}
        </if> 
        
        <if test = "startDate!=null">
@@ -91,5 +94,30 @@
        </trim>)X WHERE ROWNUM &lt;=#{end} ) WHERE RN &gt;=#{start} 
      
   </select>
+  
+   <!-- 根据检索条件取得员工的个数 -->
+  <select id="selectCountByCondition" resultType="int">
+   select count(a.brand_id) from Brand a
+      <trim prefix = "WHERE" prefixOverrides="AND/OR">
+      
+       <if test = "manuid!=0">
+        a.man_id = #{manuid}
+       </if> 
+       
+       <if test = "startDate!=null">
+       and a.brand_time &gt; = #{startDate}
+       </if>
+       
+       <if test = "endDate!=null">
+       and a.brand_time &lt; = #{endDate}
+       </if>
+       
+       <if test = "name!=null and name!=''">
+       and a.brand_name like #{name}
+       </if>
+       
+       </trim>
+  </select>
+  
   
 </mapper>

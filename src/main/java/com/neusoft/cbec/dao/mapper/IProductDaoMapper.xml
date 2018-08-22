@@ -129,8 +129,8 @@
 	   <if test="name!=null and name!=''">
 	      and a.pro_name like #{name}
 	   </if>
-	   	   <if test="proState!=null and proState!=''">
-	      and a.pro_state=#{name}
+		<if test="proState!=null and proState!=''">
+	      and a.pro_state=#{proState}
 	   </if>
 	</trim> 
 	)
@@ -158,6 +158,9 @@
 	   </if>
 	   <if test="name!=null and name!=''">
 	      and a.pro_name like #{name}
+	   </if>
+	   <if test="proState!=null and proState!=''">
+	      and a.pro_state=#{proState}
 	   </if>
 	</trim> 
   </select>

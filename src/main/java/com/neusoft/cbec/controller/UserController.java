@@ -32,7 +32,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/add",method= {RequestMethod.POST})
-	public ControllerResult add(UserModel user,@RequestParam(required=false)MultipartFile portrait) throws Exception{
+	public ControllerResult add(UserModel user,@RequestParam(required=false)MultipartFile portrait,int[] addRoles) throws Exception{
 		ControllerResult result = null;
 		try {
 			result = new ControllerResult();
@@ -48,6 +48,10 @@ public class UserController {
 				user.setPortraitContentType(contentType);
 				userService.addWithPhoto(user);
 			}
+			//为用户授权
+			if(addRoles!=null) {
+				userService.grantRoles(user.getId(),addRoles);
+			}
 			result.setStaus("0k");
 			result.setMessage("增加用户成功");
 			return result;
@@ -58,16 +62,48 @@ public class UserController {
 		return result;
 	}
 	
+	@RequestMapping(value="/modify",method= {RequestMethod.POST})
+	public ControllerResult modify(UserModel user,int[] modifyRoles) {
+		ControllerResult result = null;
+		try {
+			result = new ControllerResult();
+			//无图片修改
+			userService.modifyWithoutPhoto(user);
+			//为用户授权
+			if(modifyRoles!=null) {
+				//清空原授权信息
+				userService.deleteRoles(user.getId());
+				userService.grantRoles(user.getId(),modifyRoles);
+			}
+			result.setStaus("0k");
+			result.setMessage("修改用户成功");
+			return result;
+		} catch (Exception e) {
+			result.setStaus("false");
+			result.setMessage(e.getMessage());
+		}
+		return result;
+	}
+	
+	//根据id得到用户的信息、关联角色
+	@RequestMapping("/get")
+	public UserModel getUserById(@RequestParam(required=true)int id) throws Exception {
+		return userService.getUserWithRolesById(id);
+	}
+	
+	//得到用户列表
 	@RequestMapping("/list")
 	public List<UserModel> getListByAll() throws Exception{
 		return userService.getListByAll();
 	}
 	
+	//得到用户列表以及对应角色
 	@RequestMapping("/list/role")
 	public List<UserModel> getListWithRoleByAll() throws Exception{
 		return userService.getListWithRoleByAll();
 	}
 	
+	//得到用户列表、有照片
 	@RequestMapping("/list/portrait")
 	public List<UserModel> getListWithPortraitByAll() throws Exception{
 		return userService.getListWithPortraitByAll();
@@ -141,7 +177,7 @@ public class UserController {
 		for(UserModel user : list) {
 			if(user.getName().equals(name)) {
 				return false;
-			}
+			}	
 		}
 		return true;
 	}

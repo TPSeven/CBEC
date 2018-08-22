@@ -25,9 +25,9 @@
 
 <association property="manufacture" column="man_id" select="com.neusoft.cbec.dao.IManufacturerDao.selectManufacturerById"></association> 
 </resultMap>
-
+<!-- //ORDER_ITEM_NEXTNO_SQ.nextval -->
 <insert id ="create" parameterType="OrderItem">
- insert into  ORDER_ITEM (Order_id,pro_id,pro_id_count,man_id,seller_id,state,order_date) values (ORDER_ITEM_NEXTNO_SQ.nextval,#{pro_id},#{pro_id_count},#{man_id},#{seller_id},#{state},#{order_date})
+ insert into  ORDER_ITEM (Order_id,pro_id,pro_id_count,man_id,seller_id,state,order_date) values (#{order_id},#{pro_id},#{pro_id_count},#{man_id},#{seller_id},#{state},#{order_date})
 </insert>
 <update id ="update"  parameterType="OrderItem">
   update ORDER_ITEM set  pro_id=#{pro_id}, pro_id_count=#{pro_id_count},man_id=#{man_id},seller_id=#{seller_id},state=#{state},order_date=#{order_date} where order_id=#{order_id} 

@@ -26,8 +26,12 @@
           <!-- <script src="employee/main.js"></script> -->
 <div class="panel panel-default">
          <div class="panel-heading">
-            <b>订单管理</b>
-            
+         <div class="row">
+                <div class="col-md-6">订单管理</div>
+            <div class="col-md-6  text-right" >  
+                        <a href="#"   id="orderlistAddLink" class="btn btn-default">增加</a><a href="#"  id="orderlistModifyLink" class="btn btn-default">修改</a><a href="#" id="orderlistDeleteLink" class="btn btn-default">删除</a><a href="#" id="orderlistViewLink" class="btn btn-default">查看</a>
+                         </div>
+         </div>
          </div>
 
          <div class="panel-body">
@@ -58,7 +62,7 @@
             <div class="col-md-1 text-right">
             
             	起始日期
-            </div>
+            </div> 
             <div class="col-md-1">
               <input type="date" class="form-controll" id="startDate" />
             </div>
@@ -73,10 +77,10 @@
             </div> 
              <br/>
             <div class="row">
-             <div class="col-md-1 text-right">
+                  <div class="col-md-1 text-right">
 	            	订单状态
 	            </div>
-	            <div class="col-md-3 ">
+	            <div class="col-md-3">
 		            <label class="radio-inline">
 				        <input type="radio"  name="state"  value="" checked>全部
 				    </label>
@@ -115,6 +119,6 @@
          </div>
          <!-- /.panel-body -->
      </div>
-          
+   <div id="OrderItemDialog"></div>
 
 <script src="orderitem/order.js"></script>

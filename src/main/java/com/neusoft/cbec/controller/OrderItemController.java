@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.ManufacturerModel;
 import com.neusoft.cbec.model.OrderItemModel;
+import com.neusoft.cbec.result.ControllerResult;
 import com.neusoft.cbec.result.GridResult;
 import com.nuesoft.cbec.service.IOrderItemService;
 
@@ -24,9 +25,11 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	this.orderitemService = orderitemService;
 }
   @RequestMapping(value="/add")
-  public String  add(OrderItemModel em)throws Exception{
+  public ControllerResult  add(OrderItemModel em)throws Exception{
 	  orderitemService.add(em);
-	  return "ok";
+	  ControllerResult result =new ControllerResult();
+	  result.setMessage("添加成功");
+	  return result;
   }
 	@RequestMapping(value="/modify",method= {RequestMethod.POST})
 	public String modify(OrderItemModel em) throws Exception{
@@ -118,5 +121,16 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		}
 		return orderitemService.getListByConditionWithPage(order_id, man_id, startDate, endDate,man_name,rows,page);
 }*/
+  
+  //检查订单编号是可用于新订单，  返回true 表示不存在，可用，false表示已经存在，不可用
+  @RequestMapping(value="/checkIDCanBeUsed",method=RequestMethod.POST) 
+  public boolean checkIDCanBeUsed(int  order_id) throws Exception{
+	    boolean  result=true;
+	    if(orderitemService.getOrderItemById(order_id)!=null) {
+	    	result=false;
+	    }
+	    return result;
+	    }
+ 
 }
   

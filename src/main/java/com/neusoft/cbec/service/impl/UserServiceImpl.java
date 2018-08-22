@@ -123,5 +123,11 @@ public class UserServiceImpl implements IUserService {
 		userDao.deleteRoles(id);
 	}
 
+	//验证用户-邮箱&密码-登陆
+	@Override
+	public UserModel validate(String email, String password) {
+		return userDao.validateByEmailPassword(email,password);
+	}
+
 	
 }

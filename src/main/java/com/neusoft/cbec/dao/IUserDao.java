@@ -49,5 +49,7 @@ public interface IUserDao {
 	
 	//根据Id获取用户信息、关联角色
 	public UserModel selectUserWithRolesById(int id);
+	//验证用户-邮箱&密码-登陆
+	public UserModel validateByEmailPassword(@Param("email")String email, @Param("password")String password);
 	
 }

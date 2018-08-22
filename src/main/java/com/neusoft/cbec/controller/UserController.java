@@ -3,6 +3,8 @@ package com.neusoft.cbec.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -52,11 +54,11 @@ public class UserController {
 			if(addRoles!=null) {
 				userService.grantRoles(user.getId(),addRoles);
 			}
-			result.setStaus("0k");
+			result.setStatus("0k");
 			result.setMessage("增加用户成功");
 			return result;
 		} catch (Exception e) {
-			result.setStaus("false");
+			result.setStatus("false");
 			result.setMessage(e.getMessage());
 		}
 		return result;
@@ -75,11 +77,11 @@ public class UserController {
 				userService.deleteRoles(user.getId());
 				userService.grantRoles(user.getId(),modifyRoles);
 			}
-			result.setStaus("0k");
+			result.setStatus("0k");
 			result.setMessage("修改用户成功");
 			return result;
 		} catch (Exception e) {
-			result.setStaus("false");
+			result.setStatus("false");
 			result.setMessage(e.getMessage());
 		}
 		return result;
@@ -192,6 +194,54 @@ public class UserController {
 			}
 		}
 		return true;
+	}
+	
+	//用户-邮箱&密码-登陆校验
+	@RequestMapping(value="/validate",method= {RequestMethod.POST})
+	public ControllerResult validate(String email,String password,HttpSession session) throws Exception {
+		ControllerResult result = new ControllerResult();
+		UserModel user = userService.validate(email,password);
+		if(user!=null) {
+			//保存会话
+			session.setAttribute("user", user);
+			result.setStatus("Y");
+			result.setMessage("用户登陆验证成功");
+		}else {
+			result.setStatus("N");
+			result.setMessage("用户登陆验证失败");
+		}
+		return result;
+	}
+	
+	//检验是否有用户会话
+	@RequestMapping(value="/checkLogin",method= {RequestMethod.GET})
+	public ControllerResult checkLogin(HttpSession session)  throws Exception{
+		ControllerResult result = new ControllerResult();
+		if(session.getAttribute("user")!=null) {
+			result.setStatus("Y");
+			result.setMessage("存在用户会话");
+		}else{
+			result.setStatus("N");
+			result.setMessage("请登录！");
+		}
+		return result;
+	}
+	
+	//返回登陆了用户的信息
+	@RequestMapping(value="/getLoginUser",method= {RequestMethod.GET})
+	public UserModel getLoginUser(HttpSession session) {
+		return (UserModel)session.getAttribute("user");
+	}
+	
+	//用户登出
+	@RequestMapping(value="/userLogout",method= {RequestMethod.GET})
+	public ControllerResult userLogout(HttpSession session) {
+		ControllerResult result = new ControllerResult();
+		session.invalidate();
+//		session.removeAttribute("user");
+		result.setStatus("Y");
+		result.setMessage("用户注销成功");
+		return result;
 	}
 	
 }

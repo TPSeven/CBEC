@@ -44,5 +44,7 @@ public interface IUserService {
 	public UserModel getUserWithRolesById(int id) throws Exception;
 	//清空用户角色权限
 	public void deleteRoles(int id);
+	//验证用户-邮箱&密码-登陆
+	public UserModel validate(String email, String password);
 	
 }

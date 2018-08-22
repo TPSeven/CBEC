@@ -64,6 +64,12 @@
   </delete>
   
   <!--================查询语句相关映射================-->
+  <!-- 验证用户-邮箱&密码-登陆 -->
+  <select id="validateByEmailPassword" resultMap="UserResultMap">
+  	select * from UUSER 
+  	where user_email=#{email} and user_password=#{password}
+  </select>
+  
   <!--根据Id取得用户信息 、关联 角色-->
   <select id="selectUserWithRolesById" parameterType="int" resultMap="UserWithRolesResultMap">
  	select a.*,c.* from UUSER a 

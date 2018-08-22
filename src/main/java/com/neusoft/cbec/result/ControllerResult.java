@@ -5,14 +5,14 @@ package com.neusoft.cbec.result;
  * Contoller层调用，返回结果
  */
 public class ControllerResult {
-	private String staus=null; //状态： 正常 OK, 异常:ERROR
+	private String status=null; //状态： 正常 OK, 异常:ERROR
 	private String message=null; //消息信息: 异常，异常message, 没有异常自己定义。
 	private Exception exception=null;
-	public String getStaus() {
-		return staus;
+	public String getStatus() {
+		return status;
 	}
-	public void setStaus(String staus) {
-		this.staus = staus;
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	public String getMessage() {
 		return message;

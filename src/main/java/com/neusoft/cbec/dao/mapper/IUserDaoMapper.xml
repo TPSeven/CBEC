@@ -24,45 +24,173 @@
   </resultMap>
    
   <!-- 有角色的映射-->
-  <resultMap id="UserWithRoleResultMap" type="User" extends="UserResultMap">
-  	<association property="role" resultMap="com.neusoft.cbec.dao.IRoleDao.RoleResultMap"/>
-  	<!-- <association property="role" column="role_id" select="com.neusoft.cbec.dao.IRoleDao.selectRoleById"/> -->
+  <resultMap id="UserWithRolesResultMap" type="User" extends="UserResultMap">
+    <collection property="roles" javaType="ArrayList" ofType="Role" resultMap="com.neusoft.cbec.dao.IRoleDao.RoleResultMap"></collection>
   </resultMap>
   
+  <!--================增加语句相关映射================-->
+  <!--添加用户，无照片  -->
+  <insert id="createWithoutPhoto" parameterType="User" >
+  	<selectKey keyProperty="id" resultType="int" order="BEFORE">
+    	select USER_NEXTID_SQ.NEXTVAL from DUAL
+  	</selectKey>
+  	insert into UUSER(user_id,user_name,user_password,user_sex,user_age,user_email,user_phone,user_birthday,user_joindate,user_desc,wallet_id,man_id,seller_id)
+  	values(#{id},#{name},#{password},#{sex},#{age},#{email},#{phone},#{birthday,jdbcType=DATE},#{joinDate,jdbcType=DATE},#{desc},0,0,0)
+  </insert>
+  <!--添加照片，有照片  -->
+  <insert id="createWithPhoto" parameterType="User" >
+ 	<selectKey keyProperty="id" resultType="int" order="BEFORE">
+    	select USER_NEXTID_SQ.NEXTVAL from DUAL
+  	</selectKey>
+  	insert into UUSER(user_id,user_name,user_password,user_sex,user_age,user_portrait,portraitFileName,portraitContentType,user_email,user_phone,user_birthday,user_joindate,user_desc,wallet_id,man_id,seller_id)
+  	values(#{id},#{name},#{password},#{sex},#{age},#{portrait},#{portraitFileName},#{portraitContentType},#{email},#{phone},#{birthday,jdbcType=DATE},#{joinDate,jdbcType=DATE},#{desc},0,0,0)
+  </insert>
+  
+  <!--为用户授予权限  -->
+  <insert id="grantRole" >
+  	insert into UUser_Role_Relate values(#{userId},#{roleId})
+  </insert>
+  <!--================修改语句相关映射================-->
+  <update id="updateWithoutPhoto" parameterType="User">
+  	update UUSER
+  	set user_name=#{name},user_password=#{password},user_sex=#{sex},user_age=#{age},user_email=#{email},user_phone=#{phone},user_birthday=#{birthday,jdbcType=DATE},user_joindate=#{joinDate,jdbcType=DATE},user_desc=#{desc},wallet_id=0,man_id=0,seller_id=0
+  	where user_id = #{id}
+  </update>
+  
+  <!--================删除语句相关映射================-->
+  <!--删除用户权限  -->
+  <delete id="deleteRoles" parameterType="int">
+  	delete UUser_Role_Relate where user_id = #{id}
+  </delete>
+  
   <!--================查询语句相关映射================-->
-  <!--取得所有用户列表 无关联角色、分页-->
+  <!-- 验证用户-邮箱&密码-登陆 -->
+  <select id="validateByEmailPassword" resultMap="UserResultMap">
+  	select * from UUSER 
+  	where user_email=#{email} and user_password=#{password}
+  </select>
+  
+  <!--根据Id取得用户信息 、关联 角色-->
+  <select id="selectUserWithRolesById" parameterType="int" resultMap="UserWithRolesResultMap">
+ 	select a.*,c.* from UUSER a 
+	left join  UUSER_ROLE_RELATE b
+	on a.user_id = b.user_id
+	left join Role c
+	on b.role_id = c.role_id
+    where a.user_id=#{id}
+  </select>
+  
+  
+  <!--取得所有用户列表 无关联角色-->
   <select id="selectListByAll" resultMap="UserResultMap">
     select * from UUSER
   </select>
   
-  <!--取得所有用户列表 、有照片、无关联角色、分页-->
+  <!--取得所有用户列表 、有照片、无关联角色-->
   <select id="selectListWithPortraitByAll" resultMap="UserWithPortraitResultMap">
     select * from UUSER
   </select>
   
-  <!--取得所有用户列表、关联角色、无照片、不 分页-->
-  <select id="selectListWithRoleByAll" resultMap="UserWithRoleResultMap">
-    select u.*,r.role_name 
-    from UUSER u
-    inner join ROLE r
-    on u.role_id = r.role_id
+  <!--关联角色,取得所有用户列表、无照片-->
+  <select id="selectListWithRolesByAll" resultMap="UserWithRolesResultMap">
+    select a.*,c.* from UUSER a 
+	left join  UUSER_ROLE_RELATE b
+	on a.user_id = b.user_id
+	left join Role c
+	on b.role_id = c.role_id
   </select>
   
-  <!--根据角色,取得所有用户列表 无关联角色、不分页-->
+  <!--根据角色,取得对应用户列表-->
   <select id="selectListByRole" parameterType="int" resultMap="UserResultMap">
-    select * from UUSER 
-    where role_id = #{roleId}
+  	select a.* from UUSER a 
+  	inner join UUSER_ROLE_RELATE b
+	on a.user_id = b.user_id
+	inner join Role c
+	on b.role_id = c.role_id
+	and c.role_id = #{roleId}
   </select>
 
-  <!--根据条件，取得所有用户列表 关联角色、不分页-->
-  <select id="selectListWithRoleByCondition" resultMap="UserWithRoleResultMap">
-    select u.*,r.role_name 
-    from UUSER u
-    inner join ROLE r
-    on u.role_id = r.role_id
-	<trim prefix='WHERE' prefixOverrides="AND|OR">
+  <!--根据条件，取得所有用户列表,不分页-->
+  <select id="selectListWithRoleByCondition" resultMap="UserResultMap">
+    select * from UUSER u
+    <trim prefix='WHERE' prefixOverrides="AND|OR">
 		<if test="userName!=null and userName!=''">
-			and user_name like #{userName}
+			and u.user_name like #{userName}
+		</if>
+		<if test="userSex!=null and userSex!=''">
+			and u.user_sex = #{userSex}
+		</if>
+		<if test="startDate!=null">
+			and u.user_birthday &gt;= #{startDate}
+		</if>
+		<if test="endDate!=null">
+			and u.user_birthday &lt;= #{endDate}
+		</if>
+		<if test="lowerAge!=null and lowerAge!=''">
+			and u.user_age &gt;= #{lowerAge}
+		</if>
+		<if test="upperAge!=null and upperAge!=''">
+			and u.user_age &lt;= #{upperAge}
+		</if>
+		<if test="userPhone!=null and userPhone!=''">
+			and u.user_Phone like #{userPhone}
+		</if>
+		<if test="roleIds!=null">
+			and u.user_id in (select user_id from UUSER_ROLE_RELATE where role_id in
+			<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
+	         	#{roleId}
+	        </foreach>
+	        )
+		</if>
+	</trim>
+  </select>
+  
+  <!--根据条件，取得所有用户列表,分页-->
+  <select id="selectListWithRoleByConditionWithPage" resultMap="UserResultMap">
+    select * from
+	(select ROWNUM rn,a.*
+	from (select * from UUSER u
+		  <where> 
+	    	<if test="userName!=null and userName!=''">
+				u.user_name like #{userName}
+			</if>
+			<if test="userSex!=null and userSex!=''">
+				and u.user_sex = #{userSex}
+			</if>
+			<if test="startDate!=null">
+				and u.user_birthday &gt;= #{startDate}
+			</if>
+			<if test="endDate!=null">
+				and u.user_birthday &lt;= #{endDate}
+			</if>
+			<if test="lowerAge!=null and lowerAge!=''">
+				and u.user_age &gt;= #{lowerAge}
+			</if>
+			<if test="upperAge!=null and upperAge!=''">
+				and u.user_age &lt;= #{upperAge}
+			</if>
+			<if test="userPhone!=null and userPhone!=''">
+				and u.user_Phone like #{userPhone}
+			</if>
+			<if test="roleIds!=null and roleIds.length!=0">
+				and u.user_id in (select user_id from UUSER_ROLE_RELATE where role_id in
+				<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
+		         	#{roleId}
+		        </foreach>
+		        )
+			</if>
+  		   </where>
+		  ) a)
+		  where rn&lt;=#{rows}*#{page} and rn&gt;=#{rows}*(#{page}-1)
+  </select>
+  
+  <!--根据条件检索，取得用户的个数-->
+  <select id="selectCountByCondition" resultType="int">
+	select count(user_id)
+ 	from UUSER
+ 	<where> 
+  		<if test="userName!=null and userName!=''">
+			user_name like #{userName}
 		</if>
 		<if test="userSex!=null and userSex!=''">
 			and user_sex = #{userSex}
@@ -83,101 +211,13 @@
 			and user_Phone like #{userPhone}
 		</if>
 		<if test="roleIds!=null">
-			and u.role_id in  
+			and user_id in (select user_id from UUSER_ROLE_RELATE where role_id in
 			<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
 	         	#{roleId}
 	        </foreach>
-		</if>
-	</trim>
-  </select>
-  
-  <!--根据条件，取得所有用户列表 关联角色、分页-->
-  <select id="selectListWithRoleByConditionWithPage" resultMap="UserWithRoleResultMap">
-    select * from
-	(select ROWNUM rn,a.*
-	from (select u.*,r.role_name 
-		  from UUSER u
-		  inner join ROLE r
-		  on u.role_id = r.role_id
-		  <where> 
-	    	<if test="userName!=null and userName!=''">
-				user_name like #{userName}
-			</if>
-			<if test="userSex!=null and userSex!=''">
-				and user_sex = #{userSex}
-			</if>
-			<if test="startDate!=null">
-				and user_birthday &gt;= #{startDate}
-			</if>
-			<if test="endDate!=null">
-				and user_birthday &lt;= #{endDate}
-			</if>
-			<if test="lowerAge!=null and lowerAge!=''">
-				and user_age &gt;= #{lowerAge}
-			</if>
-			<if test="upperAge!=null and upperAge!=''">
-				and user_age &lt;= #{upperAge}
-			</if>
-			<if test="userPhone!=null and userPhone!=''">
-				and user_Phone like #{userPhone}
-			</if>
-			<if test="roleIds!=null and roleIds.length!=0">
-				and u.role_id in  
-				<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
-		         	#{roleId}
-		        </foreach>
-			</if>
-  		   </where>
-		  ) a)
-		  where rn&lt;=#{rows}*#{page} and rn&gt;=#{rows}*(#{page}-1)
-  </select>
-  
-  <!--根据条件检索，取得用户的个数-->
-  <select id="selectCountByCondition" resultType="int">
-	select count(user_id)
- 	from UUSER
- 	<where> 
-  		<if test="userName!=null and userName!=''">
-		user_name like #{userName}
-		</if>
-		<if test="userSex!=null and userSex!=''">
-			and user_sex = #{userSex}
-		</if>
-		<if test="startDate!=null">
-			and user_birthday &gt;= #{startDate}
-		</if>
-		<if test="endDate!=null">
-			and user_birthday &lt;= #{endDate}
-		</if>
-		<if test="lowerAge!=null and lowerAge!=''">
-			and user_age &gt;= #{lowerAge}
-		</if>
-		<if test="upperAge!=null and upperAge!=''">
-			and user_age &lt;= #{upperAge}
-		</if>
-		<if test="userPhone!=null and userPhone!=''">
-			and user_Phone like #{userPhone}
-		</if>
-		<if test="roleIds!=null and roleIds.length!=0">
-			and role_id in  
-			<foreach item="roleId" collection="roleIds" open="(" separator="," close=")">
-		        	#{roleId}
-		    </foreach>
+	        )
 		</if>
 	   </where>
   </select>
   
-  <!--================增加语句相关映射================-->
-  <!--添加用户，无照片  -->
-  <insert id="createWithoutPhoto" parameterType="User" >
-  	insert into UUSER(user_id,user_name,user_password,user_sex,user_age,user_email,user_phone,user_birthday,user_joindate,user_desc,role_id,wallet_id,man_id,seller_id)
-  	values(USER_NEXTID_SQ.NEXTVAL,#{name},#{password},#{sex},#{age},#{email},#{phone},#{birthday,jdbcType=DATE},#{joinDate,jdbcType=DATE},#{desc},#{role.id},0,0,0)
-  </insert>
-  <!--添加照片，有照片  -->
-  <insert id="createWithPhoto" parameterType="User" >
-  	insert into UUSER(user_id,user_name,user_password,user_sex,user_age,user_portrait,portraitFileName,portraitContentType,user_email,user_phone,user_birthday,user_joindate,user_desc,role_id,wallet_id,man_id,seller_id)
-  	values(USER_NEXTID_SQ.NEXTVAL,#{name},#{password},#{sex},#{age},#{portrait},#{portraitFileName},#{portraitContentType},#{email},#{phone},#{birthday,jdbcType=DATE},#{joinDate,jdbcType=DATE},#{desc},#{role.id},0,0,0)
-  </insert>
-  <!--================修改语句相关映射================-->
-  <!--================删除语句相关映射================-->
 </mapper>

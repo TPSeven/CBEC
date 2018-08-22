@@ -10,8 +10,7 @@
   	<result property="pro_price" column="pro_price"/>
   	<result property="pro_weight" column="pro_weight"/>
   	<result property="pro_count" column="pro_count"/>
-  	<result property="pro_kinds_id" column="pro_kinds_id"/>
-  	<result property="pro_state_id" column="pro_state_id"/>
+  	<result property="pro_state" column="pro_state"/>
   	<result property="brand_id" column="brand_id"/>
   	<result property="pro_photos_id" column="pro_photos_id"/>
   	<result property="pro_desc" column="pro_desc"/>
@@ -43,13 +42,13 @@
   	<selectKey keyProperty="pro_id" keyColumn="pro_id" resultType="int" order="BEFORE">
   		select PRODUCT_NEXTNO_SQ.nextval from dual
   	</selectKey>
-  	insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state_id,brand_id,pro_photos_id,pro_desc,up_date) 
-  	values(#{pro_id},#{pro_name},#{pro_price},#{pro_weight},#{pro_count},#{pro_kinds_id},#{pro_state_id},#{brand_id},#{pro_photos_id},#{pro_desc},#{up_date})
+  	insert into PRODUCT(pro_id,pro_name,pro_price,pro_weight,pro_count,pro_kinds_id,pro_state,brand_id,pro_photos_id,pro_desc,up_date) 
+  	values(#{pro_id},#{pro_name},#{pro_price},#{pro_weight},#{pro_count},#{kinds.pro_kinds_id},#{pro_state},#{brand_id},#{pro_photos_id},#{pro_desc},#{up_date})
   </insert>
   
   <update id="update" parameterType = "Product">
   	update PRODUCT 
-  	set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_count=#{pro_count},pro_kinds_id=#{pro_kinds_id},pro_state_id=#{pro_state_id},brand_id=#{brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc},up_date=#{up_date}
+  	set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_count=#{pro_count},pro_kinds_id=#{kinds.pro_kinds_id},pro_state=#{pro_state},brand_id=#{brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc},up_date=#{up_date}
   	where pro_id=#{pro_id}
   </update>
   
@@ -57,9 +56,9 @@
   	delete from PRODUCT where pro_id=#{pro_id}
   </delete>
   
-  <!--select id="selectListByAll" resultMap = "ProductResultMap">
+  <select id="selectListByAll" resultMap = "ProductResultMap">
   	select * from PRODUCT 
-  </select-->
+  </select>
   
   <select id="selectById" parameterType = "int" resultMap="ProductResultMap">
   	select * from PRODUCT where pro_id=#{productId}
@@ -83,13 +82,16 @@
   
   <!-- 根据检索条件取得员工列表-无分页 -->
   <select id="selectListByCondition" resultMap="ProductWithKindsResultMap">
-    select a.* from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+    select a.* ,b.kinds_name from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
   	<trim prefix="WHERE" prefixOverrides="AND|OR ">
 	   <if test="kindsId!=0">
 	     and a.pro_kinds_id=#{kindsId}
 	   </if>
-	   <if test="pro_price!=0">
-	      and a.pro_price=#{price} 
+	   <if test="startPrice!=0">
+	      and a.pro_price&gt;=#{startPrice} 
+	   </if>
+	   <if test="endPrice!=0">
+	      and a.pro_price&lt;=#{endPrice} 
 	   </if>
 	   <if test="startDate!=null">
 	      and a.up_date &gt;=#{startDate}
@@ -104,5 +106,60 @@
   </select>
   
   <!-- 根据检索条件取得员工列表-有分页 -->
+  <select id="selectListByConditionWithPage" resultMap="ProductWithKindsResultMap">
+  SELECT * FROM  (SELECT X.*, ROWNUM RN
+  FROM (
+    select a.* ,b.kinds_name from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+  	<trim prefix="WHERE" prefixOverrides="AND|OR ">
+	   <if test="kindsId!=0">
+	     and a.pro_kinds_id=#{kindsId}
+	   </if>
+	   <if test="startPrice!=0">
+	      and a.pro_price&gt;=#{startPrice} 
+	   </if>
+	   <if test="endPrice!=0">
+	      and a.pro_price&lt;=#{endPrice} 
+	   </if>
+	   <if test="startDate!=null">
+	      and a.up_date &gt;=#{startDate}
+	   </if>
+	   <if test="endDate!=null">
+	      and a.up_date &lt;=#{endDate}
+	   </if>
+	   <if test="name!=null and name!=''">
+	      and a.pro_name like #{name}
+	   </if>
+	   	   <if test="proState!=null and proState!=''">
+	      and a.pro_state=#{name}
+	   </if>
+	</trim> 
+	)
+	 X WHERE ROWNUM &lt;=#{page})  WHERE RN &gt;=#{rows}
+  </select>
   
+  <!-- 根据检索条件取得员工的个数 -->
+  <select id="selectCountByCondition" resultType="int">
+    select count(a.pro_kinds_id) from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+  	<trim prefix="WHERE" prefixOverrides="AND|OR ">
+	   <if test="kindsId!=0">
+	     and a.pro_kinds_id=#{kindsId}
+	   </if>
+	   <if test="startPrice!=0">
+	      and a.pro_price&gt;=#{startPrice} 
+	   </if>
+	   <if test="endPrice!=0">
+	      and a.pro_price&lt;=#{endPrice} 
+	   </if>
+	   <if test="startDate!=null">
+	      and a.up_date &gt;=#{startDate}
+	   </if>
+	   <if test="endDate!=null">
+	      and a.up_date &lt;=#{endDate}
+	   </if>
+	   <if test="name!=null and name!=''">
+	      and a.pro_name like #{name}
+	   </if>
+	</trim> 
+  </select>
+   
 </mapper>

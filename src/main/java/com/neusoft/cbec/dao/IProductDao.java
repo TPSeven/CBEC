@@ -40,9 +40,13 @@ public interface IProductDao {
 	//取得所有商品个数
 	public int selectCountByAll() throws Exception;
 	
-	//根据检索条件取得员工列表-无分页
-	public List<ProductModel> selectListByCondition(@Param("kindsId") int kindsId,@Param("pro_price") int price,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name)throws Exception;
-	//根据检索条件取得员工列表-有分页
-	public List<ProductModel> selectListByConditionWithPage(@Param("kindsId") int kindId,@Param("pro_price") int price,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("start") int start,@Param("end") int end)throws Exception;
 	
+	//根据检索条件取得商品列表-无分页
+	public List<ProductModel> selectListByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int sprice,@Param("endPrice") int eprice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state)throws Exception;
+	//根据检索条件取得商品列表-有分页
+	public List<ProductModel> selectListByConditionWithPage(@Param("kindsId") int kindsId,@Param("startPrice") int sprice,@Param("endPrice") int eprice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state,@Param("rows") int rows,@Param("page") int page)throws Exception;
+	
+	
+	//根据检索条件取得商品个数
+	public int selectCountByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int sprice,@Param("endPrice") int eprice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state) throws Exception;
 }

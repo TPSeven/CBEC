@@ -15,8 +15,7 @@ public class ProductModel {
 	private double pro_price=0;
 	private double pro_weight=0;
 	private int pro_count = 0;
-	private int pro_kinds_id = 0;
-	private int pro_state_id = 0;
+	private String pro_state = null;
 	private int brand_id = 0;
 	private int pro_photos_id = 0;
 	private String pro_desc = null;
@@ -70,12 +69,6 @@ public class ProductModel {
 //	public void setPro_kinds_id(int pro_kinds_id) {
 //		this.pro_kinds_id = pro_kinds_id;
 //	}
-	public int getPro_state_id() {
-		return pro_state_id;
-	}
-	public void setPro_state_id(int pro_state_id) {
-		this.pro_state_id = pro_state_id;
-	}
 	public int getBrand_id() {
 		return brand_id;
 	}
@@ -94,17 +87,23 @@ public class ProductModel {
 	public void setPro_desc(String pro_desc) {
 		this.pro_desc = pro_desc;
 	}
-	public int getPro_kinds_id() {
-		return pro_kinds_id;
-	}
-	public void setPro_kinds_id(int pro_kinds_id) {
-		this.pro_kinds_id = pro_kinds_id;
-	}
+//	public int getPro_kinds_id() {
+//		return pro_kinds_id;
+//	}
+//	public void setPro_kinds_id(int pro_kinds_id) {
+//		this.pro_kinds_id = pro_kinds_id;
+//	}
 	public Date getUp_date() {
 		return up_date;
 	}
 	public void setUp_date(Date up_date) {
 		this.up_date = up_date;
+	}
+	public String getPro_state() {
+		return pro_state;
+	}
+	public void setPro_state(String pro_state) {
+		this.pro_state = pro_state;
 	}
 	
 	

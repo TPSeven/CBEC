@@ -14,8 +14,8 @@ select * from ROLE;
 -- waller 钱包
 create table WALLET(
   wallet_id number(10) ,
-  balance number(20), --余额
-  bankcard number(20), --银行卡
+  balance number(20,2), --余额
+  bankcards number(10), --银行卡，应该还要一个银行卡信息表
   constraint pk_wallet_id primary key(wallet_id)
 );
 create sequence WALLET_NEXTID_SQ;
@@ -42,20 +42,34 @@ create table UUSER(
   user_joindate date,
   user_desc varchar(200),
 
-  role_id number(2),
   wallet_id number(5),
   man_id number(10),
   seller_id number(10),
   constraint pk_user_id primary key(user_id)
 );
 create sequence USER_NEXTID_SQ;
---ALTER TABLE UUSER ADD constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id), --钱包外键
-ALTER TABLE UUSER ADD constraint UUSER_ROLE_FK FOREIGN KEY(role_id) REFERENCES ROLE(role_id); --角色外键
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','admin','男',20,null,null,null,'test@qq.com','10086','1-12月-1998','8-1月-2015','管理员账号',1,0,0,0);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商账号',2,0,0,0);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个借卖家账号',3,0,0,0);
+ALTER TABLE UUSER ADD constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id); --钱包外键
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','admin','男',20,null,null,null,'test@qq.com','10086','1-12月-1998','8-1月-2015','管理员账号',1,0,0);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',2,0,0);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',3,0,0);
 select * from UUSER;
 ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
+
+-- 用户角色关联表
+create table UUser_Role_Relate(
+  uuid number(10),
+  rid number(10),
+  constraint UUSER_ROLE_RPK primary key(uuid,rid),
+  foreign key (uuid) references UUSER(user_id),
+  foreign key (rid) references ROLE(role_id)
+);
+insert into UUser_Role_Relate values(2,1);
+insert into UUser_Role_Relate values(2,2);
+insert into UUser_Role_Relate values(2,3);
+insert into UUser_Role_Relate values(3,2);
+insert into UUser_Role_Relate values(3,3);
+insert into UUser_Role_Relate values(4,2);
+insert into UUser_Role_Relate values(4,3);
 
 --manufacturer 制造商
 create table MANUFACTURER(
@@ -68,9 +82,9 @@ create table MANUFACTURER(
   man_desc varchar2(200)  
 );
 create sequence MANUFACTURER_NEXTID_SQ;
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'小米',null,'10086','北京','为发烧而生');
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'苹果',null,'1008611','美国','Switch');
-insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'华为',null,'13800','中国','万物互联网');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1111,'小米公司',null,'10086','北京','为发烧而生');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'苹果公司',null,'1008611','美国','Switch');
+insert into MANUFACTURER values(MANUFACTURER_NEXTID_SQ.NEXTVAL,1000,'华为公司',null,'13800','中国','万物互联网');
 select * from MANUFACTURER;
 
 

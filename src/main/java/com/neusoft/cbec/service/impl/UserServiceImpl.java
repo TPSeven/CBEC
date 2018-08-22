@@ -31,6 +31,11 @@ public class UserServiceImpl implements IUserService {
 		userDao.createWithoutPhoto(user);
 	}
 
+	//修改用户信息
+	@Override
+	public void modifyWithoutPhoto(UserModel user) {
+		userDao.updateWithoutPhoto(user);
+	}
 
 	@Override
 	public void addWithPhoto(UserModel user) throws Exception {
@@ -52,7 +57,7 @@ public class UserServiceImpl implements IUserService {
 
 	@Override
 	public List<UserModel> getListWithRoleByAll() throws Exception {
-		return userDao.selectListWithRoleByAll();
+		return userDao.selectListWithRolesByAll();
 	}
 
 	@Override
@@ -86,10 +91,10 @@ public class UserServiceImpl implements IUserService {
 
 	//根据检索条件，取得用户显示页数
 	@Override
-	public int getPageCountByCondition(String userName, String userSex, Date startDate, Date endDate, int lowerAge,int upperAge,String userPhone,int[] roleIds,
+	public int getPageCountByCondition(String userName, String userSex, Date startDate, Date endDate, int lowerAge,int upperAge,String userPhone,int[] roles,
 			int rows) throws Exception {
 		int total = 0;
-		int count = this.getCountByCondition(userName, userSex, startDate, endDate, lowerAge, upperAge, userPhone, roleIds);
+		int count = this.getCountByCondition(userName, userSex, startDate, endDate, lowerAge, upperAge, userPhone, roles);
 		if(count%rows==0) {
 			total = count/rows;
 		}else{
@@ -98,5 +103,31 @@ public class UserServiceImpl implements IUserService {
 		return total;
 	}
 
+	//为用户授权
+	@Override
+	public void grantRoles(int userId, int[] addRoles) throws Exception {
+		for(int roleId:addRoles) {
+			userDao.grantRole(userId,roleId);
+		}
+	}
 
+	//根据Id得到用户信息、关联角色
+	@Override
+	public UserModel getUserWithRolesById(int id) throws Exception {
+		return userDao.selectUserWithRolesById(id);
+	}
+	
+	//清空用户权限
+	@Override
+	public void deleteRoles(int id) {
+		userDao.deleteRoles(id);
+	}
+
+	//验证用户-邮箱&密码-登陆
+	@Override
+	public UserModel validate(String email, String password) {
+		return userDao.validateByEmailPassword(email,password);
+	}
+
+	
 }

@@ -1,12 +1,13 @@
-<!--添加用户表格
+<!--修改用户表格
 	author:Wwl 温万龙
 -->
 <div class="panel panel-default">
 	<div class="panel-body">
 		<div class="row">
-			<form id="addUserForm" action="user/add.mvc" method="post" enctype="multipart/form-data">
+			<form id="modifyUserForm" action="user/modify.mvc" method="post" enctype="multipart/form-data">
 				<div class="col-md-12">
 					<div class="col-md-6">
+						<input type="hidden" name="id">
 	                    <label>用户名称</label>
 	                    <input name="name" class="form-control"> 
 	                </div>
@@ -60,7 +61,7 @@
 				</div>
 				<div class="col-md-12">
 					<div class="col-md-12">
-						<div id="addRoleCheckboxArea">
+						<div id="modifyRoleCheckboxArea">
 						<label>角色复选</label>
 						<label class="checkbox-inline">
 							
@@ -70,21 +71,18 @@
 				</div>
 				<div class="col-md-12">
 					<div class="col-md-12">
-					<div class="form-group">
-	                    <label>用户描述</label>
-	                    <textarea name="desc" class="form-control" rows="3"></textarea>
+						<div class="form-group">
+		                    <label>用户描述</label>
+		                    <textarea name="desc" class="form-control" rows="3"></textarea>
+		                </div>
 	                </div>
-	                </div>
-	                <div class="col-md-6">
-	              	选择照片<input type="file" name="portrait">
-	              	</div>
 	            </div>
 	            <div class="col-md-12">
 	            	<div class="col-md-6">
 	            	<input type="submit" class="form-control btn btn-default" value="提交" />
 	            	</div>
 	            	<div class="col-md-6">
-	              	<a href="#" id="userCancelLink" class="form-control btn btn-default">取消</a>
+	              	<a href="#" id="modifyCancelLink" class="form-control btn btn-default">取消</a>
 	              	</div>
 	            </div>
 			</form>

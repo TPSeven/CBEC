@@ -95,4 +95,25 @@ $(document).ready(function(){
         	alert(productId);
         }
     });
+    //增加事件按钮点击事件处理
+    $("a#ProductAddLink").on("click",function(){
+    	$("div#ProductDialog").load("product/add.html",function(productList){
+    	   //取得种类表填充下拉框
+    		$.getJSON("kinds/list/all.mvc",function(kindsList){
+    			//var options="<option value='0'>所有</option>"
+    			$.each(kindsList,function(index,kd){
+    				
+    				$("select[name='kinds.pro_kinds_id']").append("<option value='"+kd.pro_kinds_id+"'>"+kd.pro_kinds_name+"</option>");
+    			});
+    		});
+    		//取得品牌表生成品牌复选框
+    		
+    	});
+    	$("div#ProductDialog").dialog({
+    	  	title:"增加商品",
+        	width:900,
+        	hight:350	
+    	});
+  
+    });
 });

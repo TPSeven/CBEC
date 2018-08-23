@@ -72,7 +72,8 @@ $(document).ready(function(){
             { label: '商品状态', name: 'pro_state', width: 120 },
             { label: '商品品牌', name: 'brand_id', width: 120 },
             { label: '商品图片', name: 'pro_photos_id', width: 120 },
-            { label: '商品简介', name: 'pro_desc', width: 120 }
+            { label: '商品简介', name: 'pro_desc', width: 120 },
+            { label: '商品日期', name: 'up_date', width: 120 }
         ],
         autowidth:true,
 		viewrecords: true,
@@ -108,7 +109,21 @@ $(document).ready(function(){
     		});
     		//取得品牌表生成品牌复选框
     		
+    		//拦截增加表单提交
+    		$("form#ProductAddForm").ajaxForm(function(result){
+    			alert(result.message);
+    			getParamAndReloadGrid(); //重新载入商品列表，并刷新Grid显示。
+    			$("div#ProductDialog").dialog("close"); //关闭弹出Dialog
+    			
+    		});
+    		//定义取消连接点击事件处理
+    		$("a#ProductAddCancelLink").on("click",function(){
+    			$("div#ProductDialog").dialog("close"); //关闭弹出Dialog
+    		});
+    		
     	});
+
+		
     	$("div#ProductDialog").dialog({
     	  	title:"增加商品",
         	width:900,

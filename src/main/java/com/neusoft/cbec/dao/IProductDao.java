@@ -42,11 +42,11 @@ public interface IProductDao {
 	
 	
 	//根据检索条件取得商品列表-无分页
-	public List<ProductModel> selectListByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int sprice,@Param("endPrice") int eprice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state)throws Exception;
+	public List<ProductModel> selectListByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state)throws Exception;
 	//根据检索条件取得商品列表-有分页
-	public List<ProductModel> selectListByConditionWithPage(@Param("kindsId") int kindsId,@Param("startPrice") int sprice,@Param("endPrice") int eprice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state,@Param("rows") int rows,@Param("page") int page)throws Exception;
+	public List<ProductModel> selectListByConditionWithPage(@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state,@Param("rows") int rows,@Param("page") int page)throws Exception;
 	
 	
 	//根据检索条件取得商品个数
-	public int selectCountByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int sprice,@Param("endPrice") int eprice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state) throws Exception;
+	public int selectCountByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String proState) throws Exception;
 }

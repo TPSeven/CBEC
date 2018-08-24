@@ -62,11 +62,17 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	}
   
   @RequestMapping(value="/listbycondition")
-	public List<OrderItemModel> getListByCondition(@RequestParam(required=false,defaultValue="0") int order_id, @RequestParam(required=false,defaultValue="0") int man_id, @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, @RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")  Date endDate,@RequestParam(required=false,defaultValue="") String man_name) throws Exception {
+	public List<OrderItemModel> getListByCondition(
+			@RequestParam(required=false,defaultValue="0") int order_id, 
+			@RequestParam(required=false,defaultValue="0") int man_id,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")  Date endDate,
+			@RequestParam(required=false,defaultValue="") String man_name,
+			@RequestParam(required=false,defaultValue="") String state) throws Exception {
 	if(man_name!=null&&man_name.trim().length()>0){
 		man_name="%"+man_name+"%";
 	}
-		return orderitemService.getListByCondition(order_id, man_id, startDate, endDate,man_name);
+		return orderitemService.getListByCondition(order_id, man_id, startDate, endDate,man_name,state);
 	}
 
   @RequestMapping(value="/listbyconditionwithpage")
@@ -131,6 +137,18 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	    }
 	    return result;
 	    }
- 
+  @RequestMapping(value="/validate",method=RequestMethod.POST) 
+ public   ControllerResult validate(int order_id,int man_id)throws Exception{
+	 ControllerResult result =new ControllerResult();
+	 if(orderitemService.validate(order_id, man_id)) {
+		result.setStatus("Y");
+		result.setMessage("订单验证通过");
+	 }else
+	 {
+		 result.setStatus("N");
+			result.setMessage("订单验证失败");
+	 }
+	   return result;
+ }
 }
   

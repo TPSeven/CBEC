@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.neusoft.cbec.dao.IManufacturerDao;
+import com.neusoft.cbec.dao.IOrderItemDao;
 import com.neusoft.cbec.model.ManufacturerModel;
 import com.nuesoft.cbec.service.IManufacturerService;
 
@@ -23,8 +24,18 @@ import com.nuesoft.cbec.service.IManufacturerService;
 @Transactional
 public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 	
-	public IManufacturerDao manufacturerDao = null;
+	private IManufacturerDao manufacturerDao = null;
+	private IOrderItemDao orderitemDao=null;
 	
+	public IOrderItemDao getOrderitemDao() {
+		return orderitemDao;
+	}
+
+	@Autowired
+	public void setOrderitemDao(IOrderItemDao orderitemDao) {
+		this.orderitemDao = orderitemDao;
+	}
+
 	@Autowired
 	public void setManufacturerDao(IManufacturerDao manufacturerDao) {
 		this.manufacturerDao = manufacturerDao;
@@ -82,6 +93,16 @@ public class ManufacturerServiceImplWithSpring implements IManufacturerService {
 	
 		return manufacturerDao.selectManufacturerWithOrderItemById(id);
 
+	}
+
+	@Override
+	public boolean checkCanDelete(int man_id) throws Exception {
+		boolean result=true;
+		System.out.println(man_id);
+		if(orderitemDao.selectCountByCondition(man_id, 0, null, null,null,null)>0) {
+			result =false;
+		}
+		return result;
 	}
 }
 

@@ -84,7 +84,17 @@ $(document).ready(function(){
 	function modifyLinkClick(){
 		$("a#modifyManufacturerLink").on("click",function(){
 			if(manufacturerId==0){
-				alert("请选择一个品牌商");
+				BootstrapDialog.show({
+	    			title:"品牌商操作提示",
+	    		    message:"<h4>请选择要修改的品牌商</h4>",
+	    				buttons:[{
+	    				label:'关闭'	,
+	    				action:function(dialog){
+	    					dialog.close();
+	    			      	 }	
+	             		  }
+	    				] 
+	    		});  	
 			}else{
 				//修改页面-跳转
 				$("div#manufacturer-content").load("manufacturer/modify.html",function(){
@@ -133,20 +143,57 @@ $(document).ready(function(){
 	function deleteLinkClick(){
 		$("a#deleteManufacturerLink").on("click",function(){
 			if(manufacturerId==0){
-				alert("请选择要删除的品牌商");
-			}else{
-				var conf =  confirm("确定要删除吗");
-				if(conf){
-					$.post("manufacturer/delete.mvc",{id:manufacturerId},function(resultData){
-						if(resultData=="ok"){
-							alert("删除品牌商成功");
-							showManufacturerList();
-						}else{
-							alert("删除品牌商失败");
+				BootstrapDialog.show({
+	    			title:"品牌商操作提示",
+	    		    message:"<h4>请选择要删除的品牌商</h4>",
+	    				buttons:[{
+	    				label:'关闭'	,
+	    				action:function(dialog){
+	    					dialog.close();
+	    			      	 }	
+	             		  }
+	    				] 
+	    		});  
+				
+				}else{ 
+					alert(manufacturerId);
+				
+				//检查选择的品牌商是否可以被删除
+				$.getJSON("manufacturer/checkcandelete.mvc",{man_id:manufacturerId},function(checkResult){
+				
+					if(checkResult.status=='N'){
+						BootstrapDialog.show({
+			    			title:"品牌商操作提示",
+			    		    message:"<h5>"+checkResult.message+"</h5>",
+			    				buttons:[{
+			    				label:'关闭'	,
+			    				action:function(dialog){
+			    					dialog.close();
+			    			      	 }	
+			             		  }
+			    				] 
+			    		});
+					}else{
+						//可以删除
+						BootstrapDialog.confirm('确认要删除此品牌商吗?', function(result){
+		
+						if(result){
+							$.post("manufacturer/delete.mvc",{id:manufacturerId},function(resultData){
+								if(resultData=="ok"){
+									alert("删除品牌商成功");
+									showManufacturerList();
+								}else{
+									alert("删除品牌商失败");
+								}
+								showManufacturerList();
+							});
 						}
-					});
-				}
-				showManufacturerList();
+						});
+					}
+				});
+				
+		
+			
 			}
 		});
 	}

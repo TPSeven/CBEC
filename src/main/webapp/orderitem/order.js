@@ -200,14 +200,12 @@ $("input#order_id").on("change",function(){
     		});
     		
     		
-    		
-    		
     	//拦截订单增加表单提交
 		$("form#addorderitemForm").ajaxForm(function(result){
 			alert(result.message);
-			
-			  getParamAndReloadGrid(); //重新载入订单列表，并刷新Grid显示。
-		
+	
+			getParamAndReloadGrid(); //重新载入订单列表，并刷新Grid显示。
+	
 			$("div#OrderItemDialog").dialog("close"); //关闭弹出Dialog
 		
 		});
@@ -223,8 +221,19 @@ $("input#order_id").on("change",function(){
     	$("div#OrderItemDialog").load("orderitem/modify.html",function(){
     	
     		if(o_id==0){
-    		alert("请选择要修改的订单！");
-    		}else
+    		BootstrapDialog.show({
+    			title:"订单操作提示",
+    		    message:"<h4>请选择要修改的订单</h4>",
+    				buttons:[{
+    				label:'关闭'	,
+    				action:function(dialog){
+    					dialog.close();
+    			      	 }	
+             		  }
+    				] 
+    		});  		
+    		}
+    		else
     			{
     			//嵌入修改页面
         		$("div#OrderItemDialog").dialog({
@@ -294,6 +303,7 @@ $("input#order_id").on("change",function(){
         			}
     			}
     		});
+    	
     		$("form#modifyorderitemForm").ajaxForm(function(result){
     			alert(result.message);
     			
@@ -314,13 +324,26 @@ $("input#order_id").on("change",function(){
     $("a#orderlistDeleteLink").on("click",function(){
     
     		if(o_id==0){
-    			alert("请选择要删除的订单!");
+    			BootstrapDialog.show({
+        			title:"订单操作提示",
+        		    message:"<h4>请选择要删除的订单</h4>",
+        				buttons:[{
+        				label:'关闭'	,
+        				action:function(dialog){
+        					dialog.close();
+        			      	 }	
+                 		  }
+        				] 
+        		});  
     			
     		}else{ 
-    			var confirmResult=confirem("确认要删除选择的订单吗?");
+    			
+    			BootstrapDialog.confirm('确认要删除此订单吗?', function(confirmResult){
+    			
     			if(confirmResult){
     			    $.post("orderitem/delete.mvc",{order_id:o_id},function(result){
     			  if(result=="ok"){
+    				
     				   alert("删除订单成功");
     			  }else{
     				  alert("删除订单失败");
@@ -328,9 +351,9 @@ $("input#order_id").on("change",function(){
     			});
     			    } 
     			getParamAndReloadGrid(); 
+    			});
     			}
-    
-    			
+ 			
     });
     //查看订单俺就事件处理
     $("a#orderlistViewLink").on("click",function(){

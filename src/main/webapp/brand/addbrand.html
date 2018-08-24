@@ -1,4 +1,4 @@
-<form role="form" action="addbrand.mvc" method="post">
+<form role="form" action="brand/addbrand.mvc" method="post">
 
 	<div class="form-group">
 		<label>品牌商名字</label>
@@ -6,13 +6,20 @@
 	</div>
 	
 	<div class="form-group">
-		<label>制造商ID</label>
-		<input name = "man_id" class="form-control" >
+		<label >制造商名称</label>
+		<select name = "manufacturer.id" class="form-control">
+		
+		</select>
 	</div>
 	
 	<div class="form-group">
 		<label>品牌商信息</label>
 		<input name = "brand_desc" class="form-control" >
+	</div>
+	
+	<div class="form-group">
+		<label>品牌注册时间</label>
+		<input  type = "date" name = "brand_time" class="form-control" >
 	</div>
 	
 	

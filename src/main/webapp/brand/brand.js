@@ -14,16 +14,16 @@ $(document).ready(function () {
 	    			datas.startDate=startDate;
 	    		}
 	    		
-	    		//检查是否输入了生日截止日期
+	    		//检查是否输入了生日截止日
 	    		if(endDate!=null){
 	    			datas.endDate=endDate;
 	    		}
 	    		
 	    		//清除postData累积的参数
-	    		/*var postData = $('table#BrandGrid').jqGrid("getGridParam", "postData");
+	    		var postData = $('table#BrandGrid').jqGrid("getGridParam", "postData");
 	    		$.each(postData, function (k, v) {
 	                delete postData[k];
-	            });*/ 
+	            }); 
 	        	$("table#BrandGrid").jqGrid("setGridParam",{postData:datas}).trigger("reloadGrid");
 	         };
 	         
@@ -48,6 +48,23 @@ $(document).ready(function () {
 	    	  brandName = $("input#brandName").val();
 	    	  getParamAndReloadGrid();
 	    	  
+	      });
+	      //增加事件
+	      $("a#BrandAddLink").on("click",function(){
+	    	  $("div#BrandDialog").load("brand/addbrand.html",function(){
+	    		  //取得制造商列表，填充制造商下拉框
+	    		  $.getJSON("manufacturer/toListByAll.mvc",function(manuList){
+	  	        	$.each(manuList,function(index,manu){
+	  	        		$("select[name='manufacturer.id']").append("<option value = '"+manu.id+"'>"+manu.name+"</option>");
+	  	        		/*$("select#ManufacturerSelection").append("<option value = '"+manu.name+"'></option>");*/
+	  	        	});
+	  	        });
+	    	  });
+	    	  $("div#BrandDialog").dialog({
+	    		  title:"增加新员工",
+	    		  width:900,
+	    		  height:350
+	    	  });
 	      });
 			//显示品牌商列表
             $("table#BrandGrid").jqGrid({

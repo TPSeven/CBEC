@@ -73,10 +73,10 @@
       select * from (select X.*, ROWNUM RN   FROM(
        select a.*, b.man_name from Brand a  inner join Manufacturer b
        on a.man_id = b.man_id
-      <trim prefix = "WHERE" prefixOverrides="AND/OR">
+      <trim prefix = "WHERE" prefixOverrides="AND|OR">
       
        <if test = "manuid!=0">
-        a.man_id = #{manuid}
+        and a.man_id = #{manuid}
        </if> 
        
        <if test = "startDate!=null">
@@ -98,10 +98,10 @@
    <!-- 根据检索条件取得员工的个数 -->
   <select id="selectCountByCondition" resultType="int">
    select count(a.brand_id) from Brand a
-      <trim prefix = "WHERE" prefixOverrides="AND/OR">
+      <trim prefix = "WHERE" prefixOverrides="AND|OR">
       
        <if test = "manuid!=0">
-        a.man_id = #{manuid}
+        and a.man_id = #{manuid}
        </if> 
        
        <if test = "startDate!=null">

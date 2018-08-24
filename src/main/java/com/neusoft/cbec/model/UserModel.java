@@ -1,6 +1,7 @@
 package com.neusoft.cbec.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,7 +35,7 @@ public class UserModel {
 	private String desc = null;
 	
 	//关联的属性,外键
-	private RoleModel role = null;//权限
+	private List<RoleModel> roles = null;//权限
 	
 	private int man_id = 0;
 	private int wallet_id = 0;
@@ -118,11 +119,11 @@ public class UserModel {
 	public void setDesc(String desc) {
 		this.desc = desc;
 	}
-	public RoleModel getRole() {
-		return role;
+	public List<RoleModel> getRoles() {
+		return roles;
 	}
-	public void setRole(RoleModel role) {
-		this.role = role;
+	public void setRole(List<RoleModel> roles) {
+		this.roles = roles;
 	}
 	public int getMan_id() {
 		return man_id;

@@ -16,6 +16,8 @@ public interface IUserService {
 	
 	public void delete(UserModel user) throws Exception;
 	public void modify(UserModel user) throws Exception;
+	//修改用户信息
+	public void modifyWithoutPhoto(UserModel user);
 	
 	//取得所有用户列表，无分页
 	public List<UserModel> getListByAll() throws Exception;
@@ -35,5 +37,14 @@ public interface IUserService {
 	public int getCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("lowerAge") int lowerAge,@Param("upperAge") int upperAge,@Param("userPhone")String userPhone,@Param("roleIds")int[] roleIds) throws Exception;
 	//根据检索条件，取得用户显示页数
 	public int getPageCountByCondition(@Param("userName")String userName,@Param("userSex")String userSex,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("lowerAge") int lowerAge,@Param("upperAge") int upperAge,@Param("userPhone")String userPhone,@Param("roleIds")int[] roleIds,int rows) throws Exception;
-				
+	
+	//为用户授权-添加角色
+	public void grantRoles(int userId,int[] roleIds) throws Exception;
+	//根据Id得到用户信息、关联角色
+	public UserModel getUserWithRolesById(int id) throws Exception;
+	//清空用户角色权限
+	public void deleteRoles(int id);
+	//验证用户-邮箱&密码-登陆
+	public UserModel validate(String email, String password);
+	
 }

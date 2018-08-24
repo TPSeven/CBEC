@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.cbec.dao.IWalletDao">
+
+  <resultMap id="WalletResultMap" type="Wallet">
+  	<id property="id" column="wallet_id" />
+  	<result property="balance" column="balance"/>
+  	<result property="bankcards" column="bankcards"/>
+  </resultMap>
+  
+  <!--取得所有角色列表，无关联用户  -->
+  <select id="selectListByAll" resultMap="WalletResultMap">
+    select *
+    from Wallet
+  </select>
+  
+  <!--根据钱包获得钱包的信息  -->
+  <select id="selectWalletById" parameterType="int" resultMap="WalletResultMap">
+    select *
+    from Wallet
+    where wallet_id = #{id}
+  </select>
+  
+</mapper>

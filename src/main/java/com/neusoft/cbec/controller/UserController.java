@@ -3,6 +3,8 @@ package com.neusoft.cbec.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/add",method= {RequestMethod.POST})
-	public ControllerResult add(UserModel user,@RequestParam(required=false)MultipartFile portrait) throws Exception{
+	public ControllerResult add(UserModel user,@RequestParam(required=false)MultipartFile portrait,int[] addRoles) throws Exception{
 		ControllerResult result = null;
 		try {
 			result = new ControllerResult();
@@ -48,26 +50,62 @@ public class UserController {
 				user.setPortraitContentType(contentType);
 				userService.addWithPhoto(user);
 			}
-			result.setStaus("0k");
+			//为用户授权
+			if(addRoles!=null) {
+				userService.grantRoles(user.getId(),addRoles);
+			}
+			result.setStatus("0k");
 			result.setMessage("增加用户成功");
 			return result;
 		} catch (Exception e) {
-			result.setStaus("false");
+			result.setStatus("false");
 			result.setMessage(e.getMessage());
 		}
 		return result;
 	}
 	
+	@RequestMapping(value="/modify",method= {RequestMethod.POST})
+	public ControllerResult modify(UserModel user,int[] modifyRoles) {
+		ControllerResult result = null;
+		try {
+			result = new ControllerResult();
+			//无图片修改
+			userService.modifyWithoutPhoto(user);
+			//为用户授权
+			if(modifyRoles!=null) {
+				//清空原授权信息
+				userService.deleteRoles(user.getId());
+				userService.grantRoles(user.getId(),modifyRoles);
+			}
+			result.setStatus("0k");
+			result.setMessage("修改用户成功");
+			return result;
+		} catch (Exception e) {
+			result.setStatus("false");
+			result.setMessage(e.getMessage());
+		}
+		return result;
+	}
+	
+	//根据id得到用户的信息、关联角色
+	@RequestMapping("/get")
+	public UserModel getUserById(@RequestParam(required=true)int id) throws Exception {
+		return userService.getUserWithRolesById(id);
+	}
+	
+	//得到用户列表
 	@RequestMapping("/list")
 	public List<UserModel> getListByAll() throws Exception{
 		return userService.getListByAll();
 	}
 	
+	//得到用户列表以及对应角色
 	@RequestMapping("/list/role")
 	public List<UserModel> getListWithRoleByAll() throws Exception{
 		return userService.getListWithRoleByAll();
 	}
 	
+	//得到用户列表、有照片
 	@RequestMapping("/list/portrait")
 	public List<UserModel> getListWithPortraitByAll() throws Exception{
 		return userService.getListWithPortraitByAll();
@@ -141,7 +179,7 @@ public class UserController {
 		for(UserModel user : list) {
 			if(user.getName().equals(name)) {
 				return false;
-			}
+			}	
 		}
 		return true;
 	}
@@ -156,6 +194,54 @@ public class UserController {
 			}
 		}
 		return true;
+	}
+	
+	//用户-邮箱&密码-登陆校验
+	@RequestMapping(value="/validate",method= {RequestMethod.POST})
+	public ControllerResult validate(String email,String password,HttpSession session) throws Exception {
+		ControllerResult result = new ControllerResult();
+		UserModel user = userService.validate(email,password);
+		if(user!=null) {
+			//保存会话
+			session.setAttribute("user", user);
+			result.setStatus("Y");
+			result.setMessage("用户登陆验证成功");
+		}else {
+			result.setStatus("N");
+			result.setMessage("用户登陆验证失败");
+		}
+		return result;
+	}
+	
+	//检验是否有用户会话
+	@RequestMapping(value="/checkLogin",method= {RequestMethod.GET})
+	public ControllerResult checkLogin(HttpSession session)  throws Exception{
+		ControllerResult result = new ControllerResult();
+		if(session.getAttribute("user")!=null) {
+			result.setStatus("Y");
+			result.setMessage("存在用户会话");
+		}else{
+			result.setStatus("N");
+			result.setMessage("请登录！");
+		}
+		return result;
+	}
+	
+	//返回登陆了用户的信息
+	@RequestMapping(value="/getLoginUser",method= {RequestMethod.GET})
+	public UserModel getLoginUser(HttpSession session) {
+		return (UserModel)session.getAttribute("user");
+	}
+	
+	//用户登出
+	@RequestMapping(value="/userLogout",method= {RequestMethod.GET})
+	public ControllerResult userLogout(HttpSession session) {
+		ControllerResult result = new ControllerResult();
+		session.invalidate();
+//		session.removeAttribute("user");
+		result.setStatus("Y");
+		result.setMessage("用户注销成功");
+		return result;
 	}
 	
 }

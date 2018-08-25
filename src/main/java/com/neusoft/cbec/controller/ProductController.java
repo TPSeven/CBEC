@@ -86,23 +86,24 @@ public class ProductController {
 	
 	@RequestMapping(value="/list/condition/page",method=RequestMethod.POST)
 	public GridResult<ProductModel> getListByConditionWithPage(@RequestParam(required=false,defaultValue="0") int kindsId, 
-			@RequestParam(required=false,defaultValue="0") int sprice,
-			@RequestParam(required=false,defaultValue="0") int eprice,
+			@RequestParam(required=false,defaultValue="0") int startPrice,
+			@RequestParam(required=false,defaultValue="0") int endPrice,
 			@RequestParam(required=false,defaultValue="0") int brand,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
 			@RequestParam(required=false,defaultValue="") String name,
-			@RequestParam(required=false,defaultValue="") String state,
+			@RequestParam(required=false,defaultValue="") String proState,
 			@RequestParam(required=false,defaultValue="3") int rows,
 			@RequestParam(required=false,defaultValue="1") int page) throws Exception {
 		if(name!=null&&name.trim().length()>0) {
 			name="%"+name+"%";
 			
 		}
+		System.out.println(kindsId);
 		GridResult<ProductModel>  result=new GridResult<ProductModel>();
 		
-		result.setRecords(productService.getCountByCondition(kindsId, sprice, eprice, brand, startDate, endDate, name, state));
-		int pageCount=productService.getPageCountByCondition(kindsId, sprice, eprice, brand, startDate, endDate, name, state, rows);
+		result.setRecords(productService.getCountByCondition(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState));
+		int pageCount=productService.getPageCountByCondition(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows);
 		if(page>pageCount) {
 			page=pageCount;
 		}
@@ -111,7 +112,7 @@ public class ProductController {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(productService.getListByConditionWithPage(kindsId, sprice, eprice, brand, startDate, endDate, name, state, rows, page));
+		result.setRows(productService.getListByConditionWithPage(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows, page));
 		
 		return result;
 	}	

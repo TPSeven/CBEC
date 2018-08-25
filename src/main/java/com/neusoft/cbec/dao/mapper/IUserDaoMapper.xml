@@ -220,4 +220,19 @@
 	   </where>
   </select>
   
+  <!--  -->
+  <select id="selectGrandModulesAndFunctions" parameterType="int" resultMap="com.neusoft.cbec.dao.IModuleDao.ModuleWithFunctionsResultMap">
+  	select a.*,b.*
+	from SYSTEMFUNCTION a,(select x.* from SYSTEMMODULE x
+	                       join ROLE_MODULE_RELATE y
+	                       on x.module_no = y.module_no
+	                       where y.role_id in (
+	                             select k.role_id from UUSER z
+	                             left join UUSER_ROLE_RELATE k
+	                             on z.user_id = k.user_id
+	                             where z.user_id=#{id}
+	                       )) b
+	where a.module_no in b.module_no
+  </select>
+  
 </mapper>

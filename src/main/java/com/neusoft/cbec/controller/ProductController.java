@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.ProductModel;
+import com.neusoft.cbec.result.ControllerResult;
 import com.neusoft.cbec.result.GridResult;
 import com.nuesoft.cbec.service.IProductService;
 
@@ -24,10 +25,15 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/add",method=RequestMethod.POST)
-	public String add(ProductModel product) throws Exception {
+	public ControllerResult add(ProductModel product) throws Exception {
 		
 		productService.add(product);
-		return "ok";
+		
+		ControllerResult result=new ControllerResult();
+		result.setStatus("OK");
+		result.setMessage("增加员工成功!");
+		
+		return result;
 		
 	}
 	

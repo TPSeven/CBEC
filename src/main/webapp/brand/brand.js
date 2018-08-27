@@ -59,9 +59,60 @@ $(document).ready(function () {
 	  	        		/*$("select#ManufacturerSelection").append("<option value = '"+manu.name+"'></option>");*/
 	  	        	});
 	  	        });
+	    		//使用JQuery validate对员工进行数据验证
+	    		  $("form#BrandAddForm").validate({
+	    			  rules:{
+	    				  brand_name:{
+	    					  required:true,
+	    					  rangelength:[2,5]
+	    				  },
+	    				  brand_desc:{
+	    					  required:true,
+	    					  rangelength:[5,20]
+	    					  
+	    				  },
+	    				  brand_time:{
+	    					  required:true
+	    				  }
+	    				  
+	    			  },
+	    			  messages:{
+	    				  brand_name:{
+	    					  required:"品牌商不能为空",
+	    					  rangelength:"品牌商名字必须为2到5个字符"
+	    				  },
+	    				  brand_desc:{
+	    					  required:"品牌商描述不能为空",
+	    					  rangelength:"品牌商描述必须在5到20个字符"
+	    					  
+	    				  },
+	    				  brand_time:{
+	    					  required:"品牌商注册时间不能为空"
+	    				  }
+	    				  
+	    			  }
+	    		  
+	    		  });
+	    		  
+	    		  //拦截增加的表单提交
+	    		  $("form#BrandAddForm").ajaxForm(function(result){
+	    			 
+	    			  alert(result.message);
+	    			  getParamAndReloadGrid();//重新载入员工列表，并刷新Grid显示
+	    			  $("div#BrandDialog").dialog("close");//关闭弹出的DiaGrid
+    			  
+	    		  });
+	    		  //定义取消链接点击事件处理
+	    		  $("a#BrandAddCancelLink").on("click",function(){
+	    			  $("div#BrandDialog").dialog("close");//关闭弹出Dialog
+	    		  });
+	    		  
+	    		 
+	    		  
+	    		  
 	    	  });
 	    	  $("div#BrandDialog").dialog({
-	    		  title:"增加新员工",
+	    		  title:"增加新品牌商",
 	    		  width:900,
 	    		  height:350
 	    	  });

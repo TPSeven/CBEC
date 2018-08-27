@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.neusoft.cbec.model.ModuleModel;
 import com.neusoft.cbec.model.UserModel;
 
 /**
@@ -51,5 +52,7 @@ public interface IUserDao {
 	public UserModel selectUserWithRolesById(int id);
 	//验证用户-邮箱&密码-登陆
 	public UserModel validateByEmailPassword(@Param("email")String email, @Param("password")String password);
+	//取得用户被授予的模块与功能
+	public List<ModuleModel> selectGrandModulesAndFunctions(int id);
 	
 }

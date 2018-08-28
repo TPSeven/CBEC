@@ -33,6 +33,12 @@
   	<association property="kinds" resultMap="com.neusoft.cbec.dao.IKindsDao.KindsResultMap"></association>
   </resultMap>
   
+  <!--  无图 品牌字段映射的resultMap
+  <resultMap id="ProductWithBrandResultMap" type="Product" extends="ProductResultMap">
+  	<association property="brand" resultMap="com.neusoft.cbec.dao.IBrandDao.BrandResultMap"></association>
+  </resultMap>
+  -->
+  
   <!-- 有图 有种类字段映射的resultMap
   <resultMap id="ProductWithKindsAndPhotosResultMap" type="Product" extends="ProductWithPhotosResultMap,ProductWithKindsResultMap">
   </resultMap>

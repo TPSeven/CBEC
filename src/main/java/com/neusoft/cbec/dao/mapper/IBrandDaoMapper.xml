@@ -18,6 +18,7 @@
   	</association> -->
   	<association property = "manufacturer" resultMap = "com.neusoft.cbec.dao.IManufacturerDao.ManResultMap"></association>
   </resultMap>
+  
    
   <insert id="create" parameterType="Brand">
      insert into Brand (brand_id,brand_name,man_id,brand_desc,brand_time) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{manufacturer.id},#{brand_desc},#{brand_time})

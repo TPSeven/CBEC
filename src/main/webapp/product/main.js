@@ -108,7 +108,11 @@ $(document).ready(function(){
     			});
     		});
     		//取得品牌表生成品牌复选框
-    		
+    		$.getJSON("product/list/all/withoutkinds.mvc",function(productList){
+				$.each(productList,function(index,pd){
+					$("div#BrandCheckboxArea").append("<label class='checkbox-inline'><input type='checkbox' name='brand_id' value='"+pd.brand_id+"'>"+rm.name+"</label>");
+				});
+    		});
     		//拦截增加表单提交
     		$("form#ProductAddForm").ajaxForm(function(result){
     			alert(result.message);
@@ -126,8 +130,8 @@ $(document).ready(function(){
 		
     	$("div#ProductDialog").dialog({
     	  	title:"增加商品",
-        	width:900,
-        	hight:350	
+        	width:500,
+        	hight:1000
     	});
   
     });

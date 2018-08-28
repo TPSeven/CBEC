@@ -146,7 +146,7 @@ select count(a.order_id) from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_
 </trim>
 </select>
 <!-- 根据订单ID和制造商ID取得订单个数 -->
-<select id="selectCountByloginID" resultType="int">
+<select id="selectCountByloginId" resultType="int">
  select  count(order_id) from ORDER_ITEM where order_id=#{order_id} and man_id=#{man_id}
 </select>
 </mapper> 

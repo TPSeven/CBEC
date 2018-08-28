@@ -95,8 +95,10 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 
 	@Override
 	public boolean validate(int order_id, int man_id) throws Exception {
+		 System.out.println("ok1");
         boolean result = false;
-        if(orderitemdao.selectCountByloginID(order_id, man_id)>0) {
+        if(orderitemdao.selectCountByloginId(order_id, man_id)>0) {
+   		 System.out.println("ok3");
         	result=true;
         }
 		return result;

@@ -13,7 +13,7 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
+     <link href="dist/bootstrapdialog/css/bootstrap-dialog.min.css" rel="stylesheet" type="text/css"/>
     <!-- MetisMenu CSS -->
     <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
@@ -35,13 +35,13 @@
                         <h3 class="panel-title">跨境电商借买交易平台</h3>
                     </div>
                     <div class="panel-body">
-                        <form   id="orderitemLoginFrom" role="form" action="orderitem/validate.mvc" method="post" id="userLoginForm">
+                        <form   id="orderitemLoginFrom" role="form" action="orderitem/validate.mvc" method="post" >
                             <fieldset>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="账号" name="order_id" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="密码" name="man_id" type="man_id" value="">
+                                    <input class="form-control" placeholder="密码" name="man_id" type="text" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
@@ -49,7 +49,17 @@
                                     </label>
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -->
-                                <input type="submit" class="btn btn-lg btn-success btn-block" value="登陆"/>
+					                              
+					           <div class="form-group">
+					                    <div class="col-md-6  ">
+						            	<input type="submit" class="btn btn-lg btn-success btn-block" value="登陆"/>
+						            	</div>
+						            	<div class="col-md-6 ">
+						               	<input type="reset" class="btn btn-lg btn-success btn-block" value="重置"/>
+						              	</div>
+						        </div> 
+						      
+						           
                             </fieldset>
                         </form>
                     </div>

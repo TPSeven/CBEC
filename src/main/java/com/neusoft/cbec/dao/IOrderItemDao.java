@@ -38,6 +38,6 @@ public interface IOrderItemDao {
     //取得指定制造商的订单列表 
     public List<OrderItemModel>  selectListByManufacturer(int man_id)throws Exception;
     //验证登陆
-    public int selectCountByloginID (int order_id ,int man_id )throws Exception;
+    public int selectCountByloginId (@Param("order_id")int order_id ,@Param("man_id")int man_id )throws Exception;
     
 }

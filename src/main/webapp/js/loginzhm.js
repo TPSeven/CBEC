@@ -2,7 +2,7 @@
  * 
  */
 $(document).ready(function(){
-	$("from#orderitemLoginFrom").validate({
+	$("form#orderitemLoginFrom").validate({
 		rules:{
 			order_id:{
 				required:true
@@ -21,14 +21,18 @@ $(document).ready(function(){
 			    }
 		}
 	});
-	$("from#orderitemLoginFrom").ajaxForm(function(loginResult){
-		if(loginReuslt.status=='Y'){
-			window.location.href="index.html";
+	$("form#orderitemLoginFrom").ajaxForm(function(loginResult){
+	
+		if(loginResult.status=='Y'){
+			
+			window.location.href="indexzhm.html";
 			
 		}else{
+		
 			BootstrapDialog.show({
+			
 				title:"订单登陆提示",
-			    message:"<h4>"+loginReult.message+"</h4>",
+				message:"<h4>"+loginResult.message+"</h4>",
 			    buttons:[{
 			    	lable:"关闭",
 			        action:function(dialog){
@@ -36,7 +40,7 @@ $(document).ready(function(){
 			        	
 			        }
 			    }]
-			})
+			});
 		}
 	});
 	

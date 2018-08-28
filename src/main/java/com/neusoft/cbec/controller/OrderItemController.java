@@ -3,6 +3,8 @@ package com.neusoft.cbec.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -138,17 +140,54 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	    return result;
 	    }
   @RequestMapping(value="/validate",method=RequestMethod.POST) 
- public   ControllerResult validate(int order_id,int man_id)throws Exception{
+ public   ControllerResult validate(int order_id,int man_id,HttpSession session)throws Exception{
 	 ControllerResult result =new ControllerResult();
+
 	 if(orderitemService.validate(order_id, man_id)) {
+      OrderItemModel em=orderitemService.getOrderItemById(order_id);
+      session.setAttribute("orderitemInfo", em);
 		result.setStatus("Y");
 		result.setMessage("订单验证通过");
 	 }else
-	 {
+	 {	 
 		 result.setStatus("N");
-			result.setMessage("订单验证失败");
+			result.setMessage ("订单验证失败");
 	 }
 	   return result;
  }
+  //检查订单是否登陆
+  @RequestMapping(value="/checklogin",method=RequestMethod.GET) 
+ public   ControllerResult checklogin(HttpSession session)throws Exception{
+	 ControllerResult result =new ControllerResult();
+
+	 if(session.getAttribute("orderitemInfo")!=null) {
+		 System.out.println("ok3");
+		result.setStatus("Y");
+		result.setMessage("订单验证通过");
+	 }else
+	 {	 System.out.println("ok4");
+		 result.setStatus("N");
+			result.setMessage ("订单验证失败");
+	 }
+	   return result;
+ }
+  //取得已经登陆的订单信息
+  @RequestMapping(value="/getOrderitemInfoFromSession",method=RequestMethod.GET) 
+  public OrderItemModel getOrderitemInfoFromSession(HttpSession session)throws Exception{
+	     return (OrderItemModel)session.getAttribute("orderitemInfo");
+  }
+  
+  @RequestMapping(value="/orderitemlogout",method=RequestMethod.GET) 
+  public ControllerResult OrderitemLogout(HttpSession session)throws Exception{
+
+   session.invalidate();  //销毁session对象
+	  ControllerResult result =new ControllerResult();
+
+	
+			result.setStatus("Y");
+			result.setMessage("订单注销成功");
+	
+		   return result;
+  }
 }
   

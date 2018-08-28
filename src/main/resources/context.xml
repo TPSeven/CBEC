@@ -35,7 +35,7 @@ http://mybatis.org/schema/mybatis-spring
 http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- 配置扫描的起始包-->
-	<context:component-scan base-package="com.neusoft.oa"/>
+	<context:component-scan base-package="com.neusoft.cbec"/>
 	<!-- 自动扫描dao接口文件-->
 	<mybatis:scan base-package="com.neusoft.cbec.dao" />
 	<!-- 启用Aspect J切面处理 -->
@@ -45,7 +45,7 @@ http://mybatis.org/schema/mybatis-spring.xsd">
 	<!-- c3p0 -->	
  	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="oracle.jdbc.driver.OracleDriver"/>    
-		<property name="jdbcUrl" value="jdbc:oracle:thin:@10.1.53.30:1521:neuedu"/> 
+		<property name="jdbcUrl" value="jdbc:oracle:thin:@127.0.0.1:1521:neuedu"/> 
 		<property name="user" value="tpseven"/> 
 		<property name="password" value="TPSEVEN"/> 
 		<property name="initialPoolSize" value="2"/>

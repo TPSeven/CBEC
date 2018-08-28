@@ -126,9 +126,9 @@ public class ProductController {
 	//检查商品id是否是否可用于新员工，返回true表示不存在，可以使用 返回fales表示ID已存在，不能使用
 	//用于jQuery validate remote的验证规则
 /*	@RequestMapping(value="checkIDCanBeUsed")
-	public boolean checkIDCanBeUsed(String pro_id) throws Exception{
+	public boolean checkIDCanBeUsed(String productId) throws Exception{
 		boolean result=true;
-		if(productService.getById(pro_id)!=null) {
+		if(productService.getById(productId)!=null) {
 			return false;
 		}
 		

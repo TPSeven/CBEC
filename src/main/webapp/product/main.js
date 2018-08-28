@@ -116,10 +116,20 @@ $(document).ready(function(){
     		//使用jQuery validate对商品进行数据验证
 			$("form#ProductAddForm").validate({
 				rules:{
-//					pro_id:{
-//						required:true,
-//						remote:"product/checkIDCanBeUsed.mvc"
-//					},
+					/*pro_id:{
+						required:true,
+						remote:{
+							url:"product/checkIDCanBeUsed.mvc",
+							type:"POST",
+							data:{
+								productId:function(){
+									return $("input[name='pro_id']");
+								}
+							}
+						}
+					
+					
+					},*/
 					
 					pro_name:{
 						required:true	

@@ -40,7 +40,7 @@ $(document).ready(function(){
 	});
 	
 	//状态选项更改事件
-    $("input[type='radio'][name='state']").on("change",function(){
+    $("input[type='radio'][name='pro_state']").on("change",function(){
     	proState=$(this).val();
     	alert(proState);
   	  	getParamAndReloadGrid();
@@ -73,7 +73,7 @@ $(document).ready(function(){
             { label: '商品品牌', name: 'brand_id', width: 120 },
             { label: '商品图片', name: 'pro_photos_id', width: 120 },
             { label: '商品简介', name: 'pro_desc', width: 120 },
-            { label: '商品日期', name: 'up_date', width: 120 }
+            { label: '更新日期', name: 'up_date', width: 120 }
         ],
         autowidth:true,
 		viewrecords: true,
@@ -111,8 +111,72 @@ $(document).ready(function(){
     		$.getJSON("product/list/all/withoutkinds.mvc",function(productList){
 				$.each(productList,function(index,pd){
 					$("div#BrandCheckboxArea").append("<label class='checkbox-inline'><input type='checkbox' name='brand_id' value='"+pd.brand_id+"'>"+rm.name+"</label>");
-				});
+				});	
     		});
+    		//使用jQuery validate对商品进行数据验证
+			$("form#ProductAddForm").validate({
+				rules:{
+//					pro_id:{
+//						required:true,
+//						remote:"product/checkIDCanBeUsed.mvc"
+//					},
+					
+					pro_name:{
+						required:true	
+					},
+					
+					pro_price:{
+						required:true,
+						number:true
+
+					},
+					pro_weight:{
+						required:true,
+						number:true,
+					},
+					pro_count:{
+						required:true,
+						digits:true
+					},
+					up_date:{
+						required:true
+					},
+					pro_desc:{
+						required:true
+					}
+				
+					
+				},
+				messages:{
+					pro_name:{
+						required:"商品名称为空"
+					},
+					
+					pro_price:{
+						required:"商品价格为空",
+						number:"价格必须为数值"
+
+					},
+					pro_weight:{
+						required:"商品重量为空",
+						number:"重量必须为数值"
+					},
+					pro_count:{
+						required:"商品数量为空",
+						digits:"数量必须为整数"
+					},
+					up_date:{
+						required:"商品日期为空",
+					},
+					pro_desc:{
+						required:"商品简介为空",
+					}
+					
+				}
+			});
+    		
+    		
+    		
     		//拦截增加表单提交
     		$("form#ProductAddForm").ajaxForm(function(result){
     			alert(result.message);

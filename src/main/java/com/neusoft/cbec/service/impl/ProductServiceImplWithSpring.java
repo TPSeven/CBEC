@@ -47,7 +47,7 @@ public class ProductServiceImplWithSpring implements IProductService {
 	}
 
 	@Override
-	public ProductModel getById(int productId) throws Exception {
+	public ProductModel getById(String productId) throws Exception {
 		
 		return productDao.selectById(productId);
 	}

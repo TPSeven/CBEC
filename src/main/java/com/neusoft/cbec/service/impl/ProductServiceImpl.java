@@ -58,7 +58,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public ProductModel getById(int productId) throws Exception {
+	public ProductModel getById(String productId) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}

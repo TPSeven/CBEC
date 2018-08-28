@@ -61,9 +61,9 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 	}
 
 	@Override
-	public List<OrderItemModel> getListByCondition(int order_id, int man_id, Date startDate, Date endDate,String man_name) throws Exception {
+	public List<OrderItemModel> getListByCondition(int order_id, int man_id,Date startDate, Date endDate,String man_name,String state) throws Exception {
 	
-		return orderitemdao.selectListByCondition(order_id, man_id, startDate, endDate,man_name);
+		return orderitemdao.selectListByCondition(order_id, man_id, startDate, endDate,man_name,state);
 	}
 
 	@Override
@@ -91,6 +91,17 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 			  pageCount=count/rows+1;
 		}
 		return pageCount;
+	}
+
+	@Override
+	public boolean validate(int order_id, int man_id) throws Exception {
+		 System.out.println("ok1");
+        boolean result = false;
+        if(orderitemdao.selectCountByloginId(order_id, man_id)>0) {
+   		 System.out.println("ok3");
+        	result=true;
+        }
+		return result;
 	}
 
 }

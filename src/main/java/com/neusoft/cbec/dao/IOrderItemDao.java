@@ -23,7 +23,7 @@ public interface IOrderItemDao {
    //分页
     public List<OrderItemModel>  selectListByAllWithPage(int rows,int page) throws Exception;
    //根据检索条件取得订单的列表 ,无分页
-    public List<OrderItemModel> selectListByCondition(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name) throws Exception;
+    public List<OrderItemModel> selectListByCondition(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name,@Param("state")String state) throws Exception;
     
     //根据检索条件取得订单的列表 ,有分页
     public List<OrderItemModel> selectListByConditionWithPage(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name,@Param("state")String state,@Param("start")int start,@Param("end")int end) throws Exception;
@@ -37,5 +37,7 @@ public interface IOrderItemDao {
     
     //取得指定制造商的订单列表 
     public List<OrderItemModel>  selectListByManufacturer(int man_id)throws Exception;
+    //验证登陆
+    public int selectCountByloginId (@Param("order_id")int order_id ,@Param("man_id")int man_id )throws Exception;
     
 }

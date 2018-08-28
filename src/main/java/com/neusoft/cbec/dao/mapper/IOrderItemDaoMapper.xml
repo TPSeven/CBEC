@@ -131,21 +131,23 @@ select count(a.order_id) from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_
 <if test="man_id!=0">
  and a.man_id=#{man_id}
 </if>
-
-
 <if test="startDate!=null">
  and a.order_date &gt;= #{startDate}
 </if>
 <if test="endDate!=null">
  and a.order_date &lt;= #{endDate}
  </if>
- <if test="man_name!=null and man_name!=''">
+ <if test="man_name!=null and  man_name!=''">
  and b.man_name like #{man_name}
  </if>
-<if test="state!=null and state!=''">
+<if test="state!=null  and state!=''">
  and a.state= #{state}
 </if>
 </trim>
+</select>
+<!-- 根据订单ID和制造商ID取得订单个数 -->
+<select id="selectCountByloginId" resultType="int">
+ select  count(order_id) from ORDER_ITEM where order_id=#{order_id} and man_id=#{man_id}
 </select>
 </mapper> 
 <!-- ORDER_ID order_id, PRO_ID pro_id,PRO_ID_COUNT pro_id_count,MAN_ID man_id,SELLER_ID seller_id,STATE state -->

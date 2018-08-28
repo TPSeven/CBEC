@@ -21,11 +21,11 @@
   
    
   <insert id="create" parameterType="Brand">
-     insert into Brand (brand_id,brand_name,man_id,brand_desc,brand_time) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{manufacturer.id},#{brand_desc},#{brand_time})
+     insert into Brand (brand_id,brand_name,man_id,brand_desc,brand_time) values (BRAND_NEXTNO_SQ.nextval,#{brand_name},#{manufacturer.id},#{brand_desc},#{brand_time,jdbcType=DATE})
   </insert>
   
   <update id="update" parameterType="Brand">
-    update Brand set brand_name=#{brand_name},man_id=#{manufacturer.id},brand_desc=#{brand_desc},brand_time=#{brand_time} where brand_id=#{brand_id}
+    update Brand set brand_name=#{brand_name},man_id=#{manufacturer.id},brand_desc=#{brand_desc},brand_time=#{brand_time,jdbcType=DATE} where brand_id=#{brand_id}
   </update>
   
   <delete id="delete" parameterType="Brand">
@@ -74,10 +74,10 @@
       select * from (select X.*, ROWNUM RN   FROM(
        select a.*, b.man_name from Brand a  inner join Manufacturer b
        on a.man_id = b.man_id
-      <trim prefix = "WHERE" prefixOverrides="AND/OR">
+      <trim prefix = "WHERE" prefixOverrides="AND|OR">
       
        <if test = "manuid!=0">
-        a.man_id = #{manuid}
+        and a.man_id = #{manuid}
        </if> 
        
        <if test = "startDate!=null">
@@ -99,10 +99,10 @@
    <!-- 根据检索条件取得员工的个数 -->
   <select id="selectCountByCondition" resultType="int">
    select count(a.brand_id) from Brand a
-      <trim prefix = "WHERE" prefixOverrides="AND/OR">
+      <trim prefix = "WHERE" prefixOverrides="AND|OR">
       
        <if test = "manuid!=0">
-        a.man_id = #{manuid}
+        and a.man_id = #{manuid}
        </if> 
        
        <if test = "startDate!=null">

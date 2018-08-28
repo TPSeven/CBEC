@@ -26,4 +26,5 @@ public interface IManufacturerDao {
 	//取得所有的制造商列表，并关联品牌商的列表
 	
 	public ManufacturerModel selectManufacturerWithBrandsById(int id) throws Exception;
+  
 }

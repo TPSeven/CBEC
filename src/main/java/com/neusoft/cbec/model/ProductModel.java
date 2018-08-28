@@ -26,6 +26,9 @@ public class ProductModel {
 	//关联-商品类型
 	private KindsModel kinds = null;
 	
+	//关联-商品品牌
+	//private brandModel brand = null;
+	
 	
 	
 	public KindsModel getKinds() {

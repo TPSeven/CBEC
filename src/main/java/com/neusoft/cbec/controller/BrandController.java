@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.BrandModel;
+import com.neusoft.cbec.result.ControllerResult;
 import com.neusoft.cbec.result.GridResult;
+
 import com.nuesoft.cbec.service.IBrandService;
 
 
@@ -29,9 +31,13 @@ public class BrandController {
 	
 	
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
-	public String add(BrandModel brandmodel) throws Exception{
+	public ControllerResult add(BrandModel brandmodel) throws Exception{
 		brandService.add(brandmodel);
-		return "ok";
+		ControllerResult result = new ControllerResult();
+		result.setStatus("ok");
+		result.setMessage("增加员工成功!");
+		
+		return result;
 	}
 	
 	@RequestMapping(value = "/listbyall/nomanu",method = RequestMethod.GET) 

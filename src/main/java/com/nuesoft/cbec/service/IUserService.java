@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.neusoft.cbec.model.ModuleModel;
 import com.neusoft.cbec.model.UserModel;
 
 public interface IUserService {
@@ -46,5 +47,7 @@ public interface IUserService {
 	public void deleteRoles(int id);
 	//验证用户-邮箱&密码-登陆
 	public UserModel validate(String email, String password);
+	//取得用户被授予的模块与功能
+	public List<ModuleModel> getGrandModulesAndFunctions(int id);
 	
 }

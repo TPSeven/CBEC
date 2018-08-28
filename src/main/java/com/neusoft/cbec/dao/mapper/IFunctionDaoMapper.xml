@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.neusoft.cbec.dao.IFunctionDao">
+	
+	<!-- 基本映射  -->
+	<resultMap type="Function" id="FunctionResultMap">
+		<id property="no" column="fun_no" />
+		<result property="name" column="fun_name" />
+		<result property="url" column="fun_url" />
+	</resultMap>
+	
+	<!-- 系统功能关联归属的系统模块映射  -->
+	<resultMap extends="FunctionResultMap" type="Function" id="FunctionWithModuleResultMap">
+		<association property="module" resultMap="com.neusoft.cbec.dao.IModuleDao.ModuleResultMap"></association>
+	</resultMap>
+	
+	
+</mapper>

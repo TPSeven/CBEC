@@ -4,6 +4,7 @@
  * */
 
 $(document).ready(function(){
+	
 	//用户登陆输入信息验证
 	$("form#userLoginForm").validate({
 		rules:{
@@ -14,7 +15,7 @@ $(document).ready(function(){
 				required:true
 			}
 		},
-		message:{
+		messages:{
 			email:{
 				required:"请填入你的登陆邮箱"
 			},
@@ -39,7 +40,7 @@ $(document).ready(function(){
 			});
 		}else{
 			//跳转到首页
-			window.location.href="indexWwl.html";
+			window.location.href="../indexWwl.html";
 		}
 	});
 });

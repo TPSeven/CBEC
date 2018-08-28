@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.neusoft.cbec.dao.IUserDao;
+import com.neusoft.cbec.model.ModuleModel;
 import com.neusoft.cbec.model.UserModel;
 import com.nuesoft.cbec.service.IUserService;
 /**
@@ -127,6 +128,12 @@ public class UserServiceImpl implements IUserService {
 	@Override
 	public UserModel validate(String email, String password) {
 		return userDao.validateByEmailPassword(email,password);
+	}
+
+	//取得用户被授予的模块与功能
+	@Override
+	public List<ModuleModel> getGrandModulesAndFunctions(int id) {
+		return userDao.selectGrandModulesAndFunctions(id);
 	}
 
 	

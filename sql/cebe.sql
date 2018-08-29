@@ -49,9 +49,9 @@ create table UUSER(
 );
 create sequence USER_NEXTID_SQ;
 ALTER TABLE UUSER ADD constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id); --钱包外键
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','admin','男',20,null,null,null,'test@qq.com','10086','1-12月-1998','8-1月-2015','管理员账号',1,0,0);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',2,0,0);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',3,0,0);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','admin','男',20,null,null,null,'test1@qq.com','10086','1-12月-1998','8-1月-2015','管理员账号',1,0,0);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,null,null,null,'test2@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',2,0,0);
+insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',20,null,null,null,'test3@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',3,0,0);
 select * from UUSER;
 ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
 

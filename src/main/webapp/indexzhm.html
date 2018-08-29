@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>跨境电商借买交易平台</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Dialog CSS -->
+    <link href="dist/bootstrapdialog/css/bootstrap-dialog.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="dist/css/sb-admin-2.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" type="text/css" media="screen" href="dist/jqgrid/css/ui.jqgrid-bootstrap4.css" />
+	<!-- JQueryUI CSS -->
+	<link rel="stylesheet" type="text/css" href="dist/jqueryui/jquery-ui.min.css">
+	<link rel="stylesheet" type="text/css" href="dist/jqueryui/jquery-ui.theme.min.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+
+<body>
+
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">跨境电商借卖平台</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                        <span id="loginorderitemid"></span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="orderitemlogoutlink"><i class="fa fa-sign-out fa-fw"></i>注销登陆</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                            <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> 品牌商<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" id="manufacturer-content">
+                                <li>
+                                    <a href="manufacturer/view.html">我的信息</a>
+                                </li>
+                                <li>
+                                    <a href="brand/brand.html">品牌管理</a>
+                                </li>
+                                <li>
+                                    <a href="product/main.html">商品录入</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html">商品主图</a>
+                                </li>
+                                <li>
+                                    <a href="typography.html">订单管理</a>
+                                </li>
+                                <li>
+                                    <a href="icons.html">我的钱包</a>
+                                </li>
+ 							</ul>
+                            <!-- /.nav-second-level -->
+                        	</li>
+                            <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> 借卖商<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" >
+                                <li>
+                                    <a href="#">商品管理</a>
+                                </li>
+                                <li>
+                                    <a href="#">店铺管理</a>
+                                </li>
+                                <li>
+                                    <a href="#">商品浏览</a>
+                                </li>
+                                <li>
+                                    <a href="#">心愿单</a>
+                                </li>
+                                <li>
+                                    <a href="orderitem/order.html"> 订单管理</a>
+                                </li>
+                                <li>
+                                    <a href="#">我的钱包</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                   
+                 
+       
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i>管理员<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level" id="admin-content">
+                            	<li>
+                                    <a href="user/main.html">用户管理</a>
+                                </li>
+                            	<li>
+                                    <a href="manufacturer/main.html">品牌商管理</a>
+                                </li>
+                                <li>
+                                    <a href="panels-wells.html">数据字典管理</a>
+                                </li>
+                                <li>
+                                    <a href="buttons.html">参数管理</a>
+                                </li>
+                                <li>
+                                    <a href="notifications.html">充值提现审核</a>
+                                </li>
+                                 <li>
+                                    <a href="orderitem/order.html"> 订单管理</a>
+                                </li>
+                            <!-- /.nav-second-level -->
+                        </li>
+
+
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid" id="maincontent">
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                           	 欢迎使用 <small>东软集团跨境电商借买交易平台</small>
+                        </h1>
+                        <ol class="breadcrumb">
+                            <li class="active">
+                                <i class="fa fa-fw fa-smile-o"></i></i> 欢迎使用
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+
+    <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+    
+    <!-- JqGrid Theme JavaScript -->
+    <script type="text/ecmascript" src="dist/jqgrid/js/i18n/grid.locale-cn.js"></script>
+    <script type="text/ecmascript" src="dist/jqgrid/js/jquery.jqGrid.min.js"></script>
+    <!-- JQeury UI JavaScript -->
+    <script type="text/javascript" src="dist/jqueryui/jquery-ui.min.js"></script>
+    <!-- JQeury Form JavaScript -->
+    <script type="text/javascript" src="dist/jqueryform/jquery.form.js"></script>
+    <script type="text/javascript" src="dist/jqueryform/jquery.form.min.js"></script>
+    <!-- JQeury Validate JavaScript -->
+    <script type="text/javascript" src="dist/jqueryvalidate/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="dist/jqueryvalidate/additional-methods.min.js"></script>
+    <script type="text/javascript" src="dist/jqueryvalidate/localization/messages_zh.min.js"></script>
+
+    <!--   引入定制的JQuery Validate验证规则 -->
+    <script src="js/oa_order_validate.js"></script>
+
+    <!-- Bootstrap Dialog JavaScript -->
+    <script type="text/javascript" src="dist/bootstrapdialog/js/bootstrap-dialog.min.js"></script>
+    
+
+    <!-- Main JavaScript -->
+    <script src="js/mainzhm.js"></script>
+    <script src="js/oa_order_validate.js"></script>
+    
+
+</body>
+
+</html>

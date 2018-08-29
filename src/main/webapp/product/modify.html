@@ -1,4 +1,7 @@
-<form role="form" action="#" method="post">
+<form id="ProductModifyForm" role="form" action="product/modify.mvc" method="post">
+		 <div class="form-group">
+             <input type="hidden" class="form-control" name="pro_id" >
+         </div>
          <div class="form-group">
              <label>商品名称</label>
              <input class="form-control" name="pro_name" >
@@ -11,17 +14,19 @@
              <label>商品重量</label>
              <input class="form-control" name="pro_weight"   >
          </div>
-         <div class="form-group">                                        
+         <div class="form-group">                                         
              <label>商品数量</label>
              <input class="form-control" name="pro_count" >
          </div>
             <div class="form-group">
              <label>商品类型</label>
-             <input  class="form-control" name="pro_kinds_id" >
+             <select class="form-control" name="kinds.pro_kinds_id">             
+             </select>
          </div>
             <div class="form-group">
              <label>商品状态</label>
-             <input class="form-control" name="pro_state_id" >
+             <input type="radio" name="pro_state" value="在售" checked>在售
+	    	 <input type="radio" name="pro_state" value="下架">下架	
          </div>
          <div class="form-group">
              <label>商品品牌</label>
@@ -35,6 +40,18 @@
              <label>商品简介</label>
              <input class="form-control" name="pro_desc" >
          </div>
-         <button type="button" id="ProductModifyButton"class="btn btn-default">修改</button>
-         <button type="button" id="ProductCancelButton"class="btn btn-default">返回</button>
+         <div class="form-group">
+             <label>商品日期</label>
+             <input class="form-control" name="up_date" >
+         </div>
+         <div class="form-group">
+        	<div class="col-sm-6">
+                <input type="submit" class="form-control" value="修改" />
+            </div>
+            <div class="col-sm-6">
+               <div class="col-md-12">
+                <a href="#" id="ProductModifyCancelLink" class="form-control btn btn-default">取消</a>
+               </div>
+            </div>
+        </div>
    </form>

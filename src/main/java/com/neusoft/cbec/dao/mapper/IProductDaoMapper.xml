@@ -33,6 +33,12 @@
   	<association property="kinds" resultMap="com.neusoft.cbec.dao.IKindsDao.KindsResultMap"></association>
   </resultMap>
   
+  <!--  无图 品牌字段映射的resultMap
+  <resultMap id="ProductWithBrandResultMap" type="Product" extends="ProductResultMap">
+  	<association property="brand" resultMap="com.neusoft.cbec.dao.IBrandDao.BrandResultMap"></association>
+  </resultMap>
+  -->
+  
   <!-- 有图 有种类字段映射的resultMap
   <resultMap id="ProductWithKindsAndPhotosResultMap" type="Product" extends="ProductWithPhotosResultMap,ProductWithKindsResultMap">
   </resultMap>
@@ -60,8 +66,15 @@
   	select * from PRODUCT 
   </select>
   
-  <select id="selectById" parameterType = "int" resultMap="ProductResultMap">
+  <select id="selectById" parameterType = "String" resultMap="ProductResultMap">
   	select * from PRODUCT where pro_id=#{productId}
+  </select>
+  
+  <select id="selectByIdWithKinds" parameterType = "String" resultMap="ProductResultMap">
+  	select * from PRODUCT
+  	a inner join KINDS b
+  	on a.pro_kinds_id=b.pro_kinds_id 
+  	where pro_id=#{productId}
   </select>
   
   <!-- 查询所有-无关联种类 -->

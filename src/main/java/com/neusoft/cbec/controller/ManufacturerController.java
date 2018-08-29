@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.neusoft.cbec.model.ManufacturerModel;
+import com.neusoft.cbec.result.ControllerResult;
 import com.nuesoft.cbec.service.IManufacturerService;
 
 /**
@@ -76,5 +77,18 @@ public class ManufacturerController {
 	@RequestMapping(value="/getManuWithOrderById",method={RequestMethod.POST,RequestMethod.GET})
 	public ManufacturerModel getManuWithOrderById(@RequestParam(required=true)int id) throws Exception{
 		return manufacturerService.getManufacturerWithOrderItemById(id);
+	}
+	//检查订单能否被删除
+	@RequestMapping(value="/checkcandelete",method=RequestMethod.GET)
+	public ControllerResult checkCanDelete(int man_id) throws Exception{
+		ControllerResult result =new ControllerResult();
+		 if(manufacturerService.checkCanDelete(man_id)) {
+			 result.setStatus("Y");
+		 }
+		 else {
+			 result.setStatus("N");
+			 result.setMessage("此订单不能被删除，有关联制造商");
+		 }
+		return result;
 	}
 }

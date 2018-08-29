@@ -30,6 +30,7 @@ public class ProductModel {
 	//private brandModel brand = null;
 	
 	
+	
 	public KindsModel getKinds() {
 		return kinds;
 	}
@@ -108,6 +109,7 @@ public class ProductModel {
 	public void setPro_state(String pro_state) {
 		this.pro_state = pro_state;
 	}
+
 	
 	
 	

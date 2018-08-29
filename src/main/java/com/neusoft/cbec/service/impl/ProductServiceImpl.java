@@ -58,7 +58,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public ProductModel getById(int productId) throws Exception {
+	public ProductModel getById(String productId) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -104,6 +104,12 @@ public class ProductServiceImpl implements IProductService {
 			String name, String state, int rows) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	@Override
+	public ProductModel getByIdWithKinds(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

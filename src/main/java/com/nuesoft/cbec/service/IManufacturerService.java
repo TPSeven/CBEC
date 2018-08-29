@@ -18,4 +18,6 @@ public interface IManufacturerService {
 	public  List<ManufacturerModel> getListWithBrandsByAll() throws Exception;
 	
 	public   ManufacturerModel getManufacturerWithBrandsById(int id) throws Exception;
+	  //检查制定的订单是否可以被删除
+	    public boolean checkCanDelete(int  man_id) throws Exception;
 }

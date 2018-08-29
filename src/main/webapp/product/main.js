@@ -199,4 +199,132 @@ $(document).ready(function(){
     	});
   
     });
+    
+    //修改商品按钮点击事件处理
+    $("a#ProductModifyLink").on("click",function(){
+    	if(productId==null){
+    		BootstrapDialog.show({
+    			title:"商品操作提示",
+    			message:"<h4>请选择要修改的商品</h4>",
+    			buttons:[{
+    				label:'关闭',
+    				action:function(dialog){
+    					dialog.close();
+    				}
+    			}]
+    		})
+    	}
+    	else{
+        	$("div#ProductDialog").load("product/modify.html",function(productList){
+         	   //取得种类表填充下拉框
+         		$.getJSON("kinds/list/all.mvc",function(kindsList){
+         			//var options="<option value='0'>所有</option>"
+         			$.each(kindsList,function(index,kd){
+         				
+         				$("select[name='kinds.pro_kinds_id']").append("<option value='"+kd.pro_kinds_id+"'>"+kd.pro_kinds_name+"</option>");
+         			});
+         		});
+     			//取得员工的信息，填充员工修改表单元素
+				$.getJSON("product/get/id.mvc",{productId:productId},function(pd){
+					$("input[name='pro_id']").val(pd.pro_id);
+					$("input[name='pro_name']").val(pd.pro_name);
+					$("input[name='pro_price']").val(pd.pro_price);
+					$("input[name='pro_weight']").val(pd.pro_weight);
+					$("input[name='pro_count']").val(pd.pro_count);
+					$("input[name='pro_state']").val(pd.pro_state);
+					$("input[name='brand_id']").val(pd.brand_id);
+					$("input[name='pro_photos_id']").val(pd.pro_photos_id);
+					$("input[name='pro_desc']").val(pd.pro_desc);
+					$("input[name='up_date']").val(pd.up_date);
+					//选中种类的商品
+					$("select[name='kinds.pro_kinds_id']").val(pd.kinds.pro_kinds_id);
+					//biao
+				});
+     		
+         		//使用jQuery validate对商品进行数据验证
+     			$("form#ProductModifyForm").validate({
+     				rules:{
+//     					pro_id:{
+//     						required:true,
+//     						remote:"product/checkIDCanBeUsed.mvc"
+//     					},
+     					
+     					pro_name:{
+     						required:true	
+     					},
+     					
+     					pro_price:{
+     						required:true,
+     						number:true
+
+     					},
+     					pro_weight:{
+     						required:true,
+     						number:true,
+     					},
+     					pro_count:{
+     						required:true,
+     						digits:true
+     					},
+     					up_date:{
+     						required:true
+     					},
+     					pro_desc:{
+     						required:true
+     					}
+     				
+     					
+     				},
+     				messages:{
+     					pro_name:{
+     						required:"商品名称为空"
+     					},
+     					
+     					pro_price:{
+     						required:"商品价格为空",
+     						number:"价格必须为数值"
+
+     					},
+     					pro_weight:{
+     						required:"商品重量为空",
+     						number:"重量必须为数值"
+     					},
+     					pro_count:{
+     						required:"商品数量为空",
+     						digits:"数量必须为整数"
+     					},
+     					up_date:{
+     						required:"商品日期为空",
+     					},
+     					pro_desc:{
+     						required:"商品简介为空",
+     					}
+     					
+     				}
+     			});
+         		
+     			$("div#ProductDialog").dialog({
+     	    	  	title:"修改商品",
+     	        	width:500,
+     	        	hight:1000
+     	    	});
+         		
+         		
+         		//拦截增加表单提交
+         		$("form#ProductModifyForm").ajaxForm(function(result){
+         			alert(result.message);
+         			getParamAndReloadGrid(); //重新载入商品列表，并刷新Grid显示。
+         			$("div#ProductDialog").dialog("close"); //关闭弹出Dialog
+         			
+         		});
+         		//定义取消连接点击事件处理
+         		$("a#ProductModifyCancelLink").on("click",function(){
+         			$("div#ProductDialog").dialog("close"); //关闭弹出Dialog
+         		});
+         		
+         	});
+    		
+    	}
+    	
+    });
 });

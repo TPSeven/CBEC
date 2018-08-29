@@ -38,10 +38,15 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String modify(ProductModel product) throws Exception {
+	public ControllerResult modify(ProductModel product) throws Exception {
 		
 		productService.modify(product);
-		return "ok";
+		ControllerResult result=new ControllerResult();
+		result.setStatus("OK");
+		result.setMessage("修改员工成功!");
+		
+		return result;
+		
 		
 	}
 	
@@ -71,6 +76,11 @@ public class ProductController {
 	@RequestMapping(value="/get/id",method=RequestMethod.GET)
 	public ProductModel getById(String productId) throws Exception{
 		return productService.getById(productId);
+	}
+	
+	@RequestMapping(value="/get/id/withkinds",method=RequestMethod.GET)
+	public ProductModel getByIdWithKinds(String productId) throws Exception{
+		return productService.getByIdWithKinds(productId);
 	}
 		
 		

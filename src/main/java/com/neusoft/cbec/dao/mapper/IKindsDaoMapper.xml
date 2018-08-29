@@ -15,7 +15,7 @@
   </resultMap>
   
   <insert id="create" parameterType = "Kinds" >
-  	insert into KINDS(pro_kinds_id,kinds_name) 
+  	insert into KINDS(pro_kinds_id,kinds_name)
   	values(#{pro_kinds_id},#{pro_kinds_name})
   </insert>
   

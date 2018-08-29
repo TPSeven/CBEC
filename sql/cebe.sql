@@ -53,15 +53,15 @@ insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','admin','男',20,null,nu
 insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',2,0,0);
 insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',20,null,null,null,'test@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',3,0,0);
 select * from UUSER;
-ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
+-- ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
 
 -- 用户角色关联表
 create table UUser_Role_Relate(
-  uuid number(10),
-  rid number(10),
-  constraint UUSER_ROLE_RPK primary key(uuid,rid),
-  foreign key (uuid) references UUSER(user_id),
-  foreign key (rid) references ROLE(role_id)
+  user_id number(10),
+  role_id number(10),
+  constraint UUSER_ROLE_RPK primary key(user_id,role_id),
+  foreign key (user_id) references UUSER(user_id),
+  foreign key (role_id) references ROLE(role_id)
 );
 insert into UUser_Role_Relate values(2,1);
 insert into UUser_Role_Relate values(2,2);
@@ -70,6 +70,52 @@ insert into UUser_Role_Relate values(3,2);
 insert into UUser_Role_Relate values(3,3);
 insert into UUser_Role_Relate values(4,2);
 insert into UUser_Role_Relate values(4,3);
+
+-- SystemModule 系统模块表
+create table SystemModule(
+  module_no number(10) primary key,
+  module_name varchar(50)
+);
+insert into SystemModule values(1,'品牌商');
+insert into SystemModule values(2,'借卖商');
+insert into SystemModule values(3,'管理员');
+
+--SystemFunction 系统功能表
+create table SystemFunction(
+  fun_no number(10) primary key,
+  module_no number(10) references SystemModule(module_no),
+  fun_name varchar(100),
+  fun_url varchar(100)
+);
+insert into SystemFunction values (1,1,'我的信息',null);
+insert into SystemFunction values (2,1,'品牌管理','brand/brand.html');
+insert into SystemFunction values (3,1,'商品录入','product/main.html');
+insert into SystemFunction values (4,1,'商品主图',null);
+insert into SystemFunction values (5,1,'订单管理',null);
+insert into SystemFunction values (6,1,'我的钱包',null);
+
+insert into SystemFunction values (7,2,'商品管理',null);
+insert into SystemFunction values (8,2,'店铺管理',null);
+insert into SystemFunction values (9,2,'商品浏览',null);
+insert into SystemFunction values (10,2,'心愿单',null);
+insert into SystemFunction values (11,2,'订单管理',null);
+insert into SystemFunction values (12,2,'我的钱包',null);
+
+insert into SystemFunction values (13,3,'用户管理','user/main.html');
+insert into SystemFunction values (14,3,'品牌商管理','manufacturer/main.html');
+insert into SystemFunction values (15,3,'订单管理','orderitem/orderitem.html');
+
+-- 模块角色关联表
+create table Role_Module_Relate(
+  role_id number(10),
+  module_no number(10),
+  constraint Role_Module_RPK primary key(role_id,module_no),
+  foreign key (role_id) references ROLE(role_id),
+  foreign key (module_no) references SystemModule(module_no)
+);
+insert into Role_Module_Relate values (1,1);
+insert into Role_Module_Relate values (2,2);
+insert into Role_Module_Relate values (3,3);
 
 --manufacturer 制造商
 create table MANUFACTURER(

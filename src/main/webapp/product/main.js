@@ -324,7 +324,42 @@ $(document).ready(function(){
          		
          	});
     		
-    	}
-    	
+    	}	
     });
+    
+	//删除订单按钮事件处理
+    $("a#ProductDeleteLink").on("click",function(){
+
+    		if(productId == null){
+    			BootstrapDialog.show({
+        			title:"订单操作提示",
+        		    message:"<h4>请选择要删除的订单</h4>",
+        				buttons:[{
+        				label:'关闭'	,
+        				action:function(dialog){
+        					dialog.close();
+        			      	 }	
+                 		  }
+        				] 
+        		});  
+    			
+    		}else{ 
+    			
+    			BootstrapDialog.confirm('确认要删除此订单吗?', function(confirmResult){
+    			
+        			if(confirmResult){
+        			    $.post("product/delete.mvc",{pro_id:productId},function(result){
+	        			  if(result=="ok"){
+	        				   alert("删除订单成功");
+	        			  }
+	        			  else{
+	        				  alert("删除订单失败");
+	        			  }
+        			    });
+    			    } 
+        			getParamAndReloadGrid();
+    			});
+    		}	
+    });
+ //   
 });

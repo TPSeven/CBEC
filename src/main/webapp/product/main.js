@@ -371,5 +371,40 @@ $(document).ready(function(){
     			});
     		}	
     });
- //   
+ // 
+    //查看商品事件处理
+    $("a#ProductViewLink").on("click",function(){
+        
+		if(productId==0){
+			alert("请选择要查看的订单!");
+			
+		}
+		else{
+			
+			$("div#ProductDialog").load("product/view.html",function(){
+				$("div#ProductDialog").dialog({
+            		title:"查看订单",
+            	width:900,
+            	heigth:650   
+            	});
+		    	 $.getJSON("product/get/id/withkinds.mvc",{productId:productId},function(resultData){
+		    		    $("span#productId").html(resultData.pro_id);
+		    		    $("span#productName").html(resultData.pro_name);
+		 				$("span#productPrice").html(resultData.pro_price);
+		 				$("span#productWeight").html(resultData.pro_weight);
+		 				$("span#productCount").html(resultData.pro_count);
+		 				$("span#productKinds").html(resultData.kinds.pro_kinds_name);
+		 				$("span#productState").html(resultData.pro_state); 
+		 				$("span#productBrand").html(resultData.brand_id); 
+		 				$("span#productPhotos").html(resultData.pro_photos_id); 
+		 				$("span#productDesc").html(resultData.pro_desc); 
+		 				$("span#productUpdate").html(resultData.up_date); 
+		    	 });
+		    	   $("button#ProductCancelButton").on("click",function(){
+		    			$("div#ProductDialog").dialog("close"); //关闭弹出Dialog
+		    		
+		    	   });
+    		});
+		 } 		
+    });
 });

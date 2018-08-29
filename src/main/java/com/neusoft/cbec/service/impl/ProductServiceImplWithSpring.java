@@ -98,4 +98,10 @@ public class ProductServiceImplWithSpring implements IProductService {
 		return pageCount;
 	}
 
+	@Override
+	public ProductModel getByIdWithKinds(String productId) throws Exception {
+		
+		return productDao.selectByIdWithKinds(productId);
+	}
+
 }

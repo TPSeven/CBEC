@@ -17,7 +17,10 @@ import com.neusoft.cbec.result.GridResult;
 
 import com.nuesoft.cbec.service.IBrandService;
 
-
+/*
+ * 品牌商控制器类
+ * 马家豪
+ */
 @RestController
 @RequestMapping("/brand")
 public class BrandController {
@@ -55,9 +58,12 @@ public class BrandController {
 	}
 	
 	@RequestMapping(value = "/modify",method = RequestMethod.POST)
-	public String modify(BrandModel brandmodel)throws Exception{
+	public ControllerResult modify(BrandModel brandmodel)throws Exception{
 		brandService.modify(brandmodel);
-		return "ok";
+		ControllerResult result = new ControllerResult();
+		result.setStatus("ok");
+		result.setMessage("修改员工成功!");
+		return result;
 	}
 	
 	@RequestMapping(value = "/getbrandid" ,method = {RequestMethod.POST ,RequestMethod.GET})
@@ -114,6 +120,21 @@ public class BrandController {
 		     return brandService.getListByCondition(manuid, name, startDate, endDate);
 		
 	}
+	//取得品牌商是否可用于新员工，返回TURE，表示不存在，可以使用；false表示品牌商已经存在，不能使用
+	//用于JQuery Validate remote 的验证规则
+	@RequestMapping(value="/checkIDCanBeUsed",method=RequestMethod.GET)
+	public boolean checkIDCanBeUsed(String brand_name) throws Exception{
+		List<BrandModel> list = brandService.getListByAll();
+		for(BrandModel brandname : list) {
+			if(brandname.getBrand_name()!=null&&brandname.getBrand_name().equals(brand_name)) {
+				return false;
+			}
+		}
+		return true;                   
+		
+	}
+	
+	
 			
 	
 	

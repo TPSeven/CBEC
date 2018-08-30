@@ -87,7 +87,7 @@ create table SystemFunction(
   fun_name varchar(100),
   fun_url varchar(100)
 );
-insert into SystemFunction values (1,1,'我的信息',null);
+insert into SystemFunction values (1,1,'我的信息','manufacturer/view.html');
 insert into SystemFunction values (2,1,'品牌管理','brand/brand.html');
 insert into SystemFunction values (3,1,'商品录入','product/main.html');
 insert into SystemFunction values (4,1,'商品主图',null);

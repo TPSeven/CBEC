@@ -54,6 +54,8 @@ $(document).ready(function(){
 				
 			});
 			
+			
+			
 		}
 	});
 	
@@ -61,8 +63,8 @@ $(document).ready(function(){
 	$("div#maincontent").load("home/main.html");
 	
 	//主页链接点击响应事件
-	$("div#side-menu li a[href='indexWwl.html']").on("click",function(event){
-		$("div#maincontent").load("indexWwl.html");
+	$("ul#side-menu li a[href='indexWwl.html']").on("click",function(event){
+		$("div#maincontent").load("home/main.html");
 		event.preventDefault();
 	});
 	

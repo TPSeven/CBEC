@@ -28,6 +28,11 @@
     <collection property="roles" javaType="ArrayList" ofType="Role" resultMap="com.neusoft.cbec.dao.IRoleDao.RoleResultMap"></collection>
   </resultMap>
   
+  <!-- 关联制造商信息的映射-->
+  <resultMap id="UserWithManuResultMap" type="User" extends="UserResultMap">
+  	<association property="manufacturer" resultMap="com.neusoft.cbec.dao.IManufacturerDao.ManResultMap"></association>
+  </resultMap>
+  
   <!--================增加语句相关映射================-->
   <!--添加用户，无照片  -->
   <insert id="createWithoutPhoto" parameterType="User" >
@@ -64,9 +69,10 @@
   </delete>
   
   <!--================查询语句相关映射================-->
-  <!-- 验证用户-邮箱&密码-登陆 -->
-  <select id="validateByEmailPassword" resultMap="UserResultMap">
-  	select * from UUSER 
+  <!-- 验证用户-邮箱&密码-登陆 、关联对应制造商 -->
+  <select id="validateByEmailPassword" resultMap="UserWithManuResultMap">
+  	select * from UUSER u
+	natural join MANUFACTURER 
   	where user_email=#{email} and user_password=#{password}
   </select>
   
@@ -79,7 +85,6 @@
 	on b.role_id = c.role_id
     where a.user_id=#{id}
   </select>
-  
   
   <!--取得所有用户列表 无关联角色-->
   <select id="selectListByAll" resultMap="UserResultMap">
@@ -220,7 +225,7 @@
 	   </where>
   </select>
   
-  <!--  -->
+  <!--取得用户被授予的系统模块与功能  -->
   <select id="selectGrandModulesAndFunctions" parameterType="int" resultMap="com.neusoft.cbec.dao.IModuleDao.ModuleWithFunctionsResultMap">
   	select a.*,b.*
 	from SYSTEMFUNCTION a,(select x.* from SYSTEMMODULE x

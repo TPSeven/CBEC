@@ -1,0 +1,56 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h1 class="page-header">
+           	 我的信息
+        </h1>
+        <ol class="breadcrumb">
+            <li>
+                <i class="fa fa-fw fa-home"></i><a href="#" id="home">首页</a>
+            </li>
+            <li class="active">
+                <i class="fa fa-table"></i> 我的信息
+            </li>
+        </ol>
+    </div>
+</div>
+<!-- /.row -->
+
+<div class="row">
+	<div class="col-lg-12">
+            <div class="list-group">
+	           	<a class="list-group-item active">品牌商信息</a>
+	        	<a class="list-group-item">
+	        	品牌商照片：<img alt="log" src="#">
+	        	</a>
+	        	<a class="list-group-item" id="viewNo"></a>
+	            <a class="list-group-item" id="viewName"></a>
+	            <a class="list-group-item" id="viewPhone"></a>
+	            <a class="list-group-item" id="viewAddress"></a>
+	            <a class="list-group-item">品牌商描述：
+	            <textarea name="mdesc" class="form-control" rows="3" readonly></textarea>
+	            </a>
+            </div>
+            <button type="button" class="btn btn-default" id="backManufacturerBut">返回</button>
+	</div>
+</div>
+<script type="text/javascript">
+	//取得登陆用户的信息
+	$.getJSON("login/getLoginUser.mvc",function(userModel){
+		$("a#viewNo").text("品牌商编号："+userModel.manufacturer.no);
+		$("a#viewName").text("品牌商名称："+userModel.manufacturer.name);
+		$("a#viewPhone").text("品牌商电话："+userModel.manufacturer.phone);
+		$("a#viewAddress").text("品牌商地址："+userModel.manufacturer.address);
+		$("textarea[name='mdesc']").val(userModel.manufacturer.mdesc);
+	});
+	
+	//显示信息页面，返回按钮响应
+	$("button#backManufacturerBut").on("click",function(){
+		//加载home主页
+		$("div#maincontent").load("home/main.html");
+	});
+	
+	$("a#home").on("click",function(){
+		//加载home主页
+		$("div#maincontent").load("home/main.html");
+	});
+</script>

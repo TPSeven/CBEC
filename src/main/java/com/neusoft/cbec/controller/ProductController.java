@@ -38,10 +38,15 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/modify",method=RequestMethod.POST)
-	public String modify(ProductModel product) throws Exception {
+	public ControllerResult modify(ProductModel product) throws Exception {
 		
 		productService.modify(product);
-		return "ok";
+		ControllerResult result=new ControllerResult();
+		result.setStatus("OK");
+		result.setMessage("修改员工成功!");
+		
+		return result;
+		
 		
 	}
 	
@@ -69,8 +74,13 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/get/id",method=RequestMethod.GET)
-	public ProductModel getById(int productId) throws Exception{
+	public ProductModel getById(String productId) throws Exception{
 		return productService.getById(productId);
+	}
+	
+	@RequestMapping(value="/get/id/withkinds",method=RequestMethod.GET)
+	public ProductModel getByIdWithKinds(String productId) throws Exception{
+		return productService.getByIdWithKinds(productId);
 	}
 		
 		
@@ -82,12 +92,12 @@ public class ProductController {
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date startDate, 
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date endDate,
 			@RequestParam(required=false,defaultValue="") String name,
-			@RequestParam(required=false,defaultValue="") String state) throws Exception {
+			@RequestParam(required=false,defaultValue="") String proState) throws Exception {
 		if(name!=null&&name.trim().length()>0) {
 			name="%"+name+"%";
 			
 		}
-		return productService.getListByCondition(kindsId, sprice, eprice, brand, startDate, endDate, name, state);
+		return productService.getListByCondition(kindsId, sprice, eprice, brand, startDate, endDate, name, proState);
 	}	
 	
 	@RequestMapping(value="/list/condition/page",method=RequestMethod.POST)
@@ -121,9 +131,20 @@ public class ProductController {
 		result.setRows(productService.getListByConditionWithPage(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows, page));
 		
 		return result;
-	}	
+	}
 	
+	//检查商品id是否是否可用于新员工，返回true表示不存在，可以使用 返回fales表示ID已存在，不能使用
+	//用于jQuery validate remote的验证规则
+/*	@RequestMapping(value="checkIDCanBeUsed")
+	public boolean checkIDCanBeUsed(String productId) throws Exception{
+		boolean result=true;
+		if(productService.getById(productId)!=null) {
+			return false;
+		}
 		
+		return result;
+		
+	}*/
 }
 
 

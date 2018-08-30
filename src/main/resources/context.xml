@@ -35,7 +35,7 @@ http://mybatis.org/schema/mybatis-spring
 http://mybatis.org/schema/mybatis-spring.xsd">
 	
 	<!-- 配置扫描的起始包-->
-	<context:component-scan base-package="com.neusoft.oa"/>
+	<context:component-scan base-package="com.neusoft.cbec"/>
 	<!-- 自动扫描dao接口文件-->
 	<mybatis:scan base-package="com.neusoft.cbec.dao" />
 	<!-- 启用Aspect J切面处理 -->

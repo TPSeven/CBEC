@@ -36,7 +36,10 @@ public interface IProductDao {
 	public List<ProductModel> selectListByKindsWithPage(int rows,int page,int kindsId) throws Exception;
 	
 	//取得指定编号商品信息（单个对象）
-	public ProductModel selectById(int productId) throws Exception;
+	public ProductModel selectById(String productId) throws Exception;
+	//取得指定编号商品信息-关联种类（单个对象）
+	public ProductModel selectByIdWithKinds(String productId) throws Exception;
+	
 	//取得所有商品个数
 	public int selectCountByAll() throws Exception;
 	

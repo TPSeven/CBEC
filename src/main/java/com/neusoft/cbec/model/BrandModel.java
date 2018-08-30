@@ -7,6 +7,7 @@
 package com.neusoft.cbec.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -60,5 +61,10 @@ public class BrandModel {
 	public void setBrand_desc(String brand_desc) {
 		this.brand_desc = brand_desc;
 	}
+
+	
+
+	
+	
 
 }

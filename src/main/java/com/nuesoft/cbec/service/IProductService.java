@@ -14,8 +14,12 @@ public interface IProductService {
 	public void delete(ProductModel product) throws Exception;
 	//查询
 	public List<ProductModel> getListByAll() throws Exception;
+	
 	//按编号查询
-	public ProductModel getById(int productId) throws Exception;
+	public ProductModel getById(String productId) throws Exception;
+	//按编号查询-关联种类
+	public ProductModel getByIdWithKinds(String productId) throws Exception;
+	
 	
 	//取得所有商品列表-无关联种类-无分页
 	public List<ProductModel> getListWithoutKindsByAll() throws Exception;

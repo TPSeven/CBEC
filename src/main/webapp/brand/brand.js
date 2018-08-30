@@ -1,7 +1,7 @@
 
 /*品牌管理*/
 $(document).ready(function () {
-	         var brandId = null; 
+	         var brandId = 0; 
 	         var man_id = 0;
 	         var startDate = null;
 	         var endDate = null;
@@ -13,7 +13,6 @@ $(document).ready(function () {
 	        	if(startDate!=null){
 	    			datas.startDate=startDate;
 	    		}
-	    		
 	    		//检查是否输入了生日截止日
 	    		if(endDate!=null){
 	    			datas.endDate=endDate;
@@ -49,6 +48,16 @@ $(document).ready(function () {
 	    	  getParamAndReloadGrid();
 	    	  
 	      });
+	      //起始日期更改事件处理
+	      $("input#StartDate").on("change",function(){
+	  		startDate=$("input#StartDate").val();
+	  		getParamAndReloadGrid();
+	  	  });
+	  	  //截止日期更改事件处理
+	  	  $("input#EndDate").on("change",function(){
+	  		  endDate=$("input#EndDate").val();
+	  		  getParamAndReloadGrid();
+	  	  });
 	      //增加事件
 	      $("a#BrandAddLink").on("click",function(){
 	    	  $("div#BrandDialog").load("brand/addbrand.html",function(){
@@ -64,11 +73,12 @@ $(document).ready(function () {
 	    			  rules:{
 	    				  brand_name:{
 	    					  required:true,
-	    					  rangelength:[2,5]
+	    					  rangelength:[2,5],
+	    		              remote:"brand/checkIDCanBeUsed.mvc"
 	    				  },
 	    				  brand_desc:{
 	    					  required:true,
-	    					  rangelength:[5,20]
+	    					  rangelength:[2,20]
 	    					  
 	    				  },
 	    				  brand_time:{
@@ -79,11 +89,12 @@ $(document).ready(function () {
 	    			  messages:{
 	    				  brand_name:{
 	    					  required:"品牌商不能为空",
-	    					  rangelength:"品牌商名字必须为2到5个字符"
+	    					  rangelength:"品牌商名字必须为2到5个字符",
+	    					  remote:"此品牌商名称已存在"
 	    				  },
 	    				  brand_desc:{
 	    					  required:"品牌商描述不能为空",
-	    					  rangelength:"品牌商描述必须在5到20个字符"
+	    					  rangelength:"品牌商描述必须在2到20个字符"
 	    					  
 	    				  },
 	    				  brand_time:{
@@ -117,6 +128,146 @@ $(document).ready(function () {
 	    		  height:350
 	    	  });
 	      });
+	      //修改按钮事件
+	      $("a#BrandModifyLink").on("click",function(){
+	    	  if(brandId==0){
+	    		  BootstrapDialog.show({
+	    			  title:"员工操作提醒",
+	    			  message:"<h4>请选择要修改的员工</h4>",
+	    			  buttons:[{
+	    				  label:'关闭',
+	    				  action: function(dialog){
+	    					  dialog.close();
+	    				  }
+	    			  }]
+	    		  });
+	    	  }
+	    	  else{
+	    		  $("div#BrandDialog").load("brand/modifybrand.html",function(){
+	    			  //取得制造商列表，填充制造商下拉框
+		    		  $.getJSON("manufacturer/toListByAll.mvc",function(manuList){
+		  	        	$.each(manuList,function(index,manu){
+		  	        		$("select[name='manufacturer.id']").append("<option value = '"+manu.id+"'>"+manu.name+"</option>");
+		  	        	});
+		  	        });
+		    		  $.getJSON("brand/getbrandid.mvc",{id:brandId},function(br){
+		    			  $("input[name='brand_id']").val(br.brand_id);
+		    			  $("input[name='brand_name']").val(br.brand_name);
+		    			  $("input[name='brand_desc']").val(br.brand_desc);
+		    			  $("input[name='brand_time']").val(br.brand_time);
+		    			  //选中品牌商的制造商（下拉框）
+		    			  $("select[name='manufacturer.id']").val(br.manufacturer.id);
+		    		  });
+		    		//使用JQuery validate对员工进行数据验证
+		    		  $("form#BrandModifyForm").validate({
+		    			  rules:{
+		    				  brand_name:{
+		    					  required:true,
+		    					  rangelength:[2,5],
+		    		            //  remote:"brand/checkIDCanBeUsed.mvc"
+		    				  },
+		    				  brand_desc:{
+		    					  required:true,
+		    					  rangelength:[2,20]
+		    					  
+		    				  },
+		    				  brand_time:{
+		    					  required:true
+		    				  }
+		    				  
+		    			  },
+		    			  messages:{
+		    				  brand_name:{
+		    					  required:"品牌商不能为空",
+		    					  rangelength:"品牌商名字必须为2到5个字符",
+		    				//	  remote:"此品牌商名称已存在"
+		    				  },
+		    				  brand_desc:{
+		    					  required:"品牌商描述不能为空",
+		    					  rangelength:"品牌商描述必须在2到20个字符"
+		    					  
+		    				  },
+		    				  brand_time:{
+		    					  required:"品牌商注册时间不能为空"
+		    				  }
+		    				  
+		    			  }
+		    		  
+		    		  });
+		    		//拦截增加的表单提交
+		    		  $("form#BrandModifyForm").ajaxForm(function(result){
+		    		
+		    			  alert(result.message);
+		    			  getParamAndReloadGrid();//重新载入员工列表，并刷新Grid显示
+		    			  
+		    			  $("div#BrandDialog").dialog("close");//关闭弹出的DiaGrid
+	    			  
+		    		  });
+		    		  //定义取消链接点击事件处理
+		    		  $("a#BrandModifyCancelLink").on("click",function(){
+		    			  $("div#BrandDialog").dialog("close");//关闭弹出Dialog
+		    		  });
+
+	    			  
+	    			  
+	    		  });
+	    		//弹出修改页面
+					$("div#BrandDialog").dialog({
+						title:"修改品牌商",
+						width:900,
+						height:550
+					});
+	    	  }
+	      });
+	      //删除按钮-绑定响应事件
+	      $("a#BrandDeleteLink").on("click",function(){
+	    	  if(brandId==0){
+	    		  alert("请选择要删除的品牌商");
+	    	  }else{
+	    		  var conf = confirm("确定要删除吗？");
+	    		  if(conf){
+	    			  $.post("brand/delete.mvc",{brand_id:brandId},function(resultData){
+	    				  if(resultData=="ok"){
+	    					  alert("删除品牌商成功");
+	    					  getParamAndReloadGrid();	    					  
+	    				  }else{
+	    					  alert("删除品牌商失败");
+	    				  }
+	    			  });
+	    		  }
+	    	  }
+	      });
+	      //查看单个品牌商信息
+	      $("a#BrandViewLink").on("click",function(){
+	    	  
+	    	  if(brandId==0){
+	    		  alert("请选择要查看的品牌商");
+	    	  }else{
+	    		  $("div#BrandDialog").load("brand/view.html",function(){
+	    			  $.getJSON("brand/getbrandid.mvc",{id:brandId},function(brdata){
+	    				  $("span#brandId").html(brdata.brand_id);
+	    				  $("span#brandName").html(brdata.brand_name);
+	    				  $("span#brandManufacturerId").html(brdata.manufacturer.id);
+	    				  $("span#brandManufacturerName").html(brdata.manufacturer.name);
+	    				  $("span#brandDesc").html(brdata.brand_desc);
+	    				  $("span#brandTime").html(brdata.brand_time);
+	    				  
+	    			  });
+	    			//定义取消链接点击事件处理
+			    		$("a#BrandViewCancelLink").on("click",function(){
+			    			$("div#BrandDialog").dialog("close");//关闭弹出Dialog
+			    		});
+	    		  });
+	    			$("div#BrandDialog").dialog({
+	    				title:"查看单个品牌商信息",
+	    				width:900,
+	    				height:550
+	    			});
+	    	  }
+	      });
+	      
+	      
+	      
 			//显示品牌商列表
             $("table#BrandGrid").jqGrid({
             	//指定数据来源
@@ -147,7 +298,7 @@ $(document).ready(function () {
                 multiselect:false,
                 onSelectRow:function(brand_id){
                 	brandId = brand_id;
-                	alert(brandId);
+                	
                 }
                 
             });

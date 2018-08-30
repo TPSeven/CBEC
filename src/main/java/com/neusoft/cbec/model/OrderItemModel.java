@@ -14,13 +14,14 @@ public class OrderItemModel {
 			 private int order_id =0;
 			 private int pro_id=0;
 			 private int pro_id_count=0;
-			 private int man_id=0;
 			 private int seller_id=0;
 			 private String state=null;
 				@DateTimeFormat(pattern="yyyy-MM-dd")
 				@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
-			 private Date  order_date=null;
-			 
+			private Date  order_date=null;
+         	
+			private ManufacturerModel manufacture=null;
+				
 			 
 			 
 			public Date getOrder_date() {
@@ -29,7 +30,6 @@ public class OrderItemModel {
 			public void setOrder_date(Date order_date) {
 				this.order_date = order_date;
 			}
-			private ManufacturerModel manufacture=null;
 		
 	
 			public ManufacturerModel getManufacture() {
@@ -55,13 +55,7 @@ public class OrderItemModel {
 			}
 			public void setPro_id_count(int pro_id_count) {
 				this.pro_id_count = pro_id_count;
-			}
-		public int getMan_id() {
-				return man_id;
-			}
-			public void setMan_id(int man_id) {
-				this.man_id = man_id;
-			}
+			}	
 			public int getSeller_id() {
 				return seller_id;
 			}

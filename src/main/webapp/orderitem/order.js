@@ -26,8 +26,8 @@ $(document).ready(function(){
             { label: '订单编号', name: 'order_id', key: true, width: 75 },
             { label: '产品编号', name: 'pro_id', width: 150 },
             { label: '产品数量', name: 'pro_id_count', width: 150 },
-            { label: '制造商编号', name: 'man_id', width: 150 },
-      //      { label:'制造商名', name: 'man_name', width: 150 },
+            { label: '制造商编号', name:'manufacture.id', width: 150 },
+         // { label:'制造商名', name: 'manufacture.man_name', width: 150 },
             { label:'借卖方编号', name: 'seller_id', width: 150 },
             { label:'订单状态', name: 'state', width: 150 },
             { label:'订单日期', name: 'order_date', width: 150 }
@@ -246,7 +246,8 @@ $("input#order_id").on("change",function(){
  					    $("input[name='order_id']").val(resultData.order_id);
     					$("input[name='pro_id']").val(resultData.pro_id);
     					$("input[name='pro_id_count']").val(resultData.pro_id_count);
-    					$("input[name='man_id']").val(resultData.man_id);
+    					$("input[name='manufacture.id']").val(resultData.manufacture.id);
+    					//$("input[name='manufacture.man_name']").val(resultData.man_name);
     					$("input[name='seller_id']").val(resultData.seller_id);
     					$("input[name='state']").val(resultData.state);
     					$("input[name='order_date']").val(resultData.order_date);
@@ -266,6 +267,9 @@ $("input#order_id").on("change",function(){
     			man_id:{
     				required:true,
     				rangelength:[1,5]
+    			},
+    			man_name:{
+    				required:true
     			},
     			order_date:{
     				required:true
@@ -291,6 +295,9 @@ $("input#order_id").on("change",function(){
         			man_id:{
         				required:"制造商编号为空",
         				rangelength:"制造商编号要在1到5为长度"
+        			},
+        			man_name:{
+        				required:"制造商编号为空"
         			},
         			order_date:{
         				required:"生日为空"
@@ -376,7 +383,8 @@ $("input#order_id").on("change",function(){
 			    		    $("span#order_date").html(resultData.order_date);
 			 				$("span#pro_id").html(resultData.pro_id);
 			 				$("span#pro_id_count").html(resultData.pro_id_count);
-			 				$("span#man_id").html(resultData.man_id);
+			 				$("span#man_id").html(resultData.manufacture.id);
+			 			//	$("span#man_name").html(resultData.manufacture.man_name);
 			 				$("span#seller_id").html(resultData.seller_id);
 			 				$("span#state").html(resultData.state);
 			 			 

@@ -27,7 +27,7 @@ public class ProductModel {
 	private KindsModel kinds = null;
 	
 	//关联-商品品牌
-	//private brandModel brand = null;
+	private BrandModel brand = null;
 	
 	
 	
@@ -108,6 +108,12 @@ public class ProductModel {
 	}
 	public void setPro_state(String pro_state) {
 		this.pro_state = pro_state;
+	}
+	public BrandModel getBrand() {
+		return brand;
+	}
+	public void setBrand(BrandModel brand) {
+		this.brand = brand;
 	}
 
 	

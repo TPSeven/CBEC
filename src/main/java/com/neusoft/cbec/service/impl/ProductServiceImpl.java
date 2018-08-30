@@ -85,22 +85,10 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
-	@Override
-	public List<ProductModel> getListByConditionWithPage(int kindsId, int sprice, int eprice, int brand, Date startDate,
-			Date endDate, String name, String state, int rows, int page) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 	@Override
-	public int getCountByCondition(int kindsId, int sprice, int eprice, int brand, Date startDate, Date endDate,
-			String name, String state) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int getPageCountByCondition(int kindsId, int sprice, int eprice, int brand, Date startDate, Date endDate,
+	public int getPageCountByCondition(int brandId,int kindsId, int sprice, int eprice, int brand, Date startDate, Date endDate,
 			String name, String state, int rows) throws Exception {
 		// TODO Auto-generated method stub
 		return 0;
@@ -110,6 +98,20 @@ public class ProductServiceImpl implements IProductService {
 	public ProductModel getByIdWithKinds(String productId) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<ProductModel> getListByConditionWithPage(int brandId, int kindsId, int sprice, int eprice, int brand,
+			Date startDate, Date endDate, String name, String state, int rows, int page) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getCountByCondition(int brandId, int kindsId, int sprice, int eprice, int brand, Date startDate,
+			Date endDate, String name, String state) throws Exception {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 

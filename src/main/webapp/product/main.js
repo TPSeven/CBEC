@@ -3,6 +3,7 @@
  */
 //页面载入成功事件
 $(document).ready(function(){
+	var brandId =0;
 	var productId = null;
 	var kindsId = 0;
 	var proName = null;
@@ -22,7 +23,7 @@ $(document).ready(function(){
 	
 	//事件更改
 	function getParamAndReloadGrid(){
-		 var datas={kindsId:kindsId,name:proName,proState:proState};
+		 var datas={brandId:brandId,kindsId:kindsId,name:proName,proState:proState};
 		 if (startDate!=null){
 			 datas.startDate=startDate;
 		 }
@@ -70,7 +71,7 @@ $(document).ready(function(){
             { label: '商品数量', name: 'pro_count', width: 120 },
             { label: '商品种类', name: 'kinds.pro_kinds_name', width: 120 },
             { label: '商品状态', name: 'pro_state', width: 120 },
-            { label: '商品品牌', name: 'brand_id', width: 120 },
+            { label: '商品品牌', name: 'brand.brand_name', width: 120 },
             { label: '商品图片', name: 'pro_photos_id', width: 120 },
             { label: '商品简介', name: 'pro_desc', width: 120 },
             { label: '更新日期', name: 'up_date', width: 120 }
@@ -116,10 +117,20 @@ $(document).ready(function(){
     		//使用jQuery validate对商品进行数据验证
 			$("form#ProductAddForm").validate({
 				rules:{
-//					pro_id:{
-//						required:true,
-//						remote:"product/checkIDCanBeUsed.mvc"
-//					},
+					/*pro_id:{
+						required:true,
+						remote:{
+							url:"product/checkIDCanBeUsed.mvc",
+							type:"POST",
+							data:{
+								productId:function(){
+									return $("input[name='pro_id']");
+								}
+							}
+						}
+					
+					
+					},*/
 					
 					pro_name:{
 						required:true	
@@ -361,5 +372,40 @@ $(document).ready(function(){
     			});
     		}	
     });
- //   
+ // 
+    //查看商品事件处理
+    $("a#ProductViewLink").on("click",function(){
+        
+		if(productId==0){
+			alert("请选择要查看的订单!");
+			
+		}
+		else{
+			
+			$("div#ProductDialog").load("product/view.html",function(){
+				$("div#ProductDialog").dialog({
+            		title:"查看订单",
+            	width:900,
+            	heigth:650   
+            	});
+		    	 $.getJSON("product/get/id/withkinds.mvc",{productId:productId},function(resultData){
+		    		    $("span#productId").html(resultData.pro_id);
+		    		    $("span#productName").html(resultData.pro_name);
+		 				$("span#productPrice").html(resultData.pro_price);
+		 				$("span#productWeight").html(resultData.pro_weight);
+		 				$("span#productCount").html(resultData.pro_count);
+		 				$("span#productKinds").html(resultData.kinds.pro_kinds_name);
+		 				$("span#productState").html(resultData.pro_state); 
+		 				$("span#productBrand").html(resultData.brand_id); 
+		 				$("span#productPhotos").html(resultData.pro_photos_id); 
+		 				$("span#productDesc").html(resultData.pro_desc); 
+		 				$("span#productUpdate").html(resultData.up_date); 
+		    	 });
+		    	   $("button#ProductCancelButton").on("click",function(){
+		    			$("div#ProductDialog").dialog("close"); //关闭弹出Dialog
+		    		
+		    	   });
+    		});
+		 } 		
+    });
 });

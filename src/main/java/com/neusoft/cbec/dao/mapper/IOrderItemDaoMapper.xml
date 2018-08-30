@@ -64,6 +64,11 @@ select a.*,b.* from ORDER_ITEM a inner join MANUFACTURER b on a.man_id =b.man_id
 <select id="selectListByManufacturer" parameterType="int" resultMap="OrderItemResultMap">
 select * from ORDER_ITEM where man_id=#{man_id}
 </select>
+<!-- 根据制造商编号取得订单列表 -->
+<select id="selectListByManufacturerWithPage" parameterType="int" resultMap="OrderItemResultMap">
+select * from (select x.*,ROWNUM RN
+from(select * from ORDER_ITEM where man_id=#{man_id})X where ROWNUM &lt; =#{end}) where RN &gt;=#{start}
+</select>
 <!-- 根据检索条件取得订单列表，无分页 -->
 <select id="selectListByCondition"  resultMap="OrderItemWithManMap">
 select * from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_id=b.man_id
@@ -103,8 +108,6 @@ select * from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_id=b.man_id
 <if test="man_id!=0">
  and a.man_id=#{man_id}
 </if>
-
-
 <if test="startDate!=null">
  and a.order_date &gt;= #{startDate}
 </if>
@@ -148,6 +151,9 @@ select count(a.order_id) from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_
 <!-- 根据订单ID和制造商ID取得订单个数 -->
 <select id="selectCountByloginId" resultType="int">
  select  count(order_id) from ORDER_ITEM where order_id=#{order_id} and man_id=#{man_id}
+</select>
+<select id="selectCountByMan" resultType="int">
+select count(order_id) from ORDER_ITEM  where man_id=#{man_id}
 </select>
 </mapper> 
 <!-- ORDER_ID order_id, PRO_ID pro_id,PRO_ID_COUNT pro_id_count,MAN_ID man_id,SELLER_ID seller_id,STATE state -->

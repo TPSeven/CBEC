@@ -104,4 +104,32 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 		return result;
 	}
 
+	@Override
+	public List<OrderItemModel> getOrderitemByMan(int man_id) throws Exception {
+		
+		return orderitemdao.selectListByManufacturer(man_id);
+	}
+
+	@Override
+	public int getPageByManWithPage(int man_id, int rows) throws Exception {
+		int pageCount =0;
+		int count =this.getCountByMan( man_id);
+		if(count%rows==0) {
+		  pageCount=count/rows;
+		}else {
+			  pageCount=count/rows+1;
+		}
+		return pageCount;
+	}
+
+	@Override
+	public int getCountByMan(int man_id) throws Exception {
+		  return orderitemdao.selectCountByMan(man_id);
+	}
+
+	@Override
+	public List<OrderItemModel> getOrderitemByManWithPage(int man_id, int start, int end) throws Exception {
+		return orderitemdao.selectListByManufacturerWithPage(man_id, start, end);
+	}
+
 }

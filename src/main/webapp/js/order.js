@@ -12,6 +12,12 @@ $(document).ready(function(){
 		event.preventDefault();
 		
 	});
+	$("ul#manufacturer-content li a").on("click",function(event){
+		var herf=$(this).attr("href");
+		$("div#maincontent").load(herf);
+		event.preventDefault();
+		
+	});
 	
  
 });

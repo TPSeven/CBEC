@@ -34,9 +34,11 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	  return result;
   }
 	@RequestMapping(value="/modify",method= {RequestMethod.POST})
-	public String modify(OrderItemModel em) throws Exception{
+	public ControllerResult modify(OrderItemModel em) throws Exception{
 		  orderitemService.modify(em);
-		return "ok";
+		  ControllerResult result =new ControllerResult();
+		  result.setMessage("修改成功");
+		  return result;
 	}
 	@RequestMapping(value="/delete",method= {RequestMethod.POST})
 	public String delete(OrderItemModel em) throws Exception{
@@ -89,14 +91,12 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 			@RequestParam(required=false,defaultValue="1")int page)
 			throws Exception {
 	  
-		System.out.println("111");
 	  if(man_name!=null&&man_name.trim().length()>0){
 			man_name="%"+man_name+"%";
 		}
 		GridResult<OrderItemModel>  result=new GridResult<OrderItemModel>();
 		
 		result.setRecords(orderitemService.getCountByCondition(order_id, man_id, startDate, endDate,man_name ,state));
-		System.out.println("111");
 
 		int pageCount=orderitemService.getPageByConditionWithPage(order_id, man_id, startDate, endDate, man_name,state, rows);
 		if(page>pageCount) {
@@ -189,5 +189,35 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	
 		   return result;
   }
+  @RequestMapping(value="/listbyman")
+	public List<OrderItemModel> getOrderitemByMan(
+	@RequestParam(required=false,defaultValue="0")int man_id)
+			throws Exception {
+	
+		return orderitemService.getOrderitemByMan(man_id);
+	}
+  
+    @RequestMapping(value="/listbymanwithpage")
+	public GridResult<OrderItemModel> getOrderitemByManWithPage(
+	@RequestParam(required=false,defaultValue="0")int man_id,
+	@RequestParam(required=false,defaultValue="10")int rows,
+	@RequestParam(required=false,defaultValue="1")int page)
+			throws Exception {
+		GridResult<OrderItemModel>  result=new GridResult<OrderItemModel>();
+		result.setRecords(orderitemService.getCountByMan(man_id));
+
+		int pageCount=orderitemService.getPageByManWithPage(man_id, rows);
+		if(page>pageCount) {
+			page=pageCount;
+		}
+		if(page<1) {
+			page=1;
+		}
+		result.setPage(page);
+		result.setTotal(pageCount);
+		result.setRows(orderitemService.getOrderitemByManWithPage(man_id,rows,page));
+		
+		return result;
+	}
 }
   

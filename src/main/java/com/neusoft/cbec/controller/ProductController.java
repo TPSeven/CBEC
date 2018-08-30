@@ -101,7 +101,9 @@ public class ProductController {
 	}	
 	
 	@RequestMapping(value="/list/condition/page",method=RequestMethod.POST)
-	public GridResult<ProductModel> getListByConditionWithPage(@RequestParam(required=false,defaultValue="0") int kindsId, 
+	public GridResult<ProductModel> getListByConditionWithPage(
+			@RequestParam(required=false,defaultValue="0") int brandId, 
+			@RequestParam(required=false,defaultValue="0") int kindsId, 
 			@RequestParam(required=false,defaultValue="0") int startPrice,
 			@RequestParam(required=false,defaultValue="0") int endPrice,
 			@RequestParam(required=false,defaultValue="0") int brand,
@@ -118,8 +120,8 @@ public class ProductController {
 		System.out.println(kindsId);
 		GridResult<ProductModel>  result=new GridResult<ProductModel>();
 		
-		result.setRecords(productService.getCountByCondition(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState));
-		int pageCount=productService.getPageCountByCondition(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows);
+		result.setRecords(productService.getCountByCondition(brandId ,kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState));
+		int pageCount=productService.getPageCountByCondition(brandId ,kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows);
 		if(page>pageCount) {
 			page=pageCount;
 		}
@@ -128,7 +130,7 @@ public class ProductController {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(productService.getListByConditionWithPage(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows, page));
+		result.setRows(productService.getListByConditionWithPage(brandId ,kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows, page));
 		
 		return result;
 	}

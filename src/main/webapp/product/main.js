@@ -3,6 +3,7 @@
  */
 //页面载入成功事件
 $(document).ready(function(){
+	var brandId =0;
 	var productId = null;
 	var kindsId = 0;
 	var proName = null;
@@ -22,7 +23,7 @@ $(document).ready(function(){
 	
 	//事件更改
 	function getParamAndReloadGrid(){
-		 var datas={kindsId:kindsId,name:proName,proState:proState};
+		 var datas={brandId:brandId,kindsId:kindsId,name:proName,proState:proState};
 		 if (startDate!=null){
 			 datas.startDate=startDate;
 		 }
@@ -70,7 +71,7 @@ $(document).ready(function(){
             { label: '商品数量', name: 'pro_count', width: 120 },
             { label: '商品种类', name: 'kinds.pro_kinds_name', width: 120 },
             { label: '商品状态', name: 'pro_state', width: 120 },
-            { label: '商品品牌', name: 'brand_id', width: 120 },
+            { label: '商品品牌', name: 'brand.brand_name', width: 120 },
             { label: '商品图片', name: 'pro_photos_id', width: 120 },
             { label: '商品简介', name: 'pro_desc', width: 120 },
             { label: '更新日期', name: 'up_date', width: 120 }

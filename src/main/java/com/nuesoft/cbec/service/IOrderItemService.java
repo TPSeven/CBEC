@@ -31,11 +31,11 @@ public interface IOrderItemService {
  	    public boolean validate(int order_id ,int man_id) throws Exception;
  	    
  	    //根据制造商取得订单列表
- 	    public List<OrderItemModel> getOrderitemByMan(int man_id) throws Exception;
+ 	    public List<OrderItemModel> getOrderitemByMan(int order_id,Date startDate,Date endDate,String state) throws Exception;
  	   //根据制造商取得订单列表
- 	    public List<OrderItemModel> getOrderitemByManWithPage(int man_id,int start,int end) throws Exception;
+ 	    public List<OrderItemModel> getOrderitemByManWithPage(int order_id,Date startDate,Date endDate,String state,int start,int end) throws Exception;
 		//根据制造商取得订单个数
-	    public int  getCountByMan(int man_id) throws Exception;
+	    public int  getCountByMan(int order_id,Date startDate,Date endDate,String state) throws Exception;
 	      //根据制造商取得订单的页数
- 	   public int getPageByManWithPage(int man_id,int rows) throws Exception;
+ 	   public int getPageByManWithPage(int order_id,Date startDate,Date endDate,String state,int rows) throws Exception;
 }

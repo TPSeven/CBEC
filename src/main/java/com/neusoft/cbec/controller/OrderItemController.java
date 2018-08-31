@@ -191,22 +191,28 @@ public void setOrderitemService(IOrderItemService orderitemService) {
   }
   @RequestMapping(value="/listbyman")
 	public List<OrderItemModel> getOrderitemByMan(
-	@RequestParam(required=false,defaultValue="0")int man_id)
+			@RequestParam(required=false,defaultValue="0")int order_id,
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate, 
+			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
+			@RequestParam(required=false,defaultValue="") String state)
 			throws Exception {
 	
-		return orderitemService.getOrderitemByMan(man_id);
+		return orderitemService.getOrderitemByMan(order_id,startDate,endDate,state);
 	}
   
     @RequestMapping(value="/listbymanwithpage")
 	public GridResult<OrderItemModel> getOrderitemByManWithPage(
-	@RequestParam(required=false,defaultValue="0")int man_id,
+	@RequestParam(required=false,defaultValue="0")int order_id,
+	@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate, 
+	@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
+	@RequestParam(required=false,defaultValue="") String state,
 	@RequestParam(required=false,defaultValue="10")int rows,
 	@RequestParam(required=false,defaultValue="1")int page)
 			throws Exception {
 		GridResult<OrderItemModel>  result=new GridResult<OrderItemModel>();
-		result.setRecords(orderitemService.getCountByMan(man_id));
+		result.setRecords(orderitemService.getCountByMan(order_id,startDate,endDate,state));
 
-		int pageCount=orderitemService.getPageByManWithPage(man_id, rows);
+		int pageCount=orderitemService.getPageByManWithPage(order_id,startDate,endDate,state, rows);
 		if(page>pageCount) {
 			page=pageCount;
 		}
@@ -215,7 +221,7 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(orderitemService.getOrderitemByManWithPage(man_id,rows,page));
+		result.setRows(orderitemService.getOrderitemByManWithPage(order_id,startDate, endDate, state,rows,page));
 		
 		return result;
 	}

@@ -19,6 +19,8 @@ public interface IProductService {
 	public ProductModel getById(String productId) throws Exception;
 	//按编号查询-关联种类
 	public ProductModel getByIdWithKinds(String productId) throws Exception;
+	//按编号查询-关联种类-品牌
+	public ProductModel getByIdWithKindsAndBrand(String productId) throws Exception;
 	
 	
 	//取得所有商品列表-无关联种类-无分页

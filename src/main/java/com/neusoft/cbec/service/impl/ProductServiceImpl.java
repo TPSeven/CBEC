@@ -114,6 +114,12 @@ public class ProductServiceImpl implements IProductService {
 		return 0;
 	}
 
+	@Override
+	public ProductModel getByIdWithKindsAndBrand(String productId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

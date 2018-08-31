@@ -133,7 +133,7 @@ $("input#order_id").on("change",function(){
     			order_id:{
         				required:true,
         				//rangelength:[1,10],
-        				rangelengthforOA:[1,10],
+        				//rangelengthforOA:[1,10],
     		            remote:{
     		            	url:"orderitem/checkIDCanBeUsed.mvc",
     		                type:"POST",
@@ -242,15 +242,39 @@ $("input#order_id").on("change",function(){
             	width:900,
             	heigth:650   
             	});
+        		
     			 $.getJSON("orderitem/getOrderById.mvc",{id:o_id},function(resultData){
+
  					    $("input[name='order_id']").val(resultData.order_id);
     					$("input[name='pro_id']").val(resultData.pro_id);
     					$("input[name='pro_id_count']").val(resultData.pro_id_count);
     					$("input[name='manufacture.id']").val(resultData.manufacture.id);
     					//$("input[name='manufacture.man_name']").val(resultData.man_name);
+    					
+    					//if(val1==state)
+    						//$("#r2").val("class","checked");
     					$("input[name='seller_id']").val(resultData.seller_id);
-    					$("input[name='state']").val(resultData.state);
+    					//$("input[name='state']").val(resultData.state);
     					$("input[name='order_date']").val(resultData.order_date);
+    					var val1 = resultData.state;
+    					//alert(val1);
+    					
+    					if(1!=val1)
+    						//$("input[name='state']").val(resultData.state);
+    					{
+    						
+    					//alert($("#r2").val());
+    					$("#l1").empty();
+    					$("#l2").empty();
+    				    $("#l1").append(" <input type='radio' name='state' value='1' id='r1' >1");
+    				    $("#l2").append(" <input type='radio' name='state' value='2' id='r2' checked> 2");
+    					}
+    					else{
+    						$("#l1").empty();
+        					$("#l2").empty();
+        				    $("#l1").append(" <input type='radio' name='state' value='1' id='r1' checked >1");
+        				    $("#l2").append(" <input type='radio' name='state' value='2' id='r2' > 2");
+    					}
     				 });
     			}
     		$("form#modifyorderitemForm").validate({

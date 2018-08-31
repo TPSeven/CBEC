@@ -30,7 +30,7 @@ public interface IOrderItemDao {
     //根据检索条件取得订单的个数
     public int selectCountByCondition(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("man_name")String man_name,@Param("state")String state) throws Exception;
   //根据检索条件取得订单的个数
-    public int selectCountByMan(@Param("order_id")int order_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("state")String state) throws Exception;
+    public int selectCountByMan(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("state")String state) throws Exception;
     
     //取得订单编号
    public OrderItemModel selectByID(int order_id) throws Exception;
@@ -38,9 +38,9 @@ public interface IOrderItemDao {
     public int selectCountByAll() throws Exception;
     
     //取得指定制造商的订单列表,无分页
-    public List<OrderItemModel>  selectListByManufacturer(@Param("order_id")int order_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("state")String state)throws Exception;
+    public List<OrderItemModel>  selectListByManufacturer(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("state")String state)throws Exception;
     //取得指定制造商的订单列表,无分页
-    public List<OrderItemModel>  selectListByManufacturerWithPage(@Param("order_id")int order_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("state")String state,@Param("start")int start,@Param("end")int end)throws Exception;
+    public List<OrderItemModel>  selectListByManufacturerWithPage(@Param("order_id")int order_id,@Param("man_id")int man_id,@Param("startDate")Date startDate,@Param("endDate")Date endDate,@Param("state")String state,@Param("start")int start,@Param("end")int end)throws Exception;
     //验证登陆
     public int selectCountByloginId (@Param("order_id")int order_id ,@Param("man_id")int man_id )throws Exception;
     

@@ -192,17 +192,19 @@ public void setOrderitemService(IOrderItemService orderitemService) {
   @RequestMapping(value="/listbyman")
 	public List<OrderItemModel> getOrderitemByMan(
 			@RequestParam(required=false,defaultValue="0")int order_id,
+			@RequestParam(required=false,defaultValue="0")int man_id,
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate, 
 			@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
 			@RequestParam(required=false,defaultValue="") String state)
 			throws Exception {
 	
-		return orderitemService.getOrderitemByMan(order_id,startDate,endDate,state);
+		return orderitemService.getOrderitemByMan(order_id,man_id,startDate,endDate,state);
 	}
   
     @RequestMapping(value="/listbymanwithpage")
 	public GridResult<OrderItemModel> getOrderitemByManWithPage(
 	@RequestParam(required=false,defaultValue="0")int order_id,
+	@RequestParam(required=false,defaultValue="0")int man_id,
 	@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date startDate, 
 	@RequestParam(required=false) @DateTimeFormat(pattern="yyyy-MM-dd")Date endDate,
 	@RequestParam(required=false,defaultValue="") String state,
@@ -210,9 +212,9 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 	@RequestParam(required=false,defaultValue="1")int page)
 			throws Exception {
 		GridResult<OrderItemModel>  result=new GridResult<OrderItemModel>();
-		result.setRecords(orderitemService.getCountByMan(order_id,startDate,endDate,state));
+		result.setRecords(orderitemService.getCountByMan(order_id,man_id,startDate,endDate,state));
 
-		int pageCount=orderitemService.getPageByManWithPage(order_id,startDate,endDate,state, rows);
+		int pageCount=orderitemService.getPageByManWithPage(order_id,man_id,startDate,endDate,state, rows);
 		if(page>pageCount) {
 			page=pageCount;
 		}
@@ -221,7 +223,7 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(orderitemService.getOrderitemByManWithPage(order_id,startDate, endDate, state,rows,page));
+		result.setRows(orderitemService.getOrderitemByManWithPage(order_id,man_id,startDate, endDate, state,rows,page));
 		
 		return result;
 	}

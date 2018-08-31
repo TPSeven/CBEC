@@ -1,39 +1,28 @@
- <form id="addorderitemForm" action="orderitem/add.mvc"  method="post" enctype="multipart/form-data">
+ <form id="addorderitemForm" action="seller/add.mvc"  method="post" enctype="multipart/form-data">
           <div class="form-group">
-            <label>订单编号</label>
+            <label>借卖方ID</label>
             <input class="form-control" name="order_id">
         </div>
           <div class="form-group">
-            <label>订单日期</label>
+            <label>借卖方编号</label>
               <input type="date" class="form-controll" name="order_date" />
             </div>
         <div class="form-group">
-            <label>产品编号</label>
+            <label>借卖方名</label>
             <input class="form-control" name="pro_id">
         </div>
         <div class="form-group">
-            <label>产品数量</label>
+            <label>借卖方电话</label>
             <input class="form-control" name="pro_id_count">
         </div>
         
         <div class="form-group">
-            <label>制造商编号</label>
-            <input class="form-control" name="manufacture.id">
+            <label>借卖方地址</label>
+            <input class="form-control" name="man_id">
         </div>
-           
         <div class="form-group">
-            <label>借卖方编号</label>
+            <label>借卖方简介</label>
             <input class="form-control" name="seller_id">
-        </div>
-        <div class="form-group">
-            <label class="col-sm-2 control-label" for="busType">订单状态</label>
-            <label class="radio-inline">
-		        <input type="radio" name="state" value="1" >1
-		    </label>
-		    <label class="radio-inline">
-		        <input type="radio" name="state" value="2" >2
-		    </label>
-		    
         </div>
 
         <div class="col-md-12">
@@ -41,7 +30,7 @@
 	            	<input type="submit" class="form-control btn btn-default" value="提交" />
 	            	</div>
 	            	<div class="col-md-6">
-	              	<a href="#" id="OrderItemCancelButton" class="form-control btn btn-default">取消</a>
+	              	<a href="#" id="SellerCancelButton" class="form-control btn btn-default">取消</a>
 	              	</div>
 	            </div>
   </form>

@@ -36,9 +36,9 @@ public class UserModel {
 	
 	//关联的属性,外键
 	private List<RoleModel> roles = null;//权限
+	private ManufacturerModel manufacturer = null; //借卖方
+	private WalletModel wallet = null;
 	
-	private int man_id = 0;
-	private int wallet_id = 0;
 	private int seller_id = 0;
 	
 	public int getId() {
@@ -125,23 +125,26 @@ public class UserModel {
 	public void setRole(List<RoleModel> roles) {
 		this.roles = roles;
 	}
-	public int getMan_id() {
-		return man_id;
+	public ManufacturerModel getManufacturer() {
+		return manufacturer;
 	}
-	public void setMan_id(int man_id) {
-		this.man_id = man_id;
+	public void setManufacturer(ManufacturerModel manufacturer) {
+		this.manufacturer = manufacturer;
 	}
-	public int getWallet_id() {
-		return wallet_id;
+	public WalletModel getWallet() {
+		return wallet;
 	}
-	public void setWallet_id(int wallet_id) {
-		this.wallet_id = wallet_id;
+	public void setWallet(WalletModel wallet) {
+		this.wallet = wallet;
 	}
 	public int getSeller_id() {
 		return seller_id;
 	}
 	public void setSeller_id(int seller_id) {
 		this.seller_id = seller_id;
+	}
+	public void setRoles(List<RoleModel> roles) {
+		this.roles = roles;
 	}
 
 }

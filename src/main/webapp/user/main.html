@@ -26,47 +26,71 @@
         </div>  	
     </div>
     <!-- /.panel-heading -->
-	<form class="form-inline" role="form">
-		<div class="col-sm-12 form-group">
-			<label for="userName">名称:</label>
-			<input type="text" class="form-control" id="userName" placeholder="请输入名称">
-			<label for="phone">电话:</label>
-			<input type="text" class="form-control" id="userPhone" placeholder="请输入电话">
-		</div>
-		<div class="col-md-12 form-group">
-			<label for="lowAge">年龄:</label>
-				<input type="text" class="form-control" id="lowerAge" placeholder="请输入年龄下限">
-				<label for="highAge">&nbsp;至&nbsp;&nbsp;</label>
-				<input type="text" class="form-control" id="upperAge" placeholder="请输入年龄上限">
-		</div>
-		<div class="col-md-12 form-group">
-			<label for="startDate">生日:</label>
-				<input type="date" class="form-control" id="startBirDate">
-			<label for="endDate">&nbsp;至&nbsp;&nbsp;</label>
-				<input type="date" class="form-control" id="endBirDate">
-		</div>
-		<div class="col-md-12 form-group">
+    <div class="panel-body">
+	    <div class="col-md-12">
+	    	<div class="col-md-1">
+	    		<font size="3">名称:</font>
+	    	</div>
+	    	<div class="col-md-3">
+	    		<input type="text" class="form-control" id="userName" placeholder="请输入名称">
+	    	</div>
+	    	<div class="col-md-1">
+	    		<font size="3">电话:</font>
+	    	</div>
+	    	<div class="col-md-3">
+	    		<input type="text" class="form-control" id="userPhone" placeholder="请输入电话">
+	    	</div>
+	    </div>
+	    <div class="col-md-12">
+	    	<div class="col-md-1">
+	    		<font size="3">最小年龄:</font>
+	    	</div>
+	    	<div class="col-md-3">
+	    		<input type="text" class="form-control" id="lowerAge" placeholder="请输入年龄下限">
+	    	</div>
+	    	<div class="col-md-1">
+	    		<font size="3">最大年龄:</font>
+	    	</div>
+	    	<div class="col-md-3">
+	    		<input type="text" class="form-control" id="upperAge" placeholder="请输入年龄上限">
+	    	</div>
+	    </div>
+	    <div class="col-md-12">
+	    	<div class="col-md-1">
+	    		<font size="3">起始生日:</font>
+	    	</div>
+	    	<div class="col-md-3">
+	    		<input type="date" class="form-control" id="startBirDate">
+	    	</div>
+	    	<div class="col-md-1">
+	    		<font size="3">结束生日:</font>
+	    	</div>
+	    	<div class="col-md-3">
+	    		<input type="date" class="form-control" id="endBirDate">
+	    	</div>
+	    </div>
+		<div class="col-md-12">
 			<label class="radio-inline">
-        		<input type="radio" name="userSex"  value="" checked> 全部
-   			</label>
+	    		<input type="radio" name="userSex"  value="" checked> 全部
+			</label>
 			<label class="radio-inline">
-        		<input type="radio" name="userSex"  value="男" > 男
-   			</label>
-    		<label class="radio-inline">
-        		<input type="radio" name="userSex"   value="女"> 女
-    		</label>
-    		
+	    		<input type="radio" name="userSex"  value="男" > 男
+			</label>
+			<label class="radio-inline">
+	    		<input type="radio" name="userSex"   value="女"> 女
+			</label>
+			
 		</div>
 		<div id="roleCheckboxArea">
 			<label>角色复选</label>
 			<label class="checkbox-inline">
-
+	
 			</label>
 		</div>
-	</form>
-
-    <div id="user-content">
-        
+	
+	    <div id="user-content">
+	        
+	    </div>
     </div>
     <!-- /.panel-body -->
 </div>

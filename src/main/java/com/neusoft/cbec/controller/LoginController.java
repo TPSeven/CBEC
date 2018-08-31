@@ -35,6 +35,7 @@ public class LoginController {
 		ControllerResult result = new ControllerResult();
 		UserModel user = userService.validate(email,password);
 		if(user!=null) {
+//			System.out.println(user.getManufacturer().getId());
 			//保存会话
 			session.setAttribute("user", user);
 			result.setStatus("Y");

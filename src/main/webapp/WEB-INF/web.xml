@@ -9,13 +9,14 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
-
-
   <context-param>
     <param-name>contextConfigLocation</param-name>
 
+<<<<<<< HEAD
     <param-value>/WEB-INF/classes/mjh-context.xml</param-value>
+=======
+    <param-value>/WEB-INF/classes/kaoliulian-context.xml</param-value>
+>>>>>>> branch 'master' of https://github.com/TPSeven/CBEC.git
 
   </context-param>
 

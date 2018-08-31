@@ -35,10 +35,13 @@ public interface IProductDao {
 	//取得指定种类的商品-有分页
 	public List<ProductModel> selectListByKindsWithPage(int rows,int page,int kindsId) throws Exception;
 	
+	
 	//取得指定编号商品信息（单个对象）
 	public ProductModel selectById(String productId) throws Exception;
 	//取得指定编号商品信息-关联种类（单个对象）
 	public ProductModel selectByIdWithKinds(String productId) throws Exception;
+	//取得指定编号商品信息-关联种类-品牌（单个对象）
+	public ProductModel selectByIdWithKindsAndBrand (String productId) throws Exception;
 	
 	//取得所有商品个数
 	public int selectCountByAll() throws Exception;
@@ -47,9 +50,9 @@ public interface IProductDao {
 	//根据检索条件取得商品列表-无分页
 	public List<ProductModel> selectListByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state)throws Exception;
 	//根据检索条件取得商品列表-有分页
-	public List<ProductModel> selectListByConditionWithPage(@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state,@Param("rows") int rows,@Param("page") int page)throws Exception;
+	public List<ProductModel> selectListByConditionWithPage(@Param("brandId") int brandId,@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String state,@Param("rows") int rows,@Param("page") int page)throws Exception;
 	
 	
 	//根据检索条件取得商品个数
-	public int selectCountByCondition(@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String proState) throws Exception;
+	public int selectCountByCondition(@Param("brandId") int brandId,@Param("kindsId") int kindsId,@Param("startPrice") int startPrice,@Param("endPrice") int endPrice,@Param("brand") int brand,@Param("startDate") Date startDate,@Param("endDate") Date endDate,@Param("name") String name,@Param("proState") String proState) throws Exception;
 }

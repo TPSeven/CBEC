@@ -6,9 +6,9 @@ create table ROLE(
   role_name varchar2(20),
   constraint pk_role_id primary key(role_id)
 );
-insert into ROLE values(1,'admin');
-insert into ROLE values(2,'manufacturer');
-insert into ROLE values(3,'seller');
+insert into ROLE values(1,'manufacturer');
+insert into ROLE values(2,'seller');
+insert into ROLE values(3,'admin');
 select * from ROLE;
 
 -- waller 钱包
@@ -18,11 +18,11 @@ create table WALLET(
   bankcards number(10), --银行卡，应该还要一个银行卡信息表
   constraint pk_wallet_id primary key(wallet_id)
 );
-create sequence WALLET_NEXTID_SQ;
-insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
-insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
-insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
-insert into WALLET values(WALLET_NEXTID_SQ.Nextval,10000,null);
+
+insert into WALLET values(1,10000,null);
+insert into WALLET values(2,10000,null);
+insert into WALLET values(3,10000,null);
+create sequence WALLET_NEXTID_SQ start with 4 increment by 1;
 select * from WALLET;
 
 -- user 用户表
@@ -47,12 +47,12 @@ create table UUSER(
   seller_id number(10),
   constraint pk_user_id primary key(user_id)
 );
-create sequence USER_NEXTID_SQ;
 ALTER TABLE UUSER ADD constraint uuser_wallet_FK FOREIGN KEY(wallet_id) REFERENCES WALLET(wallet_id); --钱包外键
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'admin','admin','男',20,null,null,null,'test1@qq.com','10086','1-12月-1998','8-1月-2015','管理员账号',1,0,0);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'manufacturer','1234','男',20,null,null,null,'test2@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',2,0,0);
-insert into UUSER values(USER_NEXTID_SQ.NEXTVAL,'seller','12345','女',20,null,null,null,'test3@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商\借卖家账号',3,0,0);
+insert into UUSER values(1,'manufacturer','1234','男',20,null,null,null,'manu@qq.com','1008611','01-12月-1998','8-1月-2015','一个制造商账号',1,0,0);
+insert into UUSER values(2,'seller','1234','女',20,null,null,null,'seller@qq.com','1008611','01-12月-1998','8-1月-2015','一个借卖家账号',2,0,0);
+insert into UUSER values(3,'admin','1234','男',20,null,null,null,'admin@qq.com','10086','1-12月-1998','8-1月-2015','管理员账号',3,0,0);
 select * from UUSER;
+create sequence USER_NEXTID_SQ start with 4 increment by 1;
 -- ALTER TABLE UUSER ADD CONSTRAINT UUSER_MANU_FK FOREIGN KEY(man_id) REFERENCES MANUFACTURER(man_id); -- 添加制造商外键
 
 -- 用户角色关联表
@@ -63,13 +63,12 @@ create table UUser_Role_Relate(
   foreign key (user_id) references UUSER(user_id),
   foreign key (role_id) references ROLE(role_id)
 );
-insert into UUser_Role_Relate values(2,1);
+insert into UUser_Role_Relate values(1,1);
+insert into UUser_Role_Relate values(1,2);
+insert into UUser_Role_Relate values(1,3);
 insert into UUser_Role_Relate values(2,2);
-insert into UUser_Role_Relate values(2,3);
-insert into UUser_Role_Relate values(3,2);
 insert into UUser_Role_Relate values(3,3);
-insert into UUser_Role_Relate values(4,2);
-insert into UUser_Role_Relate values(4,3);
+select * from UUser_Role_Relate;
 
 -- SystemModule 系统模块表
 create table SystemModule(
@@ -79,6 +78,7 @@ create table SystemModule(
 insert into SystemModule values(1,'品牌商');
 insert into SystemModule values(2,'借卖商');
 insert into SystemModule values(3,'管理员');
+select * from SystemModule;
 
 --SystemFunction 系统功能表
 create table SystemFunction(
@@ -87,7 +87,7 @@ create table SystemFunction(
   fun_name varchar(100),
   fun_url varchar(100)
 );
-insert into SystemFunction values (1,1,'我的信息',null);
+insert into SystemFunction values (1,1,'我的信息','manufacturer/view.html');
 insert into SystemFunction values (2,1,'品牌管理','brand/brand.html');
 insert into SystemFunction values (3,1,'商品录入','product/main.html');
 insert into SystemFunction values (4,1,'商品主图',null);
@@ -104,6 +104,8 @@ insert into SystemFunction values (12,2,'我的钱包',null);
 insert into SystemFunction values (13,3,'用户管理','user/main.html');
 insert into SystemFunction values (14,3,'品牌商管理','manufacturer/main.html');
 insert into SystemFunction values (15,3,'订单管理','orderitem/orderitem.html');
+insert into SystemFunction values (16,3,'权限管理','role/main.html');
+select * from SystemFunction;
 
 -- 模块角色关联表
 create table Role_Module_Relate(
@@ -115,7 +117,10 @@ create table Role_Module_Relate(
 );
 insert into Role_Module_Relate values (1,1);
 insert into Role_Module_Relate values (2,2);
+insert into Role_Module_Relate values (3,1);
+insert into Role_Module_Relate values (3,2);
 insert into Role_Module_Relate values (3,3);
+select * from Role_Module_Relate;
 
 --manufacturer 制造商
 create table MANUFACTURER(

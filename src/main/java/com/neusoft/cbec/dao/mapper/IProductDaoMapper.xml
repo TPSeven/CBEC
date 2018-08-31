@@ -33,11 +33,16 @@
   	<association property="kinds" resultMap="com.neusoft.cbec.dao.IKindsDao.KindsResultMap"></association>
   </resultMap>
   
-  <!--  无图 品牌字段映射的resultMap
+  <!--  无图 品牌字段映射的resultMap-->
   <resultMap id="ProductWithBrandResultMap" type="Product" extends="ProductResultMap">
   	<association property="brand" resultMap="com.neusoft.cbec.dao.IBrandDao.BrandResultMap"></association>
   </resultMap>
-  -->
+  
+   <!--  种类-品牌字段映射的resultMap-->
+  <resultMap id="ProductWithKindsAndBrandResultMap" type="Product" extends="ProductWithKindsResultMap">
+  	<association property="brand" resultMap="com.neusoft.cbec.dao.IBrandDao.BrandResultMap"></association>
+  </resultMap>
+  
   
   <!-- 有图 有种类字段映射的resultMap
   <resultMap id="ProductWithKindsAndPhotosResultMap" type="Product" extends="ProductWithPhotosResultMap,ProductWithKindsResultMap">
@@ -54,7 +59,7 @@
   
   <update id="update" parameterType = "Product">
   	update PRODUCT 
-  	set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_count=#{pro_count},pro_kinds_id=#{kinds.pro_kinds_id},pro_state=#{pro_state},brand_id=#{brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc},up_date=#{up_date}
+  	set pro_name=#{pro_name},pro_price=#{pro_price},pro_weight=#{pro_weight},pro_count=#{pro_count},pro_kinds_id=#{kinds.pro_kinds_id},pro_state=#{pro_state},brand_id=#{brand.brand_id},pro_photos_id=#{pro_photos_id},pro_desc=#{pro_desc},up_date=#{up_date}
   	where pro_id=#{pro_id}
   </update>
   
@@ -66,14 +71,23 @@
   	select * from PRODUCT 
   </select>
   
-  <select id="selectById" parameterType = "String" resultMap="ProductResultMap">
+  <select id="selectById" parameterType = "String" resultMap="ProductWithKindsResultMap">
   	select * from PRODUCT where pro_id=#{productId}
   </select>
   
-  <select id="selectByIdWithKinds" parameterType = "String" resultMap="ProductResultMap">
-  	select * from PRODUCT
+  <select id="selectByIdWithKinds" parameterType = "String" resultMap="ProductWithKindsResultMap">
+  	select a.*,b.kinds_name from PRODUCT
   	a inner join KINDS b
   	on a.pro_kinds_id=b.pro_kinds_id 
+  	where pro_id=#{productId}
+  </select>
+  
+  <select id="selectByIdWithKindsAndBrand" parameterType = "String" resultMap="ProductWithKindsAndBrandResultMap">
+  	select a.*,b.kinds_name,c.brand_name from PRODUCT
+  	a inner join KINDS b
+  	on a.pro_kinds_id=b.pro_kinds_id
+    inner join BRAND c
+    on a.brand_id=c.brand_id
   	where pro_id=#{productId}
   </select>
   
@@ -92,8 +106,8 @@
   <select id="selectListByKinds" parameterType="int" resultMap="ProductResultMap">
   	select * from PRODUCT where pro_kinds_id=#{kindsId}
   </select>
-  
-  <!-- 根据检索条件取得员工列表-无分页 -->
+   
+  <!-- 根据检索条件取得员工列表-无分页 
   <select id="selectListByCondition" resultMap="ProductWithKindsResultMap">
     select a.* ,b.kinds_name from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
   	<trim prefix="WHERE" prefixOverrides="AND|OR ">
@@ -117,13 +131,21 @@
 	   </if>
 	</trim> 
   </select>
+  -->
   
-  <!-- 根据检索条件取得员工列表-有分页 -->
-  <select id="selectListByConditionWithPage" resultMap="ProductWithKindsResultMap">
+  <!-- 根据检索条件取得商品列表-有分页 -->
+  <select id="selectListByConditionWithPage" resultMap="ProductWithKindsAndBrandResultMap">
   SELECT * FROM  (SELECT X.*, ROWNUM RN
   FROM (
-    select a.* ,b.kinds_name from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+    select a.*,b.kinds_name,c.brand_name from PRODUCT
+  	a inner join KINDS b
+  	on a.pro_kinds_id=b.pro_kinds_id
+    inner join BRAND c
+    on a.brand_id=c.brand_id
   	<trim prefix="WHERE" prefixOverrides="AND|OR ">
+  	   <if test="brandId!=0">
+	     and c.brand_id=#{brandId}
+	   </if>
 	   <if test="kindsId!=0">
 	     and a.pro_kinds_id=#{kindsId}
 	   </if>
@@ -150,10 +172,17 @@
 	 X WHERE ROWNUM &lt;=#{page})  WHERE RN &gt;=#{rows}
   </select>
   
-  <!-- 根据检索条件取得员工的个数 -->
+  <!-- 根据检索条件取得商品的个数 -->
   <select id="selectCountByCondition" resultType="int">
-    select count(a.pro_kinds_id) from PRODUCT a inner join KINDS b on a.pro_kinds_id = b.pro_kinds_id
+    select count(a.pro_kinds_id) from PRODUCT
+  	a inner join KINDS b
+  	on a.pro_kinds_id=b.pro_kinds_id
+    inner join BRAND c
+    on a.brand_id=c.brand_id
   	<trim prefix="WHERE" prefixOverrides="AND|OR ">
+  	   <if test="brandId!=0">
+	     and c.brand_id=#{brandId}
+	   </if>
 	   <if test="kindsId!=0">
 	     and a.pro_kinds_id=#{kindsId}
 	   </if>

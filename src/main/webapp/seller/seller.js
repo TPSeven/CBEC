@@ -26,8 +26,8 @@ $(document).ready(function(){
             { label: '订单编号', name: 'order_id', key: true, width: 75 },
             { label: '产品编号', name: 'pro_id', width: 150 },
             { label: '产品数量', name: 'pro_id_count', width: 150 },
-            { label: '制造商编号', name:'manufacture.id', width: 150 },
-         // { label:'制造商名', name: 'manufacture.man_name', width: 150 },
+            { label: '制造商编号', name: 'man_id', width: 150 },
+      //      { label:'制造商名', name: 'man_name', width: 150 },
             { label:'借卖方编号', name: 'seller_id', width: 150 },
             { label:'订单状态', name: 'state', width: 150 },
             { label:'订单日期', name: 'order_date', width: 150 }
@@ -133,7 +133,7 @@ $("input#order_id").on("change",function(){
     			order_id:{
         				required:true,
         				//rangelength:[1,10],
-        				//rangelengthforOA:[1,10],
+        				rangelengthforOA:[1,10],
     		            remote:{
     		            	url:"orderitem/checkIDCanBeUsed.mvc",
     		                type:"POST",
@@ -242,39 +242,14 @@ $("input#order_id").on("change",function(){
             	width:900,
             	heigth:650   
             	});
-        		
     			 $.getJSON("orderitem/getOrderById.mvc",{id:o_id},function(resultData){
-
  					    $("input[name='order_id']").val(resultData.order_id);
     					$("input[name='pro_id']").val(resultData.pro_id);
     					$("input[name='pro_id_count']").val(resultData.pro_id_count);
-    					$("input[name='manufacture.id']").val(resultData.manufacture.id);
-    					//$("input[name='manufacture.man_name']").val(resultData.man_name);
-    					
-    					//if(val1==state)
-    						//$("#r2").val("class","checked");
+    					$("input[name='man_id']").val(resultData.man_id);
     					$("input[name='seller_id']").val(resultData.seller_id);
-    					//$("input[name='state']").val(resultData.state);
+    					$("input[name='state']").val(resultData.state);
     					$("input[name='order_date']").val(resultData.order_date);
-    					var val1 = resultData.state;
-    					//alert(val1);
-    					
-    					if(1!=val1)
-    						//$("input[name='state']").val(resultData.state);
-    					{
-    						
-    					//alert($("#r2").val());
-    					$("#l1").empty();
-    					$("#l2").empty();
-    				    $("#l1").append(" <input type='radio' name='state' value='1' id='r1' >1");
-    				    $("#l2").append(" <input type='radio' name='state' value='2' id='r2' checked> 2");
-    					}
-    					else{
-    						$("#l1").empty();
-        					$("#l2").empty();
-        				    $("#l1").append(" <input type='radio' name='state' value='1' id='r1' checked >1");
-        				    $("#l2").append(" <input type='radio' name='state' value='2' id='r2' > 2");
-    					}
     				 });
     			}
     		$("form#modifyorderitemForm").validate({
@@ -291,9 +266,6 @@ $("input#order_id").on("change",function(){
     			man_id:{
     				required:true,
     				rangelength:[1,5]
-    			},
-    			man_name:{
-    				required:true
     			},
     			order_date:{
     				required:true
@@ -319,9 +291,6 @@ $("input#order_id").on("change",function(){
         			man_id:{
         				required:"制造商编号为空",
         				rangelength:"制造商编号要在1到5为长度"
-        			},
-        			man_name:{
-        				required:"制造商编号为空"
         			},
         			order_date:{
         				required:"生日为空"
@@ -407,8 +376,7 @@ $("input#order_id").on("change",function(){
 			    		    $("span#order_date").html(resultData.order_date);
 			 				$("span#pro_id").html(resultData.pro_id);
 			 				$("span#pro_id_count").html(resultData.pro_id_count);
-			 				$("span#man_id").html(resultData.manufacture.id);
-			 			//	$("span#man_name").html(resultData.manufacture.man_name);
+			 				$("span#man_id").html(resultData.man_id);
 			 				$("span#seller_id").html(resultData.seller_id);
 			 				$("span#state").html(resultData.state);
 			 			 

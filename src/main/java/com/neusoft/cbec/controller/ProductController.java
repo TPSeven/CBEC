@@ -82,6 +82,11 @@ public class ProductController {
 	public ProductModel getByIdWithKinds(String productId) throws Exception{
 		return productService.getByIdWithKinds(productId);
 	}
+	
+	@RequestMapping(value="/get/id/withkindsandbrand",method=RequestMethod.GET)
+	public ProductModel getByIdWithKindsAndBrand(String productId) throws Exception{
+		return productService.getByIdWithKindsAndBrand(productId);
+	}
 		
 		
 	@RequestMapping(value="/list/condition",method=RequestMethod.POST)
@@ -101,7 +106,9 @@ public class ProductController {
 	}	
 	
 	@RequestMapping(value="/list/condition/page",method=RequestMethod.POST)
-	public GridResult<ProductModel> getListByConditionWithPage(@RequestParam(required=false,defaultValue="0") int kindsId, 
+	public GridResult<ProductModel> getListByConditionWithPage(
+			@RequestParam(required=false,defaultValue="0") int brandId, 
+			@RequestParam(required=false,defaultValue="0") int kindsId, 
 			@RequestParam(required=false,defaultValue="0") int startPrice,
 			@RequestParam(required=false,defaultValue="0") int endPrice,
 			@RequestParam(required=false,defaultValue="0") int brand,
@@ -118,8 +125,8 @@ public class ProductController {
 		System.out.println(kindsId);
 		GridResult<ProductModel>  result=new GridResult<ProductModel>();
 		
-		result.setRecords(productService.getCountByCondition(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState));
-		int pageCount=productService.getPageCountByCondition(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows);
+		result.setRecords(productService.getCountByCondition(brandId ,kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState));
+		int pageCount=productService.getPageCountByCondition(brandId ,kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows);
 		if(page>pageCount) {
 			page=pageCount;
 		}
@@ -128,7 +135,7 @@ public class ProductController {
 		}
 		result.setPage(page);
 		result.setTotal(pageCount);
-		result.setRows(productService.getListByConditionWithPage(kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows, page));
+		result.setRows(productService.getListByConditionWithPage(brandId ,kindsId, startPrice, endPrice, brand, startDate, endDate, name, proState, rows, page));
 		
 		return result;
 	}
@@ -136,9 +143,9 @@ public class ProductController {
 	//检查商品id是否是否可用于新员工，返回true表示不存在，可以使用 返回fales表示ID已存在，不能使用
 	//用于jQuery validate remote的验证规则
 /*	@RequestMapping(value="checkIDCanBeUsed")
-	public boolean checkIDCanBeUsed(String pro_id) throws Exception{
+	public boolean checkIDCanBeUsed(String productId) throws Exception{
 		boolean result=true;
-		if(productService.getById(pro_id)!=null) {
+		if(productService.getById(productId)!=null) {
 			return false;
 		}
 		

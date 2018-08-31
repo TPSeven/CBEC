@@ -6,6 +6,10 @@ $.ajaxSetup({
 	traditional:true,
 	cache:false
 });
+//jqGrid窗口自适应
+$.jgrid.defaults.responsive = true;
+$.jgrid.defaults.styleUI = 'Bootstrap4';
+$.jgrid.defaults.iconSet = "Octicons";
 
 $(document).ready(function(){
 	var userInfo = null;
@@ -54,6 +58,8 @@ $(document).ready(function(){
 				
 			});
 			
+			
+			
 		}
 	});
 	
@@ -61,8 +67,8 @@ $(document).ready(function(){
 	$("div#maincontent").load("home/main.html");
 	
 	//主页链接点击响应事件
-	$("div#side-menu li a[href='indexWwl.html']").on("click",function(event){
-		$("div#maincontent").load("indexWwl.html");
+	$("ul#side-menu li a[href='indexWwl.html']").on("click",function(event){
+		$("div#maincontent").load("home/main.html");
 		event.preventDefault();
 	});
 	

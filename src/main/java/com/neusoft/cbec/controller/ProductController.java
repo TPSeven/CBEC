@@ -82,6 +82,11 @@ public class ProductController {
 	public ProductModel getByIdWithKinds(String productId) throws Exception{
 		return productService.getByIdWithKinds(productId);
 	}
+	
+	@RequestMapping(value="/get/id/withkindsandbrand",method=RequestMethod.GET)
+	public ProductModel getByIdWithKindsAndBrand(String productId) throws Exception{
+		return productService.getByIdWithKindsAndBrand(productId);
+	}
 		
 		
 	@RequestMapping(value="/list/condition",method=RequestMethod.POST)

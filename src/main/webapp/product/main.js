@@ -10,7 +10,7 @@ $(document).ready(function(){
 	var proState="";
 	var startDate=null;
 	var endDate=null;
-	alert("PRO OK");
+	
 	//填充下拉框
 	$.getJSON("kinds/list/all.mvc",function(kindsList){
 		//var options="<option value='0'>所有</option>"
@@ -43,7 +43,6 @@ $(document).ready(function(){
 	//状态选项更改事件
     $("input[type='radio'][name='pro_state']").on("change",function(){
     	proState=$(this).val();
-    	alert(proState);
   	  	getParamAndReloadGrid();
     
     });
@@ -51,7 +50,6 @@ $(document).ready(function(){
 	//名称框更改事件
 	$("input#productName").on("change",function(){
 		proName=$("input#productName").val();
-		alert(proName);
 		getParamAndReloadGrid();
 	});
 	
@@ -235,15 +233,15 @@ $(document).ready(function(){
          				$("select[name='kinds.pro_kinds_id']").append("<option value='"+kd.pro_kinds_id+"'>"+kd.pro_kinds_name+"</option>");
          			});
          		});
-     			//取得员工的信息，填充员工修改表单元素
-				$.getJSON("product/get/id.mvc",{productId:productId},function(pd){
+     			//取得商品的信息，填充员工修改表单元素
+				$.getJSON("product/get/id/withkindsandbrand.mvc",{productId:productId},function(pd){
 					$("input[name='pro_id']").val(pd.pro_id);
 					$("input[name='pro_name']").val(pd.pro_name);
 					$("input[name='pro_price']").val(pd.pro_price);
 					$("input[name='pro_weight']").val(pd.pro_weight);
 					$("input[name='pro_count']").val(pd.pro_count);
-					$("input[name='pro_state']").val(pd.pro_state);
-					$("input[name='brand_id']").val(pd.brand_id);
+					$("input[name='pro_state'][value='"+pd.pro_state+"']").attr("checked","checked");
+					$("input[name='brand.brand_id']").val(pd.brand.brand_id);
 					$("input[name='pro_photos_id']").val(pd.pro_photos_id);
 					$("input[name='pro_desc']").val(pd.pro_desc);
 					$("input[name='up_date']").val(pd.up_date);
@@ -388,7 +386,7 @@ $(document).ready(function(){
             	width:900,
             	heigth:650   
             	});
-		    	 $.getJSON("product/get/id/withkinds.mvc",{productId:productId},function(resultData){
+		    	 $.getJSON("product/get/id/withkindsandbrand.mvc",{productId:productId},function(resultData){
 		    		    $("span#productId").html(resultData.pro_id);
 		    		    $("span#productName").html(resultData.pro_name);
 		 				$("span#productPrice").html(resultData.pro_price);
@@ -396,7 +394,7 @@ $(document).ready(function(){
 		 				$("span#productCount").html(resultData.pro_count);
 		 				$("span#productKinds").html(resultData.kinds.pro_kinds_name);
 		 				$("span#productState").html(resultData.pro_state); 
-		 				$("span#productBrand").html(resultData.brand_id); 
+		 				$("span#productBrand").html(resultData.brand.brand_name); 
 		 				$("span#productPhotos").html(resultData.pro_photos_id); 
 		 				$("span#productDesc").html(resultData.pro_desc); 
 		 				$("span#productUpdate").html(resultData.up_date); 

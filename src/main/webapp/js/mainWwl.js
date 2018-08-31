@@ -6,6 +6,10 @@ $.ajaxSetup({
 	traditional:true,
 	cache:false
 });
+//jqGrid窗口自适应
+$.jgrid.defaults.responsive = true;
+$.jgrid.defaults.styleUI = 'Bootstrap4';
+$.jgrid.defaults.iconSet = "Octicons";
 
 $(document).ready(function(){
 	var userInfo = null;

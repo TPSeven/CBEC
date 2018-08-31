@@ -127,6 +127,7 @@ public class UserServiceImpl implements IUserService {
 	//验证用户-邮箱&密码-登陆
 	@Override
 	public UserModel validate(String email, String password) {
+		//获取用户的权限
 		return userDao.validateByEmailPassword(email,password);
 	}
 

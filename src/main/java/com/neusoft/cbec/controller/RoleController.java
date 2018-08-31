@@ -26,7 +26,7 @@ public class RoleController {
 		this.roleService = roleService;
 	}
 	
-	@RequestMapping("/list")
+	@RequestMapping(value="/list",method= {RequestMethod.GET})
 	public List<RoleModel> getListByAll() throws Exception{
 		List<RoleModel> rolelist = roleService.getListByAll();
 		return rolelist;

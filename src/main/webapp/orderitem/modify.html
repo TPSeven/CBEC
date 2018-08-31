@@ -1,5 +1,6 @@
  <form id="modifyorderitemForm" action="orderitem/modify.mvc"  method="post" enctype="multipart/form-data">
             <div class="form-group">
+       <!--      订单编号只读 -->
             <label>订单编号</label>
             <input class="form-control" name="order_id"  readonly/>
         </div>
@@ -20,6 +21,7 @@
             <label>制造商编号</label>
             <input class="form-control" name="man_id">
         </div>
+    </div>
         <div class="form-group">
             <label>借卖方编号</label>
             <input class="form-control" name="seller_id">

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.neusoft.cbec.dao.ISellerDao">
+
+<resultMap id="SellerResultMap"  type="seller">
+<id property="seller_id"  column="seller_id" />
+<result property="seller_no"  column="seller_no" />
+<result property="seller_name"  column="seller_name" />
+ <result property="seller_phone"  column="seller_phone" /> 
+<result property="seller_address"  column="seller_address" />
+<result property="seller_desc"  column="seller_desc" />
+</resultMap>
+<insert id ="create" parameterType="seller">
+ insert into  SELLER (seller_id,seller_no,seller_name,seller_phone,seller_address,seller_desc) values (#{seller_id},#{seller_no},#{seller_name},#{seller_phone},#{seller_address},#{seller_desc})
+</insert>
+<update id ="update"  parameterType="seller">
+  update SELLER set  seller_no=#{seller_no}, seller_name=#{seller_name},seller_phone=#{seller_phone},seller_address=#{seller_address},seller_desc=#{seller_desc}} where seller_id=#{seller_id} 
+</update>
+
+<delete id="delete" parameterType="seller">
+ delete from SELLER where  seller_id=#{seller_id}
+</delete>
+<!-- 取得借卖方信息 -->
+<select id="selectListByAll" resultMap="SellerResultMap">
+ select * from SELLER 
+</select>
+
+<select id="selectByID" parameterType="int"  resultMap="SellerResultMap">
+ select * from SELLER where seller_id=#{seller_id}
+ <!-- select  PRO_ID pro_id,PRO_ID_COUNT pro_id_count,MAN_ID man_id,SELLER_ID seller_id,STATE state from  ORDER_ITEM where order_id=#{order_id} -->
+</select>
+</mapper>

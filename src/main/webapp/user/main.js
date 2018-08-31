@@ -403,6 +403,21 @@ $(document).ready(function(){
 	//删除
 	$("a#deleteUserLink").on("click",function(){
 		alert("3");
+		if(userId==0){
+//			alert("请选择一个用户！");
+			BootstrapDialog.show({
+				title:"删除操作提示",
+				message:"<h5>请选择一个用户</h5>",
+				buttons:[{
+					label:'关闭',
+					action:function(dialog){
+						dialog.close();
+					}
+				}]
+			});
+		}else{
+			
+		}
 	});
 	
 	//查看

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.neusoft.cbec.dao.IPro_photosDao">
+  <resultMap id="Pro_PhotosResultMap" type="Photos" >
+    <id property="id" column="pro_photos_id" />
+  	<result property="photo" column="pro_photo"/>
+  	<result property="photoFileName" column="photoFileName"/>
+  	<result property="photoContentType" column="photoContentType"/>
+  	
+  </resultMap> 
+  <resultMap id="PhotoWithProductResultMap" type="Photos"  extends="Pro_PhotosResultMap" >
+	  	<!-- 内嵌式resultMap方式实现对一关联映射 -->
+	 <association property="product" resultMap="com.neusoft.cbec.dao.IProductDao.ProductResultMap"></association> 
+
+  </resultMap>
+   <!-- 增加照片 -->
+  <insert id="create" parameterType="Photos">	
+	   insert into pro_photos (pro_photos_id,pro_photo,photoFileName,photoContentType,pro_id) 
+	   values (PRO_PHOTOS_NEXTNO_SQ.nextval,#{photo},#{photoFileName},#{photoContentType},#{product.pro_id})
+  </insert>
+  
+   <!-- 删除照片 -->
+  <delete id="delete" parameterType="Photos">
+   		delete  pro_photos where pro_photos_id=#{id}
+  </delete>
+  
+   <!-- 修改照片 -->
+  <update id="update" parameterType="Photos">
+	update pro_photos set 
+	PHOTO=#{photo},PHOTOFILENAME=#{photoFileName},PHOTOContentType=#{photoContentType},pro_id = #{product.pro_id}
+	where pro_photos_id=#{id}
+  </update>
+  
+    
+  
+   
+
+
+</mapper>
+

@@ -76,7 +76,32 @@ public class BrandController {
 		brandService.delete(brandmodel);
 		return "ok";
 	}
+	//根据制造商号取得品牌商列表
 	//检索条件取得员工列表有分页
+		/*@RequestMapping(value="/list/manu/page",method = {RequestMethod.POST ,RequestMethod.GET})
+		public GridResult<BrandModel> getByConditionWithPage(@RequestParam(required = false,defaultValue = "0")int manuid,
+				@RequestParam(required=false,defaultValue="10" )int rows,
+				@RequestParam(required=false,defaultValue="1")int page) throws Exception{
+			    System.out.println(manuid);
+
+			     
+			     GridResult<BrandModel>  result = new GridResult<BrandModel>();
+			     result.setRecords(brandService.getCountByCondition(manuid));
+			     int pageCount=brandService.getPageCountByCondition(manuid, rows);
+			     if(page>pageCount) {
+			    	 page=pageCount;
+			    	 
+			     }
+			     if(page<1) {
+			    	 page=1;
+			     }
+			     result.setPage(page);
+			     result.setTotal(pageCount);
+			     result.setRows(brandService.getListByConditionWithPage(manuid, rows, page));
+			     return result;
+		      	 
+		}*/
+	//检索条件取得品牌商列表有分页
 	@RequestMapping(value="/list/condition/page",method = {RequestMethod.POST ,RequestMethod.GET})
 	public GridResult<BrandModel> getByConditionWithPage(@RequestParam(required = false,defaultValue = "0")int manuid,
 			/*@RequestParam(required = false,defaultValue = "") String man_name,*/

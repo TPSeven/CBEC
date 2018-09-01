@@ -104,6 +104,11 @@ public class ProductServiceImplWithSpring implements IProductService {
 		return productDao.selectByIdWithKinds(productId);
 	}
 
+	@Override
+	public ProductModel getByIdWithKindsAndBrand(String productId) throws Exception {
+		return productDao.selectByIdWithKindsAndBrand(productId);
+	}
+
 	
 
 }

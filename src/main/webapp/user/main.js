@@ -402,7 +402,7 @@ $(document).ready(function(){
 	
 	//删除
 	$("a#deleteUserLink").on("click",function(){
-		alert("3");
+		
 		if(userId==0){
 //			alert("请选择一个用户！");
 			BootstrapDialog.show({

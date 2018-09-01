@@ -15,6 +15,27 @@
   	<collection property="users" resultMap="com.neusoft.cbec.dao.IUserDao.UserResultMap"/>
   </resultMap>
   
+  <!--添加角色  -->
+  <insert id="create" parameterType="Role">
+  	insert into Role values(#{id},#{name})
+  </insert>
+  
+  <!--修改角色  -->
+  <insert id="update" parameterType="Role">
+  	update Role set role_name = #{name} where role_id = #{id}
+  </insert>
+  
+  <!--删除角色  -->
+  <insert id="delete" parameterType="Role">
+  	delete Role where role_id = #{id}
+  </insert>
+  
+  <!--角色有误关联用户  -->
+  <select id="isAssociation" parameterType="Role"  resultType="int">
+  	select count(user_id) from
+	UUSER_ROLE_RELATE
+	where role_id = #{id}
+  </select>
   
   <!--取得所有角色列表，无关联用户  -->
   <select id="selectListByAll" resultMap="RoleResultMap">
@@ -24,12 +45,15 @@
   
   <!--取得所有角色列表，关联用户  -->
   <select id="selectListWithUsersByAll" resultMap="RoleWithUsersResultMap">
-    select r.*,u.* 
-    from ROLE r
-    inner join UUSER u
-    on r.role_id = u.role_id
+    select a.*,c.*
+	from ROLE a
+	left join UUSER_ROLE_RELATE b
+	on a.role_id = b.role_id
+	left join UUSER c
+	on b.user_id = c.user_id
   </select>
   
+  <!--根据角色ID，取得对应的角色信息 -->
   <select id="selectRoleById" parameterType="int" resultMap="RoleResultMap">
     select *
     from Role

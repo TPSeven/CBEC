@@ -40,6 +40,13 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		  result.setMessage("修改成功");
 		  return result;
 	}
+	@RequestMapping(value="/modify1",method= {RequestMethod.POST})
+	public ControllerResult modify1(OrderItemModel em) throws Exception{
+		  orderitemService.modify1(em);
+		  ControllerResult result =new ControllerResult();
+		  result.setMessage("修改成功");
+		  return result;
+	}
 	@RequestMapping(value="/delete",method= {RequestMethod.POST})
 	public String delete(OrderItemModel em) throws Exception{
 		  orderitemService.delete(em);
@@ -224,7 +231,7 @@ public void setOrderitemService(IOrderItemService orderitemService) {
 		result.setPage(page);
 		result.setTotal(pageCount);
 		result.setRows(orderitemService.getOrderitemByManWithPage(order_id,man_id,startDate, endDate, state,rows,page));
-		
+
 		return result;
 	}
 }

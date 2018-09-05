@@ -14,6 +14,7 @@ public interface IOrderItemService {
 		public void add(OrderItemModel em) throws Exception;
 		public void delete(OrderItemModel em) throws Exception;
 		public void modify(OrderItemModel em) throws Exception;
+		public void modify1(OrderItemModel em) throws Exception;
 		//取得订单列表,无关制造商
 		public List<OrderItemModel> getListByAll() throws Exception;
 		//取得订单列表，取得制造商

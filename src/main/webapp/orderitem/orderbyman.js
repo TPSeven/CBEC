@@ -8,6 +8,8 @@ $.ajaxSetup({
   });
 
 $(document).ready(function(){
+	var a=0;
+	var manno=0;
 	var o_id=0;
 	var order_id=0;
 	var man_id=0;
@@ -16,43 +18,53 @@ $(document).ready(function(){
 	var startDate=null;
 	var endDate=null;
 	
-	//显示订单列表表格
-    $("table#orderitemGrid").jqGrid({
-        url: 'orderitem/listbymanwithpage.mvc',
-        mtype: "GET",
-		styleUI : 'Bootstrap',
-        datatype: "json",
-        colModel: [
-            { label: '订单编号', name: 'order_id', key: true, width: 75 },
-            { label: '产品编号', name: 'pro_id', width: 150 },
-            { label: '产品数量', name: 'pro_id_count', width: 150 },
-            { label: '制造商编号', name: 'man_id', width: 150 },
-            { label:'借卖方编号', name: 'seller_id', width: 150 },
-            { label:'订单状态', name: 'state', width: 150 },
-            { label:'订单日期', name: 'order_date', width: 150 } 
-        ],
-        autowidth:true,
-		viewrecords: true,
-        height: 400,
-        rowNum: 10,
-        rowList:[2,10,15,20],
-        pager: "#orderitemGridPager",
-        	  jsonReader : {
-                  root: "rows",  //指定数据列表
-                  page: "page",
-                  total: "total",
-                  records: "records",
-                  repeatitems: true,
-                  id: "id"
-              },
-              multiselect:false,
-              onSelectRow:function(id){
-             	o_id=id;
-             	
-              }
-              
-    });
+	$.getJSON("login/getLoginUser.mvc",function(userModel){
+		manno=userModel.manufacturer.id;
+		
 	
+		
+		//显示订单列表表格
+	    $("table#orderitemGrid").jqGrid({
+	        url: 'orderitem/listbymanwithpage.mvc?man_id=' + manno,
+	        mtype: "GET",
+			styleUI : 'Bootstrap',
+	        datatype: "json",
+	        colModel: [
+	            { label: '订单编号', name: 'order_id', key: true, width: 75 },
+	            { label: '产品编号', name: 'pro_id', width: 150 },
+	            { label: '产品数量', name: 'pro_id_count', width: 150 },
+	            { label: '制造商编号',name: 'manufacture.id', width: 150 },
+	            { label:'借卖方编号', name: 'seller_id', width: 150 },
+	            { label:'订单状态', name: 'state', width: 150 },
+	            { label:'订单日期', name: 'order_date', width: 150 } 
+	        ],
+	   
+	        autowidth:true,
+			viewrecords: true,
+	        height: 400,
+	        rowNum: 10,
+	        rowList:[2,10,15,20],
+	        pager: "#orderitemGridPager",
+	        	  jsonReader : {
+	                  root: "rows",  //指定数据列表
+	                  page: "page",
+	                  total: "total",
+	                  records: "records",
+	                  repeatitems: true,
+	                  id: "id"
+	              },
+	              multiselect:false,
+	              onSelectRow:function(id){
+	             	o_id=id;
+	             	
+	              }
+	              
+	      
+	    });
+	
+	});
+	
+
 //取得订单更改事件
 	
 function getParamAndReloadGrid(){
@@ -80,7 +92,6 @@ $("input#order_id").on("change",function(){
    
 });
 
-	 
 
 
    //起始日期更改事件处理
@@ -106,7 +117,7 @@ $("input#order_id").on("change",function(){
   
    //修改订单按钮点击事件处理
     $("a#orderlistModifyLink").on("click",function(){
-    	$("div#OrderItemDialog").load("orderitem/modify.html",function(){
+    	$("div#OrderItemDialog").load("orderitem/modifywithman.html",function(){
     	
     		if(o_id==0){
     		BootstrapDialog.show({
@@ -130,12 +141,12 @@ $("input#order_id").on("change",function(){
             	heigth:650   
             	});
     			 $.getJSON("orderitem/getOrderById.mvc",{id:o_id},function(resultData){
- 					$("input[name='order_id']").val(resultData.order_id);
+ 					    $("input[name='order_id']").val(resultData.order_id);
     					$("input[name='pro_id']").val(resultData.pro_id);
     					$("input[name='pro_id_count']").val(resultData.pro_id_count);
-    					$("input[name='man_id']").val(resultData.man_id);
+    					$("input[name='manufacture.id']").val(resultData.manufacture.id);
     					$("input[name='seller_id']").val(resultData.seller_id);
-    					$("input[name='state']").val(resultData.state);
+    					$("input[name='state'][value='"+resultData.state+"']").attr("checked","checked");
     					$("input[name='order_date']").val(resultData.order_date);
     				 });
     			}
@@ -243,6 +254,56 @@ $("input#order_id").on("change",function(){
     			}
  			
     });
+ 			
+  //订单发货按钮事件处理
+    $("a#ordersendLink").on("click",function(){
+    		if(o_id==0){
+    			BootstrapDialog.show({
+        			title:"订单操作提示",
+        		    message:"<h4>请选择要发货的订单</h4>",
+        				buttons:[{
+        				label:'关闭'	,
+        				action:function(dialog){
+        					dialog.close();
+        			      	 }	
+                 		  }
+        				] 
+        		});  
+    			
+    		}else{ 
+    			
+    			/*BootstrapDialog.confirm('确认要发货吗?', function(confirmResult){
+    			
+    			if(confirmResult){*/
+    				$.getJSON("orderitem/getOrderById.mvc",{id:o_id},function(dm){
+    					
+    					  alert(dm.manufacture.id);
+                        
+                         
+    				    order_id1=dm.order_id;
+    				    pro_id1=dm.pro_id;
+    				    pro_id_count1=dm.pro_id_count;
+    				    //man_id1=dm.manufacture.id;
+    				    seller_id1=dm.seller_id;
+    				    state1="已发货";
+    				    alert(state1);
+    				    order_date1=dm.order_date;
+    				 
+    					$.post("orderitem/modify1.mvc",{order_id:order_id1,pro_id:pro_id1,pro_id_count:pro_id_count1,
+    						seller_id:seller_id1, state:state1,order_date:order_date1},function(){
+    					});
+    					getParamAndReloadGrid();
+    				    });
+    				
+				    /*  }
+    				 });*/	
+    			
+				}
+    		
+    			 
+    	});
+    			
+    			
     //查看订单按钮事件处理
     $("a#orderlistViewLink").on("click",function(){
         

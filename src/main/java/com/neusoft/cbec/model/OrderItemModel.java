@@ -16,6 +16,8 @@ public class OrderItemModel {
 			 private int pro_id_count=0;
 			 private int seller_id=0;
 			 private String state=null;
+	//	 private int man_id=0;
+			 
 				@DateTimeFormat(pattern="yyyy-MM-dd")
 				@JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
 			private Date  order_date=null;
@@ -24,6 +26,12 @@ public class OrderItemModel {
 				
 			 
 			 
+			/*public int getMan_id() {
+				return man_id;
+			}
+			public void setMan_id(int man_id) {
+				this.man_id = man_id;
+			}*/
 			public Date getOrder_date() {
 				return order_date;
 			}

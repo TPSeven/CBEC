@@ -39,7 +39,10 @@ public class OrderItemServiceImplWithSpring implements IOrderItemService {
 	public void modify(OrderItemModel em) throws Exception {
 		
 		orderitemdao.update(em);
-
+	}
+	public void modify1(OrderItemModel em) throws Exception {
+		
+		orderitemdao.update1(em);
 	}
 
 	@Override

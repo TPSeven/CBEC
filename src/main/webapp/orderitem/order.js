@@ -250,13 +250,13 @@ $("input#order_id").on("change",function(){
     					$("input[name='pro_id_count']").val(resultData.pro_id_count);
     					$("input[name='manufacture.id']").val(resultData.manufacture.id);
     					//$("input[name='manufacture.man_name']").val(resultData.man_name);
-    					
+    					$("input[name='state'][value='"+resultData.state+"']").attr("checked","checked");
     					//if(val1==state)
     						//$("#r2").val("class","checked");
     					$("input[name='seller_id']").val(resultData.seller_id);
     					//$("input[name='state']").val(resultData.state);
     					$("input[name='order_date']").val(resultData.order_date);
-    					var val1 = resultData.state;
+    					/*var val1 = resultData.state;
     					//alert(val1);
     					
     					if(1!=val1)
@@ -274,7 +274,7 @@ $("input#order_id").on("change",function(){
         					$("#l2").empty();
         				    $("#l1").append(" <input type='radio' name='state' value='1' id='r1' checked >1");
         				    $("#l2").append(" <input type='radio' name='state' value='2' id='r2' > 2");
-    					}
+    					}*/
     				 });
     			}
     		$("form#modifyorderitemForm").validate({

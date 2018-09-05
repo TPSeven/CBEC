@@ -14,6 +14,8 @@ public interface IOrderItemDao {
 	public void create(OrderItemModel em)throws Exception;
   //修
 	public void update(OrderItemModel em)throws Exception;
+	  //修
+	public void update1(OrderItemModel em)throws Exception;
    //删
     public void delete(OrderItemModel em)throws Exception;
    //取得所有订单,无关联制造商

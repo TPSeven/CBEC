@@ -14,6 +14,17 @@
 <!-- <association property="manufacture" column="man_id" select="com.neusoft.cbec.dao.IManufacturerDao.selectManufacturerById"></association> -->
 
 </resultMap>
+<resultMap id="OrderResultMap"  type="OrderItem">
+<id property="order_id"  column="order_id" />
+<result property="pro_id"  column="pro_id" />
+<result property="pro_id_count"  column="pro_id_count" />
+<result property="man_id"  column="man_id" />
+<result property="seller_id"  column="seller_id" />
+<result property="state"  column="state" />
+<result property="order_date"  column="order_date" />
+<!-- <association property="manufacture" column="man_id" select="com.neusoft.cbec.dao.IManufacturerDao.selectManufacturerById"></association> -->
+
+</resultMap>
 
 <resultMap type="OrderItem" id="OrderItemWithManMap" extends="OrderItemResultMap">
 <association property="manufacture" resultMap="com.neusoft.cbec.dao.IManufacturerDao.ManResultMap"></association>
@@ -28,7 +39,13 @@
  insert into  ORDER_ITEM (Order_id,pro_id,pro_id_count,man_id,seller_id,state,order_date) values (#{order_id},#{pro_id},#{pro_id_count},#{manufacture.id},#{seller_id},#{state},#{order_date})
 </insert>
 <update id ="update"  parameterType="OrderItem">
-  update ORDER_ITEM set  pro_id=#{pro_id}, pro_id_count=#{pro_id_count},man_id=#{manufacture.id},seller_id=#{seller_id},state=#{state},order_date=#{order_date} where order_id=#{order_id} 
+  update ORDER_ITEM set  pro_id=#{pro_id}, pro_id_count=#{pro_id_count},seller_id=#{seller_id},state=#{state},order_date=#{order_date},  man_id=#{manufacture.id}
+  where order_id=#{order_id} 
+</update>
+
+<update id ="update1"  parameterType="OrderItem">
+  update ORDER_ITEM set  pro_id=#{pro_id}, pro_id_count=#{pro_id_count},seller_id=#{seller_id},state=#{state},order_date=#{order_date}
+  where order_id=#{order_id} 
 </update>
 
 <delete id="delete" parameterType="OrderItem">
@@ -59,8 +76,8 @@ select a.*,b.man_name from ORDER_ITEM a inner join MANUFACTURER b on a.man_id =b
 </select>
 
 <!-- 根据制造商编号取得订单列表 -->
-<select id="selectListByManufacturer" resultMap="OrderItemResultMap">
-select * from ORDER_ITEM where man_id=#{man_id}
+<select id="selectListByManufacturer" resultMap="OrderItemWithManMap">
+select * from ORDER_ITEM a where a.man_id=#{man_id}
 <trim prefix="WHERE" prefixOverrides="AND|OR"> 
 <if test="order_id!=0">
  and  a.order_id=#{order_id}
@@ -77,10 +94,10 @@ select * from ORDER_ITEM where man_id=#{man_id}
  </trim>
 </select>
 <!-- 根据制造商编号取得订单列表 -->
-<select id="selectListByManufacturerWithPage" resultMap="OrderItemResultMap">
+<select id="selectListByManufacturerWithPage" resultMap="OrderItemWithManMap">
 select * from (select x.*,ROWNUM RN
-from(select * from ORDER_ITEM where man_id=#{man_id}
-<trim prefix="WHERE" prefixOverrides="AND|OR"> 
+from(select * from ORDER_ITEM a <where>  a.man_id=#{man_id}
+
 <if test="order_id!=0">
  and  a.order_id=#{order_id}
 </if>	
@@ -93,8 +110,8 @@ from(select * from ORDER_ITEM where man_id=#{man_id}
 <if test="endDate!=null">
  and a.order_date &lt;= #{endDate}
  </if>
- </trim>
-)X where ROWNUM &lt; =#{end}) where RN &gt;=#{start}
+</where>
+)X where ROWNUM &gt; =#{end}) where RN &lt;=#{start}
 </select>
 <!-- 根据检索条件取得订单列表，无分页 -->
 <select id="selectListByCondition"  resultMap="OrderItemWithManMap">
@@ -181,12 +198,15 @@ select count(a.order_id) from ORDER_ITEM a inner join  MANUFACTURER b  on a.man_
  select  count(order_id) from ORDER_ITEM where order_id=#{order_id} and man_id=#{man_id}
 </select>
 
-
+<!-- 根据制造商ID取得订单的个数 -->
 <select id="selectCountByMan" resultType="int">
-select count(order_id) from ORDER_ITEM  where man_id=#{man_id}
-<trim prefix="WHERE" prefixOverrides="AND|OR"> 
+select count(*) from ORDER_ITEM a <where> a.man_id=#{man_id} 
+
 <if test="order_id!=0">
- and  a.order_id=#{order_id}
+ and a.order_id=#{order_id}
+</if>	
+<if test="man_id!=0">
+ and a.man_id=#{man_id}
 </if>	
  <if test="state!=null and state!=''">
  and a.state= #{state}
@@ -197,7 +217,7 @@ select count(order_id) from ORDER_ITEM  where man_id=#{man_id}
 <if test="endDate!=null">
  and a.order_date &lt;= #{endDate}
  </if>
- </trim>
+ </where>
 </select>
 </mapper> 
 <!-- ORDER_ID order_id, PRO_ID pro_id,PRO_ID_COUNT pro_id_count,MAN_ID man_id,SELLER_ID seller_id,STATE state -->

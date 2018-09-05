@@ -38,6 +38,7 @@ public class RoleServiceImpl implements IRoleService {
 
 	@Override
 	public void modify(RoleModel role) throws Exception {
+		roleDao.update(role);
 	}
 
 	//取得所有角色列表，无关联用户

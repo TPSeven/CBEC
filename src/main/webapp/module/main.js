@@ -1,25 +1,25 @@
 /**
- *  角色管理JS
+ *  系统模块管理JS
  *  author：温万龙
  */
 
 $(document).ready(function(){
-	var roleId = 0;
+	var moduleNo = 0;
 	//首页链接事件绑定
 	$("a#home").on("click",function(){
 		//加载home主页
 		$("div#maincontent").load("home/main.html");
 	});
 	
-	//显示角色列表
-	$("table#roleGrid").jqGrid({
-		url:"role/list.mvc",
+	//显示模块列表
+	$("table#moduleGrid").jqGrid({
+		url:"module/list.mvc",
 		mtype:"GET",
 		styleUI : 'Bootstrap',
      	datatype: "json",
      	colModel: [
-    		{ label: '角色ID', name: 'id', width: 100 },
-        	{ label: '角色名称', name: 'name', width: 100 },
+    		{ label: '模块编号', name: 'no', width: 100 },
+        	{ label: '模块名称', name: 'name', width: 100 },
         ],
         autowidth:true,
 	 	viewrecords: true,
@@ -28,30 +28,29 @@ $(document).ready(function(){
      	rowNum: 10,
      	rowList:[1,3,5,7],
          	multiselect:false,
-        	onSelectRow:function(id){
-        		roleId = id;
+        	onSelectRow:function(no){
+        		moduleNo = no;
      		},
-     	pager: "#roleGridPager",
+     	pager: "#moduleGridPager",
 	});
 	
-	//刷新角色列表
-	function reloadRoleGrid(){
-//		$("table#userGrid").jqGrid("setGridParam",{postData:datas}).trigger("reloadGrid");
-		$("table#roleGrid").jqGrid().trigger("reloadGrid");
+	//刷新模块列表
+	function reloadModuleGrid(){
+		$("table#moduleGrid").jqGrid().trigger("reloadGrid");
 	}
 	
 	
 	//添加按钮响应事件
-	$("a#addRoleLink").on("click",function(){
-		$("div#roleDialog").load("role/add.html",function(){
+	$("a#addModuleLink").on("click",function(){
+		$("div#moduleDialog").load("module/add.html",function(){
 			//表单验证
-			$("form#addRoleForm").validate({
+			$("form#addModuleForm").validate({
 				rules:{
-					id:{
+					no:{
 						required:true,
 						digits:true,
 						min:1,
-						remote:"role/checkRoleId.mvc"
+						remote:"module/checkModuleNo.mvc"
 					},
 					name:{
 						required:true,
@@ -59,23 +58,23 @@ $(document).ready(function(){
 					}
 				},
 				messages:{
-					id:{
-						required:"请填写角色ID",
+					no:{
+						required:"请填写模块编号",
 						digits:"请填写整数",
 						min:"不能填写0",
-						remote:"该角色ID已经存在"
+						remote:"该模块编号已经存在"
 					},
 					name:{
-						required:"请填写角色名称",
-						rangelength:"角色名称长度为3~10"
+						required:"请填写模块名称",
+						rangelength:"模块名称长度为3~10"
 					}
 				}
 			});
 			
 			//表单截取
-			$("form#addRoleForm").ajaxForm(function(result){
+			$("form#addModuleForm").ajaxForm(function(result){
 				BootstrapDialog.show({
-					title:"角色操作提示",
+					title:"模块操作提示",
 					message:result.message,
 					buttons:[{
 						label:'关闭',
@@ -84,31 +83,34 @@ $(document).ready(function(){
 						}
 					}]
 				});
-				$("div#roleDialog").dialog("close");
-				//刷新角色列表
-				reloadRoleGrid();
+				$("div#moduleDialog").dialog("close");
+				if(result.status=="T"){
+					//刷新模块列表
+					reloadModuleGrid();
+				}
+				
 			});
 			
 			//取消按钮-关闭窗口
-			$("a#roleCancelLink").on("click",function(){
-				$("div#roleDialog").dialog("close");
+			$("a#moduleCancelLink").on("click",function(){
+				$("div#moduleDialog").dialog("close");
 			});
 		});
 
 		//窗口设置
-		$("div#roleDialog").dialog({
-				title:"添加新角色",
+		$("div#moduleDialog").dialog({
+				title:"添加新模块",
 				width:500,
 				height:300
 		});
 	});
 	
 	//修改按钮响应事件
-	$("a#modifyRoleLink").on("click",function(){
-		if(roleId==0){
+	$("a#modifyModuleLink").on("click",function(){
+		if(moduleNo==0){
 			BootstrapDialog.show({
-				title:"角色操作提示",
-				message:"请选择一个角色",
+				title:"模块操作提示",
+				message:"请选择一个模块",
 				buttons:[{
 					label:"关闭",
 					action:function(dialog){
@@ -117,16 +119,16 @@ $(document).ready(function(){
 				}]
 			});
 		}else{
-			$("div#roleDialog").load("role/modify.html",function(){
-				//角色相关数据回显
-				$.getJSON("role/get/byId.mvc",{id:roleId},function(result){
-					$("input[name='id']").val(result.id);
-					$("input[name='id']").attr("readonly","readonly");
+			$("div#moduleDialog").load("module/modify.html",function(){
+				//模块相关数据回显
+				$.getJSON("module/get/byNo.mvc",{no:moduleNo},function(result){
+					$("input[name='no']").val(result.no);
+					$("input[name='no']").attr("readonly","readonly");
 					$("input[name='name']").val(result.name);
 				});
 				
 				//数据校验
-				$("form#modifyRoleForm").validate({
+				$("form#modifyModuleForm").validate({
 					rules:{
 						name:{
 							required:true,
@@ -135,16 +137,16 @@ $(document).ready(function(){
 					},
 					messages:{
 						name:{
-							required:"请填写角色名称",
-							rangelength:"角色名称长度为3~10"
+							required:"请填写模块名称",
+							rangelength:"模块名称长度为3~10"
 						}
 					}
 				});
 				
 				//表单截取
-				$("form#modifyRoleForm").ajaxForm(function(result){
+				$("form#modifyModuleForm").ajaxForm(function(result){
 					BootstrapDialog.show({
-						title:"角色操作提示",
+						title:"模块操作提示",
 						message:result.message,
 						buttons:[{ 
 							label:"关闭",
@@ -153,20 +155,22 @@ $(document).ready(function(){
 							}
 						}]
 					});
-					$("div#roleDialog").dialog("close");
-					//刷新角色列表
-					reloadRoleGrid();
+					$("div#moduleDialog").dialog("close");
+					if(result.status=="T"){
+						//刷新模块列表
+						reloadModuleGrid();
+					}
 				});
 				
 				//取消按钮-关闭窗口
-				$("a#roleCancelLink").on("click",function(){
-					$("div#roleDialog").dialog("close");
+				$("a#moduleCancelLink").on("click",function(){
+					$("div#moduleDialog").dialog("close");
 				});
 				
 			});
 			
-			$("div#roleDialog").dialog({
-				title:"修改角色",
+			$("div#moduleDialog").dialog({
+				title:"修改模块",
 				width:500,
 				height:300
 			});
@@ -174,11 +178,11 @@ $(document).ready(function(){
 	});
 	
 	//删除按钮响应事件
-	$("a#deleteRoleLink").on("click",function(){
-		if(roleId==0){
+	$("a#deleteModuleLink").on("click",function(){
+		if(moduleNo==0){
 			BootstrapDialog.show({
-				title:"角色操作提示",
-				message:"请选择一个角色",
+				title:"模块操作提示",
+				message:"请选择一个模块",
 				buttons:[{
 					label:"关闭",
 					action:function(dialog){
@@ -188,7 +192,7 @@ $(document).ready(function(){
 			});
 		}else{
 			BootstrapDialog.show({
-				title:"角色操作提示",
+				title:"模块操作提示",
 				message:"确定要删除吗？",
 				buttons:[{
 					label:"关闭",
@@ -198,7 +202,7 @@ $(document).ready(function(){
 				},{
 					label:"确定",
 					action:function(dialog){
-						$.post("role/delete.mvc",{id:roleId},function(deleteResult){
+						$.post("module/delete.mvc",{no:moduleNo},function(deleteResult){
 							BootstrapDialog.show({
 								title:"删除操作提示",
 								message:deleteResult.message,
@@ -209,8 +213,8 @@ $(document).ready(function(){
 									}
 								}]
 							});
-							//刷新角色列表
-							if(deleteResult.status=="T") reloadRoleGrid();
+							//刷新模块列表
+							if(deleteResult.status=="T") reloadModuleGrid();
 						});
 						dialog.close();	
 					}

@@ -23,5 +23,10 @@ public interface IModuleDao {
 	//根据编号取得系统的模块信息
 	public ModuleModel selectModuleByNO(int no) throws Exception;
 	
+	//统计关联的用户
+	public int selectCountWithRole(ModuleModel module);
+	//统计关联的角色
+	public int selectCountWithFun(ModuleModel module);
+	
 	
 }

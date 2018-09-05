@@ -105,6 +105,7 @@ insert into SystemFunction values (13,3,'用户管理','user/main.html');
 insert into SystemFunction values (14,3,'品牌商管理','manufacturer/main.html');
 insert into SystemFunction values (15,3,'订单管理','orderitem/orderitem.html');
 insert into SystemFunction values (16,3,'权限管理','role/main.html');
+insert into SystemFunction values (17,3,'系统模块管理','module/main.html');
 select * from SystemFunction;
 
 -- 模块角色关联表

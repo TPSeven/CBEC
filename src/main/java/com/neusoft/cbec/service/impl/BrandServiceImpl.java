@@ -78,6 +78,7 @@ public class BrandServiceImpl implements IBrandService {
 		return brandDao.selectListByConditionWithPage(manuid, name, startDate, endDate, rows*(page-1)+1, rows*page);
 	}
 
+
 	@Override
 	public List<BrandModel> getListByCondition(int manuid, String name, Date startDate, Date endDate) throws Exception {
 		// TODO Auto-generated method stub

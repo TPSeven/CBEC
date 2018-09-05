@@ -12,4 +12,6 @@ public interface IRoleDao {
 	public List<RoleModel> selectListByAll() throws Exception;
 	public List<RoleModel> selectListWithUsersByAll() throws Exception;
 	public RoleModel selectRoleById(int id) throws Exception;
+	//查看角色,关联的用户Id
+	public int isAssociation(RoleModel role);
 }

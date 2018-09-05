@@ -32,4 +32,5 @@ public interface IBrandService {
 	//根据检索条件取得品牌商显示页数
 	public int getPageCountByCondition(int manuid,String name,Date startDate,Date endDate,int rows) throws Exception;
 
+
 }

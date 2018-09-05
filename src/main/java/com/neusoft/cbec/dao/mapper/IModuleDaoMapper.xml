@@ -5,15 +5,52 @@
 <mapper namespace = "com.neusoft.cbec.dao.IModuleDao">
 
 	<!-- 基本映射 -->
-	<resultMap type="Module" id="ModuleResultMap">
+	<resultMap id="ModuleResultMap" type="Module" >
 		<id property="no" column="module_no" />
 		<result property="name" column="module_name" />
 	</resultMap>
 	
 	<!-- 系统模块关联系统功能映射 -->
-	<resultMap extends="ModuleResultMap" type="Module" id="ModuleWithFunctionsResultMap">
+	<resultMap  id="ModuleWithFunctionsResultMap" extends="ModuleResultMap" type="Module">
 		<collection property="functions" resultMap="com.neusoft.cbec.dao.IFunctionDao.FunctionResultMap"></collection>
 	</resultMap>
+	
+	<!-- 创建系统模块 -->
+	<insert id="create" parameterType="Module"> 
+		insert into SystemModule
+		values(#{no},#{name})
+	</insert>
+	
+	<!-- 更新系统模块 -->
+	<update id="update" parameterType="Module"> 
+		update SystemModule
+		set module_name=#{name}  where module_no = #{no}
+	</update>
+	
+	<!-- 删除系统模块 -->
+	<update id="delete" parameterType="Module"> 
+		delete SystemModule where module_no = #{no}
+	</update>
+	
+	<!-- 查询系统模块列表 -->
+	<select id="selectListByAll" resultMap="ModuleResultMap"> 
+		select * from SystemModule
+	</select>
+	
+	<!-- 根据编号取得系统的模块信息 -->
+	<select id="selectModuleByNO" parameterType="int" resultMap="ModuleResultMap"> 
+		select * from SystemModule where module_no = #{no}
+	</select>
+	
+	<!-- 统计关联的用户 -->
+	<select id="selectCountWithRole" parameterType="Module" resultType="int"> 
+		select count(module_no) from Role_Module_Relate where module_no = #{no}
+	</select>
+	
+	<!--统计关联的功能-->
+	<select id="selectCountWithFun" parameterType="Module" resultType="int"> 
+		select count(module_no) from SystemFunction where module_no = #{no}
+	</select>
 	
 	
 </mapper>
